@@ -1,4 +1,3 @@
-// src/server/Server.cpp
 #include "Server.hpp"
 #include "../factory/MSTFactory.hpp"
 #include "../analysis/MSTAnalysis.hpp"
@@ -62,10 +61,60 @@ void Server::handleClient(int clientSocket) {
     
     handleRequest(request);
     
-    // Send response back to client
     std::string response = "Request processed";
     send(clientSocket, response.c_str(), response.length(), 0);
     close(clientSocket);
 }
 
-// Rest of the Server.cpp implementation remains the same
+void Server::handleRequest(const std::string& request) {
+    std::istringstream iss(request);
+    std::string command;
+    iss >> command;
+
+    if (command == "addGraph") {
+        int V;
+        iss >> V;
+        Graph newGraph(V);
+        int src, dest, weight;
+        while (iss >> src >> dest >> weight) {
+            newGraph.addEdge(src, dest, weight);
+        }
+        addGraph(newGraph);
+    } else if (command == "updateGraph") {
+        std::string changes;
+        std::getline(iss, changes);
+        updateGraph(changes);
+    } else if (command == "solveMST") {
+        std::string algorithm;
+        iss >> algorithm;
+        solveMST(algorithm);
+    } else {
+        std::cout << "Unknown command: " << command << std::endl;
+    }
+}
+
+void Server::addGraph(const Graph& graph) {
+    currentGraph = graph;
+    std::cout << "Graph added successfully." << std::endl;
+}
+
+void Server::updateGraph(const std::string& changes) {
+    std::istringstream iss(changes);
+    int src, dest, weight;
+    while (iss >> src >> dest >> weight) {
+        currentGraph.addEdge(src, dest, weight);
+    }
+    std::cout << "Graph updated successfully." << std::endl;
+}
+
+void Server::solveMST(const std::string& algorithm) {
+    auto mstAlgo = MSTFactory::createMSTAlgorithm(algorithm);
+    auto mst = mstAlgo->findMST(currentGraph);
+    auto analysis = analyzeMST(currentGraph, mst);
+    
+    std::cout << "MST Analysis using " << algorithm << " algorithm:" << std::endl;
+    std::cout << "Total weight: " << analysis.totalWeight << std::endl;
+    std::cout << "Longest distance: " << analysis.longestDistance << std::endl;
+    std::cout << "Average distance: " << analysis.averageDistance << std::endl;
+    std::cout << "Shortest MST edge: " << analysis.shortestMSTEdge << std::endl;
+}

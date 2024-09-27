@@ -13,10 +13,10 @@ public:
     Server(int port, int threads);
     void start();
     void stop();
+    void handleRequest(const std::string& request);
 
 private:
     void handleClient(int clientSocket);
-    void handleRequest(const std::string& request);
     void addGraph(const Graph& graph);
     void updateGraph(const std::string& changes);
     void solveMST(const std::string& algorithm);

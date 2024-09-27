@@ -10,18 +10,18 @@ SRCS := $(shell find $(SRC_DIR) -name '*.cpp')
 OBJS := $(SRCS:$(SRC_DIR)/%.cpp=$(BUILD_DIR)/%.o)
 DEPS := $(OBJS:.o=.d)
 
-TEST_SRCS := $(shell find $(TEST_DIR) -name '*.cpp')
-TEST_OBJS := $(TEST_SRCS:$(TEST_DIR)/%.cpp=$(BUILD_DIR)/$(TEST_DIR)/%.o)
-TEST_DEPS := $(TEST_OBJS:.o=.d)
-
 EXEC := mst_project
 TEST_EXEC := test_mst_project
+CLIENT_EXEC := mst_client
 
-.PHONY: all clean test coverage profile run_all
+.PHONY: all clean test coverage profile run_all client
 
-all: $(EXEC)
+all: $(CLIENT_EXEC) $(EXEC) 
 
-$(EXEC): $(filter-out $(BUILD_DIR)/main.o, $(OBJS)) $(BUILD_DIR)/main.o
+$(EXEC): $(filter-out $(BUILD_DIR)/main.o $(BUILD_DIR)/client.o, $(OBJS)) $(BUILD_DIR)/main.o
+	$(CXX) $^ -o $@ $(LDFLAGS)
+
+$(CLIENT_EXEC): $(BUILD_DIR)/client.o
 	$(CXX) $^ -o $@ $(LDFLAGS)
 
 $(BUILD_DIR)/%.o: $(SRC_DIR)/%.cpp
@@ -30,10 +30,12 @@ $(BUILD_DIR)/%.o: $(SRC_DIR)/%.cpp
 
 -include $(DEPS)
 
+client: $(CLIENT_EXEC)
+
 test: $(TEST_EXEC)
 	./$(TEST_EXEC)
 
-$(TEST_EXEC): $(filter-out $(BUILD_DIR)/main.o, $(OBJS)) $(TEST_OBJS)
+$(TEST_EXEC): $(filter-out $(BUILD_DIR)/main.o $(BUILD_DIR)/client.o, $(OBJS)) $(TEST_OBJS)
 	$(CXX) $^ -o $@ $(LDFLAGS)
 
 $(BUILD_DIR)/$(TEST_DIR)/%.o: $(TEST_DIR)/%.cpp
@@ -59,6 +61,6 @@ run_all: $(EXEC)
 	./run_all_features.sh
 
 clean:
-	rm -rf $(BUILD_DIR) $(EXEC) $(TEST_EXEC) *.gcda *.gcno *.gcov coverage.info coverage_report profile_report.txt gmon.out
+	rm -rf $(BUILD_DIR) $(EXEC) $(CLIENT_EXEC) $(TEST_EXEC) *.gcda *.gcno *.gcov coverage.info coverage_report profile_report.txt gmon.out
 
 -include $(wildcard $(BUILD_DIR)/*.d)
