@@ -36,11 +36,7 @@ int main(int argc, char const *argv[]) {
 
     send(sock, request.c_str(), request.length(), 0);
     char buffer[1024] = {0};
-    ssize_t valread = read(sock, buffer, 1024);
-if (valread < 0) {
-    std::cerr << "Error reading from socket\n";
-    return -1;
-}
+    int valread = read(sock, buffer, 1024);
     std::cout << "Server response: " << buffer << "\n";
 
     close(sock);
