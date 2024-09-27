@@ -1,4 +1,3 @@
-// src/server/Server.hpp
 #pragma once
 #include "../graph/Graph.hpp"
 #include "../mst/MSTAlgorithm.hpp"
@@ -13,13 +12,14 @@ public:
     Server(int port, int threads);
     void start();
     void stop();
-    void handleRequest(const std::string& request);
+    std::string sendRequest(const std::string& request);  // New public method
 
 private:
     void handleClient(int clientSocket);
+    std::string handleRequest(const std::string& request);
     void addGraph(const Graph& graph);
     void updateGraph(const std::string& changes);
-    void solveMST(const std::string& algorithm);
+    std::string solveMST(const std::string& algorithm);
 
     Graph currentGraph;
     std::unique_ptr<MSTAlgorithm> currentAlgorithm;
