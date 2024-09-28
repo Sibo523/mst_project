@@ -1,4 +1,3 @@
-// src/server/Server.hpp
 #pragma once
 #include "../graph/Graph.hpp"
 #include "../mst/MSTAlgorithm.hpp"
@@ -8,18 +7,19 @@
 #include <sys/socket.h>
 #include <netinet/in.h>
 
-class Server {
+class Server
+{
 public:
     Server(int port, int threads);
     void start();
     void stop();
-    void handleRequest(const std::string& request);
+    std::string handleRequest(const std::string &request);
 
 private:
     void handleClient(int clientSocket);
-    void addGraph(const Graph& graph);
-    void updateGraph(const std::string& changes);
-    void solveMST(const std::string& algorithm);
+    void addGraph(const Graph &graph);
+    void updateGraph(const std::string &changes);
+    std::string solveMST(const std::string &algorithm);
 
     Graph currentGraph;
     std::unique_ptr<MSTAlgorithm> currentAlgorithm;
