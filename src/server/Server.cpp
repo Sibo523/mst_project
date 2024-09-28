@@ -1,3 +1,4 @@
+// src/server/Server.cpp
 #include "Server.hpp"
 #include "../factory/MSTFactory.hpp"
 #include "../analysis/MSTAnalysis.hpp"
@@ -6,7 +7,12 @@
 #include <unistd.h>
 #include <cstring>
 
-Server::Server(int port, int threads) : currentGraph(0), proactor(threads), port(port), running(false) {}
+Server::Server(int port, int threads)
+    : currentGraph(0),
+      threadPool(threads),
+      pipeline(),
+      port(port),
+      running(false) {}
 
 void Server::start()
 {
@@ -49,8 +55,8 @@ void Server::start()
             continue;
         }
 
-        proactor.enqueue([this, clientSocket]()
-                         { this->handleClient(clientSocket); });
+        threadPool.enqueue([this, clientSocket]()
+                           { this->handleClient(clientSocket); });
     }
 }
 
@@ -58,30 +64,6 @@ void Server::stop()
 {
     running = false;
     close(serverSocket);
-}
-void Server::handleClient(int clientSocket)
-{
-    char buffer[1024] = {0};
-    while (true)
-    {
-        memset(buffer, 0, sizeof(buffer));
-        int valread = read(clientSocket, buffer, 1024);
-        if (valread <= 0)
-        {
-            // Client disconnected or error occurred
-            break;
-        }
-        std::string request(buffer);
-
-        if (request == "exit")
-        {
-            break;
-        }
-
-        std::string response = handleRequest(request);
-        send(clientSocket, response.c_str(), response.length(), 0);
-    }
-    close(clientSocket);
 }
 
 std::string Server::handleRequest(const std::string &request)
@@ -93,20 +75,13 @@ std::string Server::handleRequest(const std::string &request)
     if (command == "addGraph")
     {
         int V;
-        std::cout << "Adding graph...\n what is the number of vertices: \n"
-                  << std::endl;
         iss >> V;
-
         Graph newGraph(V);
         int src, dest, weight;
-
-        do
+        while (iss >> src >> dest >> weight)
         {
-            std::cout << "Enter the edges in the format: src dest weight\n"
-                      << std::endl;
-            std::cin >> src >> dest >> weight;
             newGraph.addEdge(src, dest, weight);
-        } while (!std::cin.fail());
+        }
         addGraph(newGraph);
         return "Graph added successfully.";
     }
@@ -128,6 +103,31 @@ std::string Server::handleRequest(const std::string &request)
         return "Unknown command: " + command;
     }
 }
+
+void Server::handleClient(int clientSocket)
+{
+    char buffer[1024] = {0};
+    while (true)
+    {
+        memset(buffer, 0, sizeof(buffer));
+        int valread = read(clientSocket, buffer, 1024);
+        if (valread <= 0)
+        {
+            break;
+        }
+        std::string request(buffer);
+
+        if (request == "exit")
+        {
+            break;
+        }
+
+        std::string response = handleRequest(request);
+        send(clientSocket, response.c_str(), response.length(), 0);
+    }
+    close(clientSocket);
+}
+
 void Server::addGraph(const Graph &graph)
 {
     currentGraph = graph;
@@ -144,12 +144,13 @@ void Server::updateGraph(const std::string &changes)
     }
     std::cout << "Graph updated successfully." << std::endl;
 }
-
-std::string Server::solveMST(const std::string &algorithm)
-{
+std::string Server::solveMST(const std::string &algorithm) {
     auto mstAlgo = MSTFactory::createMSTAlgorithm(algorithm);
     auto mst = mstAlgo->findMST(currentGraph);
-    auto analysis = analyzeMST(currentGraph, mst);
+    
+    auto analysis = pipeline.process<MSTAnalysis>([&]() {
+        return analyzeMST(currentGraph, mst);
+    });
 
     std::ostringstream oss;
     oss << "MST Analysis using " << algorithm << " algorithm:\n";

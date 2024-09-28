@@ -1,0 +1,49 @@
+mst_project/
+│
+├── src/
+│   ├── main.cpp
+│   ├── graph/
+│   │   ├── Graph.hpp
+│   │   └── Graph.cpp
+│   ├── mst/
+│   │   ├── MSTAlgorithm.hpp
+│   │   ├── BoruvkaMST.hpp
+│   │   ├── BoruvkaMST.cpp
+│   │   ├── PrimMST.hpp
+│   │   ├── PrimMST.cpp
+│   │   ├── KruskalMST.hpp
+│   │   ├── KruskalMST.cpp
+│   │   ├── TarjanMST.hpp
+│   │   ├── TarjanMST.cpp
+│   │   ├── IntegerMST.hpp
+│   │   └── IntegerMST.cpp
+│   ├── factory/
+│   │   ├── MSTFactory.hpp
+│   │   └── MSTFactory.cpp
+│   ├── server/
+│   │   ├── Server.hpp
+│   │   └── Server.cpp
+│   ├── utils/
+│   │   ├── ActiveObject.hpp
+│   │   ├── ActiveObject.cpp
+│   │   ├── LeaderFollowerThreadPool.hpp
+│   │   ├── LeaderFollowerThreadPool.cpp
+│   │   ├── Pipeline.hpp
+│   │   ├── Pipeline.cpp
+│   │   └── Benchmark.hpp
+│   └── analysis/
+│       ├── MSTAnalysis.hpp
+│       └── MSTAnalysis.cpp
+│
+├── tests/
+│   ├── GraphTests.cpp
+│   ├── MSTAlgorithmTests.cpp
+│   ├── ServerTests.cpp
+│   ├── AnalysisTests.cpp
+│   └── IntegrationTests.cpp
+│
+├── client.cpp
+├── Makefile
+├── run_all_features.sh
+├── run_valgrind_tests.sh
+└── README.md

@@ -1,73 +1,89 @@
+// src/main.cpp
 #include "server/Server.hpp"
+#include "factory/MSTFactory.hpp"
+#include "analysis/MSTAnalysis.hpp"
+#include "utils/Benchmark.hpp"
 #include <iostream>
-#include <string>
-#include <csignal>
 #include <thread>
+#include <chrono>
 
-void runAllFeatures(); // Declaration
-
-Server *serverPtr = nullptr;
-
-void signalHandler(int signum)
+void runServer(int port, int threads)
 {
-    std::cout << "Interrupt signal (" << signum << ") received.\n";
-    if (serverPtr)
-    {
-        serverPtr->stop();
-    }
-    exit(signum);
+    Server server(port, threads);
+    server.start();
 }
 
-int main()
+void runBenchmark()
 {
-    const int PORT = 8081;
-    const int THREADS = 4;
+    std::cout << "Running benchmark...\n";
 
-    Server server(PORT, THREADS);
-    serverPtr = &server;
+    // Create a sample graph
+    Graph g(5);
+    g.addEdge(0, 1, 2);
+    g.addEdge(0, 3, 6);
+    g.addEdge(1, 2, 3);
+    g.addEdge(1, 3, 8);
+    g.addEdge(1, 4, 5);
+    g.addEdge(2, 4, 7);
+    g.addEdge(3, 4, 9);
 
-    // Register signal handler
-    signal(SIGINT, signalHandler);
+    std::vector<std::string> algorithms = {"Boruvka", "Prim", "Kruskal", "Tarjan", "Integer"};
 
-    std::cout << "MST Server starting on port " << PORT << " with " << THREADS << " threads." << std::endl;
-    std::cout << "Press Ctrl+C to stop the server." << std::endl;
+    for (const auto &algo : algorithms)
+    {
+        auto mstAlgo = MSTFactory::createMSTAlgorithm(algo);
 
-    // Start the server in a separate thread
-    std::thread serverThread([&server]()
-                             { server.start(); });
+        // Benchmark pipeline approach
+        auto pipelineTime = Benchmark::measureTime([&]()
+                                                   {
+            Pipeline pipeline;
+            pipeline.addStage([&](void* data) {
+                auto* graph = static_cast<Graph*>(data);
+                std::cout<<"graph: "<<graph->getVertices()<<std::endl;
+                return mstAlgo->findMST(*graph);
+            });
+            pipeline.addStage([&](void* data) {
+                auto* mst = static_cast<std::vector<std::pair<int, std::pair<int, int>>>*>(data);
+                return analyzeMST(g, *mst);
+            });
+            return pipeline.process<MSTAnalysis>([&]() { return g; }); });
 
-    // Run all features
-    // runAllFeatures();
+        // Benchmark Leader-Follower approach
+        auto lfTime = Benchmark::measureTime([&]()
+                                             {
+            LeaderFollowerThreadPool pool(4);
+            auto future = pool.enqueue([&]() {
+                auto mst = mstAlgo->findMST(g);
+                return analyzeMST(g, mst);
+            });
+            return future.get(); });
 
-    // Wait for the server thread to finish (which will be when stop() is called)
+        std::cout << "Algorithm: " << algo << "\n";
+        std::cout << "  Pipeline time: " << pipelineTime << " ms\n";
+        std::cout << "  Leader-Follower time: " << lfTime << " ms\n";
+    }
+}
+
+int main(int argc, char *argv[])
+{
+    if (argc != 3)
+    {
+        std::cerr << "Usage: " << argv[0] << " <port> <threads>\n";
+        return 1;
+    }
+
+    int port = std::stoi(argv[1]);
+    int threads = std::stoi(argv[2]);
+
+    std::thread serverThread(runServer, port, threads);
+
+    // Wait a bit for the server to start
+    std::this_thread::sleep_for(std::chrono::seconds(1));
+
+    runBenchmark();
+
+    // Keep the server running
     serverThread.join();
 
     return 0;
-}
-
-void runAllFeatures()
-{
-    // This function can now interact with the server using a client-like interface
-    // You can implement client-side logic here to test all features of your server
-    std::cout << "Running all features..." << std::endl;
-
-    // Example: Add a graph
-    std::string addGraphRequest = "addGraph 4 0 1 10 0 2 6 0 3 5 1 3 15 2 3 4";
-    std::string response = serverPtr->handleRequest(addGraphRequest);
-    std::cout << "Add Graph Response: " << response << std::endl;
-
-    // Example: Solve MST using different algorithms
-    std::string solvePrimRequest = "solveMST Prim";
-    response = serverPtr->handleRequest(solvePrimRequest);
-    std::cout << "Solve MST (Prim) Response:\n"
-              << response << std::endl;
-
-    std::string solveKruskalRequest = "solveMST Kruskal";
-    response = serverPtr->handleRequest(solveKruskalRequest);
-    std::cout << "Solve MST (Kruskal) Response:\n"
-              << response << std::endl;
-
-    // Add more feature tests as needed
-
-    std::cout << "All features tested." << std::endl;
 }
