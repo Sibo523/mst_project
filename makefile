@@ -45,8 +45,8 @@ test: $(TEST_EXEC)
 coverage: CXXFLAGS += -fprofile-arcs -ftest-coverage
 coverage: LDFLAGS += -lgcov
 coverage: clean test
-	gcov -r $(SRCS)
-	lcov --capture --directory . --output-file coverage.info
+	find $(BUILD_DIR) -name "*.gcno" -exec gcov -r {} +
+	lcov --capture --directory $(BUILD_DIR) --output-file coverage.info
 	genhtml coverage.info --output-directory coverage_report
 
 profile: CXXFLAGS += -pg
@@ -59,4 +59,4 @@ run_all: $(EXEC)
 	./run_all_features.sh
 
 clean:
-	rm -rf $(BUILD_DIR) $(EXEC) $(TEST_EXEC) *.gcda *.gcno *.gcov coverage.info coverage_report profile_report.txt gmon.out
+	rm -rf $(BUILD_DIR) $(EXEC) $(TEST_EXEC) *.gcov coverage.info coverage_report profile_report.txt gmon.out
