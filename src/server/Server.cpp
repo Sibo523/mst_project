@@ -66,7 +66,7 @@ void Server::stop()
     close(serverSocket);
 }
 
-std::string Server::handleRequest(const std::string &request)
+std::string Server::handleRequest(const std::string &request, int clientSocket)
 {
     std::istringstream iss(request);
     std::string command;
@@ -74,28 +74,52 @@ std::string Server::handleRequest(const std::string &request)
 
     if (command == "addGraph")
     {
-        int V;
-        iss >> V;
+        sendMessage(clientSocket, "Enter the number of vertices:");
+        std::string input = getClientInput(clientSocket);
+        int V = std::stoi(input);
         Graph newGraph(V);
-        int src, dest, weight;
-        while (iss >> src >> dest >> weight)
+
+        while (true)
         {
-            newGraph.addEdge(src, dest, weight);
+            sendMessage(clientSocket, "Enter edges (src dest weight), '-1' when finished:\n");
+            input = getClientInput(clientSocket);
+            if (input == "-1" || input == "-1\n" || input == "-1\r\n")
+                break;
+
+            std::istringstream edgeStream(input);
+            int src, dest, weight;
+            if (edgeStream >> src >> dest >> weight)
+            {
+                try
+                {
+                    newGraph.addEdge(src, dest, weight);
+                    sendMessage(clientSocket, "Edge added successfully. src: " + std::to_string(src) + ", dest: " + std::to_string(dest) + ", weight: " + std::to_string(weight) + "\n");
+                }
+                catch (const std::exception &e)
+                {
+                    sendMessage(clientSocket, e.what() + '\n');
+                }
+            }
+            else
+            {
+                sendMessage(clientSocket, "Invalid input. Try again or type 'done':\n");
+            }
         }
+
         addGraph(newGraph);
         return "Graph added successfully.";
     }
     else if (command == "updateGraph")
     {
-        std::string changes;
-        std::getline(iss, changes);
+        sendMessage(clientSocket, "Enter graph changes:");
+        std::string changes = getClientInput(clientSocket);
         updateGraph(changes);
         return "Graph updated successfully.";
     }
     else if (command == "solveMST")
     {
-        std::string algorithm;
-        iss >> algorithm;
+        sendMessage(clientSocket, "Enter MST algorithm (e.g., 'Kruskal' or 'Prim','IntegerMST','Tarjan','Boruvka'):");
+        std::string algorithm = getClientInput(clientSocket);
         return solveMST(algorithm);
     }
     else
@@ -122,10 +146,25 @@ void Server::handleClient(int clientSocket)
             break;
         }
 
-        std::string response = handleRequest(request);
-        send(clientSocket, response.c_str(), response.length(), 0);
+        std::string response = handleRequest(request, clientSocket);
+        sendMessage(clientSocket, response);
     }
     close(clientSocket);
+}
+void Server::sendMessage(int clientSocket, const std::string &message)
+{
+    send(clientSocket, message.c_str(), message.length(), 0);
+}
+
+std::string Server::getClientInput(int clientSocket)
+{
+    char buffer[1024] = {0};
+    int valread = read(clientSocket, buffer, 1024);
+    if (valread <= 0)
+    {
+        return "";
+    }
+    return std::string(buffer);
 }
 
 void Server::addGraph(const Graph &graph)
@@ -144,13 +183,14 @@ void Server::updateGraph(const std::string &changes)
     }
     std::cout << "Graph updated successfully." << std::endl;
 }
-std::string Server::solveMST(const std::string &algorithm) {
+std::string Server::solveMST(const std::string &algorithm)
+{
     auto mstAlgo = MSTFactory::createMSTAlgorithm(algorithm);
-    auto mst = mstAlgo->findMST(currentGraph);
     
-    auto analysis = pipeline.process<MSTAnalysis>([&]() {
-        return analyzeMST(currentGraph, mst);
-    });
+    auto mst = mstAlgo->findMST(currentGraph);
+
+    auto analysis = pipeline.process<MSTAnalysis>([&]()
+                                                  { return analyzeMST(currentGraph, mst); });
 
     std::ostringstream oss;
     oss << "MST Analysis using " << algorithm << " algorithm:\n";

@@ -12,7 +12,6 @@ void runServer(int port, int threads)
     Server server(port, threads);
     server.start();
 }
-
 void runBenchmark()
 {
     std::cout << "Running benchmark...\n";
@@ -27,43 +26,58 @@ void runBenchmark()
     g.addEdge(2, 4, 7);
     g.addEdge(3, 4, 9);
 
+    // Debug output for graph edges
+    std::cout << "Graph edges: ";
+    for (const auto &edge : g.getEdges())
+    { // Ensure getEdges() is implemented
+        std::cout << edge.first << " -- " << edge.second.first << " weight: " << edge.second.second << "; ";
+    }
+    std::cout << std::endl;
+
     std::vector<std::string> algorithms = {"Boruvka", "Prim", "Kruskal", "Tarjan", "Integer"};
 
     for (const auto &algo : algorithms)
     {
+        std::cout << "Algorithm: " << algo << "\n";
+
         auto mstAlgo = MSTFactory::createMSTAlgorithm(algo);
+        if (mstAlgo == nullptr)
+        {
+            std::cerr << "Error: Algorithm not created successfully.\n";
+            continue; // Skip to next algorithm if failed
+        }
 
         // Benchmark pipeline approach
-        auto pipelineTime = Benchmark::measureTime([&]()
-                                                   {
-            Pipeline pipeline;
-            pipeline.addStage([&](void* data) {
-                auto* graph = static_cast<Graph*>(data);
-                std::cout<<"graph: "<<graph->getVertices()<<std::endl;
-                return mstAlgo->findMST(*graph);
-            });
-            pipeline.addStage([&](void* data) {
-                auto* mst = static_cast<std::vector<std::pair<int, std::pair<int, int>>>*>(data);
-                return analyzeMST(g, *mst);
-            });
-            return pipeline.process<MSTAnalysis>([&]() { return g; }); });
+        // auto pipelineTime = Benchmark::measureTime([&]()
+        //                                            {
+        //     Pipeline pipeline;
+        //     pipeline.addStage([&](void* data) {
+        //         auto* graph = static_cast<Graph*>(data);
+        //         std::cout<<"Processing graph: "<<graph->getVertices()<<std::endl;
+        //         return mstAlgo->findMST(*graph);
+        //     });
+        //     pipeline.addStage([&](void* data) {
+        //         auto* mst = static_cast<std::vector<std::pair<int, std::pair<int, int>>>*>(data);
+        //         return analyzeMST(g, *mst);
+        //     });
+        //     return pipeline.process<MSTAnalysis>([&]() { return g; }); });
 
         // Benchmark Leader-Follower approach
         auto lfTime = Benchmark::measureTime([&]()
                                              {
             LeaderFollowerThreadPool pool(4);
             auto future = pool.enqueue([&]() {
+                std::cout<<"Processing graph: "<<g.getVertices()<<std::endl;
+
                 auto mst = mstAlgo->findMST(g);
                 return analyzeMST(g, mst);
             });
             return future.get(); });
 
-        std::cout << "Algorithm: " << algo << "\n";
-        std::cout << "  Pipeline time: " << pipelineTime << " ms\n";
+        // std::cout << "  Pipeline time: " << pipelineTime << " ms\n";
         std::cout << "  Leader-Follower time: " << lfTime << " ms\n";
     }
 }
-
 int main(int argc, char *argv[])
 {
     if (argc != 3)

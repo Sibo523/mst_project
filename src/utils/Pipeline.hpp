@@ -7,6 +7,7 @@
 #include <thread>
 #include <cstddef>
 #include <future> //don't know what this is but the compiler told me then this is what I do!
+#include <iostream>
 
 constexpr size_t MAX_PIPELINE_STAGES = 10; // Adjust this value as needed
 
@@ -37,22 +38,22 @@ T Pipeline::process(F inputFunction)
 {
     std::promise<T> resultPromise;
     std::future<T> resultFuture = resultPromise.get_future();
-
-    // Create a wrapper for the input function
     auto wrappedInput = [inputFunction, &resultPromise]()
     {
-        T *result = new T(inputFunction());
+        auto result = std::make_unique<T>(inputFunction());
         resultPromise.set_value(*result);
-        return static_cast<void *>(result);
+        return static_cast<void *>(result.release()); // Release ownership of the pointer
     };
 
     // Add the wrapped input function as the first stage
-    queues[0].push(wrappedInput());
+    queues[0].push(wrappedInput()); // Push void* into the queue
     cvs[0].notify_one();
 
-    // Wait for the result and clean up
+    // Wait for the result
     T result = resultFuture.get();
-    delete static_cast<T *>(queues.back().front());
+
+    // Clean up dynamically allocated memory from the queue
+    delete static_cast<T *>(queues.back().front()); // Properly delete the object
     queues.back().pop();
 
     return result;

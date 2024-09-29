@@ -1,11 +1,17 @@
-// src/mst/TarjanMST.cpp
 #include "TarjanMST.hpp"
 #include <algorithm>
 #include <cmath>
+#include <stack>
 
 std::vector<std::pair<int, std::pair<int, int>>> TarjanMST::findMST(const Graph &graph)
 {
     int V = graph.getVertices();
+    if (V == 0)
+    {
+        std::cout << "Warning: Empty graph passed to TarjanMST::findMST" << std::endl;
+        return {}; // Return empty MST for empty graph
+    }
+
     std::vector<Edge> edges;
     std::vector<std::pair<int, std::pair<int, int>>> mst;
     std::vector<int> parent(V), rank(V, 0);
@@ -25,57 +31,65 @@ std::vector<std::pair<int, std::pair<int, int>>> TarjanMST::findMST(const Graph 
         parent[i] = i;
     }
 
-    int m = edges.size();
-    recursiveMST(graph, mst, parent, rank, edges, m);
+    iterativeMST(graph, mst, parent, rank, edges);
 
     return mst;
 }
 
-void TarjanMST::recursiveMST(const Graph &graph, std::vector<std::pair<int, std::pair<int, int>>> &mst,
+void TarjanMST::iterativeMST(const Graph &graph, std::vector<std::pair<int, std::pair<int, int>>> &mst,
                              std::vector<int> &parent, std::vector<int> &rank,
-                             std::vector<Edge> &edges, int &m)
+                             std::vector<Edge> &edges)
 {
-    if (m <= 1)
+    std::stack<std::tuple<std::vector<Edge>, int>> stack;
+    stack.push({edges, edges.size()});
+
+    while (!stack.empty())
     {
-        if (m == 1)
+        auto [edges, m] = stack.top();
+        stack.pop();
+
+        if (m <= 1)
         {
-            mst.push_back({edges[0].weight, {edges[0].src, edges[0].dest}});
+            if (m == 1)
+            {
+                mst.push_back({edges[0].weight, {edges[0].src, edges[0].dest}});
+            }
+            continue;
         }
-        return;
-    }
 
-    int k = std::ceil(std::pow(m, 0.75));
-    std::vector<Edge> F = sampleEdges(edges, k);
+        int k = std::ceil(std::pow(m, 0.75));
+        std::vector<Edge> F = sampleEdges(edges, k);
 
-    // Recursive call on sampled edges
-    recursiveMST(graph, mst, parent, rank, F, k);
+        // Push the sampled edges onto the stack for recursive processing
+        stack.push({F, F.size()});
 
-    // Process remaining edges
-    std::vector<Edge> remaining;
-    for (const Edge &e : edges)
-    {
-        int x = find(parent, e.src);
-        int y = find(parent, e.dest);
-        if (x != y)
+        // Process remaining edges
+        std::vector<Edge> remaining;
+        for (const Edge &e : edges)
         {
-            remaining.push_back(e);
+            int x = find(parent, e.src);
+            int y = find(parent, e.dest);
+            if (x != y)
+            {
+                remaining.push_back(e);
+            }
         }
-    }
 
-    // Final processing
-    for (const Edge &e : remaining)
-    {
-        int x = find(parent, e.src);
-        int y = find(parent, e.dest);
-        if (x != y)
+        // Final processing
+        for (const Edge &e : remaining)
         {
-            mst.push_back({e.weight, {e.src, e.dest}});
-            unionSet(parent, rank, x, y);
+            int x = find(parent, e.src);
+            int y = find(parent, e.dest);
+            if (x != y)
+            {
+                mst.push_back({e.weight, {e.src, e.dest}});
+                unionSet(parent, rank, x, y);
+            }
         }
-    }
 
-    m = remaining.size();
-    edges = std::move(remaining);
+        // Push the remaining edges onto the stack for recursive processing
+        stack.push({remaining, remaining.size()});
+    }
 }
 
 int TarjanMST::find(std::vector<int> &parent, int i)

@@ -6,13 +6,11 @@
 #include <vector>
 MSTAnalysis::MSTAnalysis(const Graph &graph)
 {
-    // Initialize the analysis based on the graph
-    // This is just an example, adjust according to your needs
     totalWeight = 0;
     longestDistance = 0;
     averageDistance = 0.0;
     shortestMSTEdge = std::numeric_limits<int>::max();
-    // You might want to perform some initial analysis here
+
 }
 MSTAnalysis analyzeMST(const Graph &graph, const std::vector<std::pair<int, std::pair<int, int>>> &mst)
 {

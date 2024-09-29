@@ -3,6 +3,7 @@
 #include "MSTAlgorithm.hpp"
 #include <vector>
 #include <random>
+#include <iostream>
 
 class TarjanMST : public MSTAlgorithm
 {
@@ -17,9 +18,9 @@ private:
         Edge() : src(0), dest(0), weight(0) {} // Default constructor for std::vector
     };
     // Helper functions for Tarjan's algorithm
-    void recursiveMST(const Graph &graph, std::vector<std::pair<int, std::pair<int, int>>> &mst,
-                      std::vector<int> &parent, std::vector<int> &rank,
-                      std::vector<Edge> &edges, int &m);
+    void iterativeMST(const Graph &graph, std::vector<std::pair<int, std::pair<int, int>>> &mst,
+                                 std::vector<int> &parent, std::vector<int> &rank,
+                                 std::vector<Edge> &edges);
     int find(std::vector<int> &parent, int i);
     void unionSet(std::vector<int> &parent, std::vector<int> &rank, int x, int y);
     std::vector<Edge> sampleEdges(const std::vector<Edge> &edges, int k);
