@@ -16,7 +16,6 @@ TEST_DEPS := $(TEST_OBJS:.o=.d)
 
 EXEC := mst_project
 TEST_EXEC := test_mst_project
-CLIENT_EXEC := mst_client
 
 .PHONY: all clean test coverage profile run_all client
 
@@ -25,8 +24,7 @@ all: $(CLIENT_EXEC) $(EXEC)
 $(EXEC): $(filter-out $(BUILD_DIR)/client.o, $(OBJS))
 	$(CXX) $^ -o $@ $(LDFLAGS)
 
-$(CLIENT_EXEC): $(BUILD_DIR)/client.o
-	$(CXX) $^ -o $@ $(LDFLAGS)
+
 
 $(BUILD_DIR)/%.o: $(SRC_DIR)/%.cpp
 	@mkdir -p $(@D)
@@ -34,7 +32,6 @@ $(BUILD_DIR)/%.o: $(SRC_DIR)/%.cpp
 
 -include $(DEPS)
 
-client: $(CLIENT_EXEC)
 
 test: $(TEST_EXEC)
 	./$(TEST_EXEC)

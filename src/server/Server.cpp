@@ -12,8 +12,13 @@ Server::Server(int port, int threads)
       threadPool(threads),
       pipeline(),
       port(port),
-      running(false) {}
-
+      running(false)
+{
+    pipeline.addStage([this](std::shared_ptr<void> input)
+                      { return this->analyzeMSTStage(input); });
+    pipeline.addStage([this](std::shared_ptr<void> input)
+                      { return this->formatResultStage(input); });
+}
 void Server::start()
 {
     serverSocket = socket(AF_INET, SOCK_STREAM, 0);
@@ -126,6 +131,8 @@ std::string Server::handleRequest(const std::string &request, int clientSocket)
         std::vector<std::string> validAlgorithms = {"Kruskal", "Prim", "IntegerMST", "Tarjan", "Boruvka"};
         if (std::find(validAlgorithms.begin(), validAlgorithms.end(), algorithm) != validAlgorithms.end())
         {
+            std::cout << "Solving MST with algorithm: " << algorithm << std::endl;
+            std::cout << currentGraph.getVertices() << std::endl;
             std::string result = solveMST(algorithm);
             std::cout << "MST result: " << result << std::endl;
             return result;
@@ -228,6 +235,7 @@ void Server::updateGraph(const std::string &changes)
     }
     std::cout << "Graph updated successfully." << std::endl;
 }
+
 std::string Server::solveMST(const std::string &algorithm)
 {
     std::cout << "Solving MST with algorithm: " << algorithm << std::endl;
@@ -238,7 +246,7 @@ std::string Server::solveMST(const std::string &algorithm)
         std::cerr << "Failed to create MST algorithm: " << algorithm << std::endl;
         return "Error: Failed to create MST algorithm.";
     }
-
+    std::cout << "before findMST" << std::endl;
     std::vector<std::pair<int, std::pair<int, int>>> mst;
     try
     {
@@ -250,7 +258,61 @@ std::string Server::solveMST(const std::string &algorithm)
         return "Error: Exception occurred while finding MST.";
     }
 
-    auto analysis = analyzeMST(currentGraph, mst);
+    try
+    {
+        std::cout << "before pipeline::process" << std::endl;
+        auto result = pipeline.process<std::string>(
+            [&]() -> std::shared_ptr<void>
+            {
+                return std::make_shared<std::pair<std::string, std::vector<std::pair<int, std::pair<int, int>>>>>(algorithm, mst);
+            });
+
+        return result;
+    }
+    catch (const std::exception &e)
+    {
+        std::cerr << "Exception in pipeline processing: " << e.what() << std::endl;
+        return "Error: Exception occurred while processing MST result.";
+    }
+}
+
+
+// true
+std::shared_ptr<void> Server::analyzeMSTStage(std::shared_ptr<void> input)
+{
+    try
+    {
+        auto pair = std::static_pointer_cast<std::pair<std::string, std::vector<std::pair<int, std::pair<int, int>>>>>(input);
+        auto &algorithm = pair->first;
+        auto &mst = pair->second;
+
+        MSTAnalysis analysis;
+
+        auto totalWeightFuture = calculateTotalWeightAsync(mst);
+        auto longestDistanceFuture = findLongestDistanceAsync(currentGraph, mst);
+        auto averageDistanceFuture = calculateAverageDistanceAsync(currentGraph, mst);
+        auto shortestMSTEdgeFuture = findShortestMSTEdgeAsync(mst);
+
+        // Wait for all futures to complete
+        analysis.totalWeight = totalWeightFuture.get();
+        analysis.longestDistance = longestDistanceFuture.get();
+        analysis.averageDistance = averageDistanceFuture.get();
+        analysis.shortestMSTEdge = shortestMSTEdgeFuture.get();
+        analysis.mstEdges = mst;
+
+        return std::make_shared<std::pair<std::string, MSTAnalysis>>(algorithm, analysis);
+    }
+    catch (const std::exception &e)
+    {
+        std::cerr << "Exception in analyzeMSTStage: " << e.what() << std::endl;
+        throw;
+    }
+}
+std::shared_ptr<void> Server::formatResultStage(std::shared_ptr<void> input)
+{
+    auto pair = std::static_pointer_cast<std::pair<std::string, MSTAnalysis>>(input);
+    auto &algorithm = pair->first;
+    auto &analysis = pair->second;
 
     std::ostringstream oss;
     oss << "MST Analysis using " << algorithm << " algorithm:\n";
@@ -259,12 +321,11 @@ std::string Server::solveMST(const std::string &algorithm)
     oss << "Average distance: " << analysis.averageDistance << "\n";
     oss << "Shortest MST edge: " << analysis.shortestMSTEdge << "\n";
     oss << "MST edges: ";
-    for (const auto &edge : mst)
+    for (const auto &edge : analysis.mstEdges)
     {
         oss << "(" << edge.second.first << "-" << edge.second.second << ", " << edge.first << ") ";
     }
     oss << "\n";
 
-    std::cout << "MST solution: " << oss.str() << std::endl;
-    return oss.str();
+    return std::make_shared<std::string>(oss.str());
 }

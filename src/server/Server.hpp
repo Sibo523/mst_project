@@ -4,6 +4,7 @@
 #include "../mst/MSTAlgorithm.hpp"
 #include "../utils/LeaderFollowerThreadPool.hpp"
 #include "../utils/Pipeline.hpp"
+#include "../analysis/MSTAnalysis.hpp" // Add this line
 #include <memory>
 #include <string>
 #include <sys/socket.h>
@@ -13,6 +14,9 @@
 #include <string>
 #include <sstream>
 #include <iostream>
+#include <future>
+#include <type_traits>
+#include <utility>
 
 class Server
 {
@@ -29,6 +33,11 @@ private:
     std::string solveMST(const std::string &algorithm);
     void sendMessage(int clientSocket, const std::string &message);
     std::string getClientInput(int clientSocket);
+
+    // Update these method signatures
+    std::shared_ptr<void> analyzeMSTStage(std::shared_ptr<void> input);
+    std::shared_ptr<void> formatResultStage(std::shared_ptr<void> input);
+
     Graph currentGraph;
     std::unique_ptr<MSTAlgorithm> currentAlgorithm;
     LeaderFollowerThreadPool threadPool;
@@ -37,4 +46,5 @@ private:
     bool running;
     int port;
 };
+
 std::string trimString(const std::string &str);
