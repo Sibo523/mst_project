@@ -2,7 +2,6 @@
 #pragma once
 #include "../graph/Graph.hpp"
 #include "../mst/MSTAlgorithm.hpp"
-#include "../utils/ActiveObject.hpp"
 #include "../utils/LeaderFollowerThreadPool.hpp"
 #include "../utils/Pipeline.hpp"
 #include <memory>
@@ -15,7 +14,7 @@
 #include <sstream>
 #include <iostream>
 
-class Server : public ActiveObject
+class Server
 {
 public:
     Server(int port, int threads);
