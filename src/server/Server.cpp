@@ -107,7 +107,7 @@ std::string Server::handleRequest(const std::string &request, int clientSocket)
         }
 
         addGraph(newGraph);
-        return "Graph added successfully.";
+        return "Graph added successfully.\n";
     }
     else if (command == "updateGraph")
     {
@@ -118,22 +118,67 @@ std::string Server::handleRequest(const std::string &request, int clientSocket)
     }
     else if (command == "solveMST")
     {
-        sendMessage(clientSocket, "Enter MST algorithm (e.g., 'Kruskal' or 'Prim','IntegerMST','Tarjan','Boruvka'):");
+        sendMessage(clientSocket, "Enter MST algorithm (e.g., 'Kruskal', 'Prim', 'IntegerMST', 'Tarjan', 'Boruvka'):");
         std::string algorithm = getClientInput(clientSocket);
-        return solveMST(algorithm);
+        algorithm = trimString(algorithm); // Remove any leading/trailing whitespace
+        std::cout << "Algorithm received: '" << algorithm << "'" << std::endl;
+
+        std::vector<std::string> validAlgorithms = {"Kruskal", "Prim", "IntegerMST", "Tarjan", "Boruvka"};
+        if (std::find(validAlgorithms.begin(), validAlgorithms.end(), algorithm) != validAlgorithms.end())
+        {
+            std::string result = solveMST(algorithm);
+            std::cout << "MST result: " << result << std::endl;
+            return result;
+        }
+        else
+        {
+            std::string errorMsg = "Invalid MST algorithm: '" + algorithm + "'. Valid options are: Kruskal, Prim, IntegerMST, Tarjan, Boruvka.\n";
+            sendMessage(clientSocket, errorMsg);
+            return errorMsg;
+        }
     }
+    else if (command == "exit")
+    {
+        stop();
+        return "Server stopped.";
+    }
+    else if (command == "help")
+    {
+        std::string helpMsg = "Available commands:\n";
+        helpMsg += "addGraph: Add a new graph\n";
+        helpMsg += "updateGraph: Update the current graph\n";
+        helpMsg += "solveMST: Solve the Minimum Spanning Tree problem\n";
+        helpMsg += "exit: Stop the server\n";
+        return helpMsg;
+    }
+    else if (command == "clear")
+    {
+        /* code */
+    }
+
     else
     {
         return "Unknown command: " + command;
     }
 }
 
+// Helper function to trim whitespace from a string
+std::string trimString(const std::string &str)
+{
+    size_t first = str.find_first_not_of(" \t\n\r");
+    if (first == std::string::npos)
+        return "";
+    size_t last = str.find_last_not_of(" \t\n\r");
+    return str.substr(first, (last - first + 1));
+}
 void Server::handleClient(int clientSocket)
 {
     char buffer[1024] = {0};
     while (true)
     {
         memset(buffer, 0, sizeof(buffer));
+        sendMessage(clientSocket, "Enter command:\n");
+        sendMessage(clientSocket, "1. addGraph\n2. updateGraph\n3. solveMST\n4. exit\n");
         int valread = read(clientSocket, buffer, 1024);
         if (valread <= 0)
         {
@@ -185,12 +230,27 @@ void Server::updateGraph(const std::string &changes)
 }
 std::string Server::solveMST(const std::string &algorithm)
 {
-    auto mstAlgo = MSTFactory::createMSTAlgorithm(algorithm);
-    
-    auto mst = mstAlgo->findMST(currentGraph);
+    std::cout << "Solving MST with algorithm: " << algorithm << std::endl;
 
-    auto analysis = pipeline.process<MSTAnalysis>([&]()
-                                                  { return analyzeMST(currentGraph, mst); });
+    auto mstAlgo = MSTFactory::createMSTAlgorithm(algorithm);
+    if (!mstAlgo)
+    {
+        std::cerr << "Failed to create MST algorithm: " << algorithm << std::endl;
+        return "Error: Failed to create MST algorithm.";
+    }
+
+    std::vector<std::pair<int, std::pair<int, int>>> mst;
+    try
+    {
+        mst = mstAlgo->findMST(currentGraph);
+    }
+    catch (const std::exception &e)
+    {
+        std::cerr << "Exception in findMST: " << e.what() << std::endl;
+        return "Error: Exception occurred while finding MST.";
+    }
+
+    auto analysis = analyzeMST(currentGraph, mst);
 
     std::ostringstream oss;
     oss << "MST Analysis using " << algorithm << " algorithm:\n";
@@ -198,6 +258,13 @@ std::string Server::solveMST(const std::string &algorithm)
     oss << "Longest distance: " << analysis.longestDistance << "\n";
     oss << "Average distance: " << analysis.averageDistance << "\n";
     oss << "Shortest MST edge: " << analysis.shortestMSTEdge << "\n";
+    oss << "MST edges: ";
+    for (const auto &edge : mst)
+    {
+        oss << "(" << edge.second.first << "-" << edge.second.second << ", " << edge.first << ") ";
+    }
+    oss << "\n";
 
+    std::cout << "MST solution: " << oss.str() << std::endl;
     return oss.str();
 }

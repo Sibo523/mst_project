@@ -12,7 +12,7 @@ std::vector<std::pair<int, std::pair<int, int>>> PrimMST::findMST(const Graph &g
     if (V == 0)
     {
         std::cout << "Warning: Empty graph passed to PrimMST::findMST" << std::endl;
-        return mst; // Return empty MST for empty graph
+        return mst;
     }
     std::vector<bool> inMST(V, false);
     std::vector<int> key(V, std::numeric_limits<int>::max());
@@ -25,7 +25,7 @@ std::vector<std::pair<int, std::pair<int, int>>> PrimMST::findMST(const Graph &g
     pq.push({0, 0});
     key[0] = 0;
 
-    while (!pq.empty())
+    while (!pq.empty() && mst.size() < V - 1)
     {
         int u = pq.top().second;
         pq.pop();

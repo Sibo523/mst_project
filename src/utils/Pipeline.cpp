@@ -1,8 +1,5 @@
-// src/utils/Pipeline.cpp
 #include "Pipeline.hpp"
 #include <stdexcept>
-#include <cstddef> // Add this line to include the <cstddef> header
-#include <thread>
 
 Pipeline::Pipeline() : numStages(0), running(true) {}
 
@@ -10,18 +7,19 @@ Pipeline::~Pipeline()
 {
     running = false;
     for (std::size_t i = 0; i < numStages; ++i)
-    { // Replace 'size_t' with 'std::size_t'
+    {
         cvs[i].notify_all();
     }
     for (std::size_t i = 0; i < numStages; ++i)
-    { // Replace 'size_t' with 'std::size_t'
+    {
         if (threads[i].joinable())
         {
             threads[i].join();
         }
     }
 }
-void Pipeline::addStage(std::function<void(void *)> stage)
+
+void Pipeline::addStage(std::function<void(std::shared_ptr<void>)> stage)
 {
     if (numStages >= MAX_PIPELINE_STAGES)
     {
@@ -32,22 +30,25 @@ void Pipeline::addStage(std::function<void(void *)> stage)
                                      { this->stageThread(stageIndex); });
     ++numStages;
 }
+
 void Pipeline::stageThread(int stageIndex)
 {
     while (running)
     {
-        std::unique_lock<std::mutex> lock(mutexes[stageIndex]);
-        cvs[stageIndex].wait(lock, [this, stageIndex]
-                             { return !running || !queues[stageIndex].empty(); });
-
-        if (!running && queues[stageIndex].empty())
+        std::shared_ptr<void> data;
         {
-            break;
-        }
+            std::unique_lock<std::mutex> lock(mutexes[stageIndex]);
+            cvs[stageIndex].wait(lock, [this, stageIndex]
+                                 { return !running || !queues[stageIndex].empty(); });
 
-        void *data = queues[stageIndex].front();
-        queues[stageIndex].pop();
-        lock.unlock();
+            if (!running && queues[stageIndex].empty())
+            {
+                break;
+            }
+
+            data = queues[stageIndex].front();
+            queues[stageIndex].pop();
+        }
 
         stages[stageIndex](data);
 

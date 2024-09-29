@@ -4,29 +4,46 @@
 #include <limits>
 #include <queue>
 #include <vector>
+#include <iostream>
+
 MSTAnalysis::MSTAnalysis(const Graph &graph)
 {
     totalWeight = 0;
     longestDistance = 0;
     averageDistance = 0.0;
     shortestMSTEdge = std::numeric_limits<int>::max();
-
 }
 MSTAnalysis analyzeMST(const Graph &graph, const std::vector<std::pair<int, std::pair<int, int>>> &mst)
 {
     MSTAnalysis analysis;
+
     analysis.totalWeight = calculateTotalWeight(mst);
+    // std::cout << "Step 1: Calculated total weight: " << analysis.totalWeight << std::endl;
     analysis.longestDistance = findLongestDistance(graph, mst);
+    // std::cout << "Step 2: Found longest distance: " << analysis.longestDistance << std::endl;
     analysis.averageDistance = calculateAverageDistance(graph, mst);
+    // std::cout << "Step 3: Calculated average distance: " << analysis.averageDistance << std::endl;
     analysis.shortestMSTEdge = findShortestMSTEdge(mst);
+    // std::cout << "Step 4: Found shortest MST edge: " << analysis.shortestMSTEdge << std::endl;
     return analysis;
 }
 
 int calculateTotalWeight(const std::vector<std::pair<int, std::pair<int, int>>> &mst)
 {
+    if (mst.empty())
+    {
+        std::cerr << "Warning: Empty MST passed to calculateTotalWeight" << std::endl;
+        return 0;
+    }
+
     int totalWeight = 0;
     for (const auto &edge : mst)
     {
+        if (edge.first < 0)
+        {
+            std::cerr << "Warning: Negative weight encountered in MST" << std::endl;
+            continue;
+        }
         totalWeight += edge.first;
     }
     return totalWeight;

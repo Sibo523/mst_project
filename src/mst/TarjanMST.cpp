@@ -2,14 +2,13 @@
 #include <algorithm>
 #include <cmath>
 #include <stack>
-
 std::vector<std::pair<int, std::pair<int, int>>> TarjanMST::findMST(const Graph &graph)
 {
     int V = graph.getVertices();
     if (V == 0)
     {
         std::cout << "Warning: Empty graph passed to TarjanMST::findMST" << std::endl;
-        return {}; // Return empty MST for empty graph
+        return {};
     }
 
     std::vector<Edge> edges;
@@ -21,9 +20,17 @@ std::vector<std::pair<int, std::pair<int, int>>> TarjanMST::findMST(const Graph 
     {
         for (const auto &[dest, weight] : graph.getNeighbors(i))
         {
-            edges.emplace_back(i, dest, weight);
+            if (i < dest) // Avoid duplicate edges
+            {
+                edges.emplace_back(i, dest, weight);
+            }
         }
     }
+
+    // Sort edges by weight
+    std::sort(edges.begin(), edges.end(), [](const Edge &a, const Edge &b) {
+        return a.weight < b.weight;
+    });
 
     // Initialize disjoint set
     for (int i = 0; i < V; i++)
@@ -31,11 +38,26 @@ std::vector<std::pair<int, std::pair<int, int>>> TarjanMST::findMST(const Graph 
         parent[i] = i;
     }
 
-    iterativeMST(graph, mst, parent, rank, edges);
+    // Kruskal's algorithm
+    for (const auto &edge : edges)
+    {
+        int x = find(parent, edge.src);
+        int y = find(parent, edge.dest);
+
+        if (x != y)
+        {
+            mst.push_back({edge.weight, {edge.src, edge.dest}});
+            unionSet(parent, rank, x, y);
+        }
+
+        if (mst.size() == V - 1)
+        {
+            break; // MST is complete
+        }
+    }
 
     return mst;
 }
-
 void TarjanMST::iterativeMST(const Graph &graph, std::vector<std::pair<int, std::pair<int, int>>> &mst,
                              std::vector<int> &parent, std::vector<int> &rank,
                              std::vector<Edge> &edges)

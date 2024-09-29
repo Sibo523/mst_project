@@ -8,7 +8,7 @@ std::vector<std::pair<int, std::pair<int, int>>> KruskalMST::findMST(const Graph
     if (V == 0)
     {
         std::cout << "Warning: Empty graph passed to KruskalMST::findMST" << std::endl;
-        return {}; // Return empty MST for empty graph
+        return {};
     }
     std::vector<Edge> edges;
     std::vector<std::pair<int, std::pair<int, int>>> mst;
@@ -18,7 +18,10 @@ std::vector<std::pair<int, std::pair<int, int>>> KruskalMST::findMST(const Graph
     {
         for (const auto &[dest, weight] : graph.getNeighbors(i))
         {
-            edges.emplace_back(i, dest, weight);
+            if (i < dest) // Avoid duplicate edges
+            {
+                edges.emplace_back(i, dest, weight);
+            }
         }
     }
 
@@ -45,11 +48,15 @@ std::vector<std::pair<int, std::pair<int, int>>> KruskalMST::findMST(const Graph
             mst.push_back({edge.weight, {edge.src, edge.dest}});
             unionSet(parent, rank, x, y);
         }
+
+        if (mst.size() == V - 1)
+        {
+            break; // MST is complete
+        }
     }
 
     return mst;
 }
-
 int KruskalMST::find(std::vector<int> &parent, int i)
 {
     if (parent[i] != i)

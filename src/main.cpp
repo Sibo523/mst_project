@@ -1,8 +1,6 @@
-// src/main.cpp
 #include "server/Server.hpp"
 #include "factory/MSTFactory.hpp"
 #include "analysis/MSTAnalysis.hpp"
-#include "utils/Benchmark.hpp"
 #include <iostream>
 #include <thread>
 #include <chrono>
@@ -12,9 +10,10 @@ void runServer(int port, int threads)
     Server server(port, threads);
     server.start();
 }
-void runBenchmark()
+
+void testMSTAlgorithms()
 {
-    std::cout << "Running benchmark...\n";
+    std::cout << "Testing MST Algorithms...\n";
 
     // Create a sample graph
     Graph g(5);
@@ -26,58 +25,46 @@ void runBenchmark()
     g.addEdge(2, 4, 7);
     g.addEdge(3, 4, 9);
 
-    // Debug output for graph edges
-    std::cout << "Graph edges: ";
-    for (const auto &edge : g.getEdges())
-    { // Ensure getEdges() is implemented
-        std::cout << edge.first << " -- " << edge.second.first << " weight: " << edge.second.second << "; ";
-    }
-    std::cout << std::endl;
+    std::cout << "Graph created with 5 vertices and 7 edges.\n";
 
-    std::vector<std::string> algorithms = {"Boruvka", "Prim", "Kruskal", "Tarjan", "Integer"};
+    std::vector<std::string> algorithms = {"Boruvka", "Prim", "Kruskal", "Tarjan"};
 
     for (const auto &algo : algorithms)
     {
-        std::cout << "Algorithm: " << algo << "\n";
+        std::cout << "\nTesting " << algo << " algorithm:\n";
 
         auto mstAlgo = MSTFactory::createMSTAlgorithm(algo);
         if (mstAlgo == nullptr)
         {
-            std::cerr << "Error: Algorithm not created successfully.\n";
-            continue; // Skip to next algorithm if failed
+            std::cerr << "Error: Failed to create " << algo << " algorithm.\n";
+            continue;
         }
 
-        // Benchmark pipeline approach
-        // auto pipelineTime = Benchmark::measureTime([&]()
-        //                                            {
-        //     Pipeline pipeline;
-        //     pipeline.addStage([&](void* data) {
-        //         auto* graph = static_cast<Graph*>(data);
-        //         std::cout<<"Processing graph: "<<graph->getVertices()<<std::endl;
-        //         return mstAlgo->findMST(*graph);
-        //     });
-        //     pipeline.addStage([&](void* data) {
-        //         auto* mst = static_cast<std::vector<std::pair<int, std::pair<int, int>>>*>(data);
-        //         return analyzeMST(g, *mst);
-        //     });
-        //     return pipeline.process<MSTAnalysis>([&]() { return g; }); });
+        try
+        {
+            auto mst = mstAlgo->findMST(g);
+            auto analysis = analyzeMST(g, mst);
 
-        // Benchmark Leader-Follower approach
-        auto lfTime = Benchmark::measureTime([&]()
-                                             {
-            LeaderFollowerThreadPool pool(4);
-            auto future = pool.enqueue([&]() {
-                std::cout<<"Processing graph: "<<g.getVertices()<<std::endl;
-
-                auto mst = mstAlgo->findMST(g);
-                return analyzeMST(g, mst);
-            });
-            return future.get(); });
-
-        // std::cout << "  Pipeline time: " << pipelineTime << " ms\n";
-        std::cout << "  Leader-Follower time: " << lfTime << " ms\n";
+            std::cout << "MST Analysis:\n";
+            std::cout << "  Total weight: " << analysis.totalWeight << "\n";
+            std::cout << "  Longest distance: " << analysis.longestDistance << "\n";
+            std::cout << "  Average distance: " << analysis.averageDistance << "\n";
+            std::cout << "  Shortest MST edge: " << analysis.shortestMSTEdge << "\n";
+            
+            std::cout << "  MST edges: ";
+            for (const auto &edge : mst)
+            {
+                std::cout << "(" << edge.second.first << "-" << edge.second.second << ", " << edge.first << ") ";
+            }
+            std::cout << "\n";
+        }
+        catch (const std::exception &e)
+        {
+            std::cerr << "Error running " << algo << " algorithm: " << e.what() << "\n";
+        }
     }
 }
+
 int main(int argc, char *argv[])
 {
     if (argc != 3)
@@ -94,7 +81,10 @@ int main(int argc, char *argv[])
     // Wait a bit for the server to start
     std::this_thread::sleep_for(std::chrono::seconds(1));
 
-    runBenchmark();
+    // Run MST algorithm tests
+    testMSTAlgorithms();
+
+    std::cout << "\nServer is running. Press Ctrl+C to stop.\n";
 
     // Keep the server running
     serverThread.join();

@@ -9,6 +9,11 @@
 #include <string>
 #include <sys/socket.h>
 #include <netinet/in.h>
+#include <algorithm>
+#include <vector>
+#include <string>
+#include <sstream>
+#include <iostream>
 
 class Server : public ActiveObject
 {
@@ -33,3 +38,4 @@ private:
     bool running;
     int port;
 };
+std::string trimString(const std::string &str);
