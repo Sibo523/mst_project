@@ -1,0 +1,155 @@
+        -:    0:Source:src/mst/TarjanMST.cpp
+        -:    1:#include "TarjanMST.hpp"
+        -:    2:#include <algorithm>
+        -:    3:#include <cmath>
+        -:    4:#include <stack>
+        4:    5:std::vector<std::pair<int, std::pair<int, int>>> TarjanMST::findMST(const Graph &graph)
+        -:    6:{
+        4:    7:    int V = graph.getVertices();
+        4:    8:    if (V == 0)
+        -:    9:    {
+    #####:   10:        std::cout << "Warning: Empty graph passed to TarjanMST::findMST" << std::endl;
+    #####:   11:        return {};
+        -:   12:    }
+        -:   13:
+        4:   14:    std::vector<Edge> edges;
+        4:   15:    std::vector<std::pair<int, std::pair<int, int>>> mst;
+       12:   16:    std::vector<int> parent(V), rank(V, 0);
+        -:   17:
+        -:   18:    // Collect all edges from the graph
+       24:   19:    for (int i = 0; i < V; i++)
+        -:   20:    {
+       48:   21:        for (const auto &[dest, weight] : graph.getNeighbors(i))
+        -:   22:        {
+       28:   23:            if (i < dest) // Avoid duplicate edges
+        -:   24:            {
+       28:   25:                edges.emplace_back(i, dest, weight);
+        -:   26:            }
+        -:   27:        }
+        -:   28:    }
+        -:   29:
+        -:   30:    // Sort edges by weight
+        4:   31:    std::sort(edges.begin(), edges.end(), [](const Edge &a, const Edge &b) {
+       64:   32:        return a.weight < b.weight;
+        -:   33:    });
+        -:   34:
+        -:   35:    // Initialize disjoint set
+       24:   36:    for (int i = 0; i < V; i++)
+        -:   37:    {
+       20:   38:        parent[i] = i;
+        -:   39:    }
+        -:   40:
+        -:   41:    // Kruskal's algorithm
+       16:   42:    for (const auto &edge : edges)
+        -:   43:    {
+       16:   44:        int x = find(parent, edge.src);
+       16:   45:        int y = find(parent, edge.dest);
+        -:   46:
+       16:   47:        if (x != y)
+        -:   48:        {
+       16:   49:            mst.push_back({edge.weight, {edge.src, edge.dest}});
+       16:   50:            unionSet(parent, rank, x, y);
+        -:   51:        }
+        -:   52:
+       16:   53:        if (mst.size() == V - 1)
+        -:   54:        {
+        4:   55:            break; // MST is complete
+        -:   56:        }
+        -:   57:    }
+        -:   58:
+        4:   59:    return mst;
+        4:   60:}
+    #####:   61:void TarjanMST::iterativeMST(const Graph &graph, std::vector<std::pair<int, std::pair<int, int>>> &mst,
+        -:   62:                             std::vector<int> &parent, std::vector<int> &rank,
+        -:   63:                             std::vector<Edge> &edges)
+        -:   64:{
+    #####:   65:    std::stack<std::tuple<std::vector<Edge>, int>> stack;
+    #####:   66:    stack.push({edges, edges.size()});
+        -:   67:
+    #####:   68:    while (!stack.empty())
+        -:   69:    {
+    #####:   70:        auto [edges, m] = stack.top();
+    #####:   71:        stack.pop();
+        -:   72:
+    #####:   73:        if (m <= 1)
+        -:   74:        {
+    #####:   75:            if (m == 1)
+        -:   76:            {
+    #####:   77:                mst.push_back({edges[0].weight, {edges[0].src, edges[0].dest}});
+        -:   78:            }
+    #####:   79:            continue;
+        -:   80:        }
+        -:   81:
+    #####:   82:        int k = std::ceil(std::pow(m, 0.75));
+    #####:   83:        std::vector<Edge> F = sampleEdges(edges, k);
+        -:   84:
+        -:   85:        // Push the sampled edges onto the stack for recursive processing
+    #####:   86:        stack.push({F, F.size()});
+        -:   87:
+        -:   88:        // Process remaining edges
+    #####:   89:        std::vector<Edge> remaining;
+    #####:   90:        for (const Edge &e : edges)
+        -:   91:        {
+    #####:   92:            int x = find(parent, e.src);
+    #####:   93:            int y = find(parent, e.dest);
+    #####:   94:            if (x != y)
+        -:   95:            {
+    #####:   96:                remaining.push_back(e);
+        -:   97:            }
+        -:   98:        }
+        -:   99:
+        -:  100:        // Final processing
+    #####:  101:        for (const Edge &e : remaining)
+        -:  102:        {
+    #####:  103:            int x = find(parent, e.src);
+    #####:  104:            int y = find(parent, e.dest);
+    #####:  105:            if (x != y)
+        -:  106:            {
+    #####:  107:                mst.push_back({e.weight, {e.src, e.dest}});
+    #####:  108:                unionSet(parent, rank, x, y);
+        -:  109:            }
+        -:  110:        }
+        -:  111:
+        -:  112:        // Push the remaining edges onto the stack for recursive processing
+    #####:  113:        stack.push({remaining, remaining.size()});
+    #####:  114:    }
+    #####:  115:}
+        -:  116:
+       72:  117:int TarjanMST::find(std::vector<int> &parent, int i)
+        -:  118:{
+       72:  119:    if (parent[i] != i)
+        -:  120:    {
+        8:  121:        parent[i] = find(parent, parent[i]);
+        -:  122:    }
+       72:  123:    return parent[i];
+        -:  124:}
+        -:  125:
+       16:  126:void TarjanMST::unionSet(std::vector<int> &parent, std::vector<int> &rank, int x, int y)
+        -:  127:{
+       16:  128:    int xroot = find(parent, x);
+       16:  129:    int yroot = find(parent, y);
+        -:  130:
+       16:  131:    if (rank[xroot] < rank[yroot])
+        -:  132:    {
+    #####:  133:        parent[xroot] = yroot;
+        -:  134:    }
+       16:  135:    else if (rank[xroot] > rank[yroot])
+        -:  136:    {
+       12:  137:        parent[yroot] = xroot;
+        -:  138:    }
+        -:  139:    else
+        -:  140:    {
+        4:  141:        parent[yroot] = xroot;
+        4:  142:        rank[xroot]++;
+        -:  143:    }
+       16:  144:}
+        -:  145:
+    #####:  146:std::vector<TarjanMST::Edge> TarjanMST::sampleEdges(const std::vector<Edge> &edges, int k)
+        -:  147:{
+    #####:  148:    std::vector<Edge> sampled = edges;
+    #####:  149:    std::random_device rd;
+    #####:  150:    std::mt19937 g(rd());
+    #####:  151:    std::shuffle(sampled.begin(), sampled.end(), g);
+    #####:  152:    sampled.resize(std::min(k, static_cast<int>(sampled.size())));
+    #####:  153:    return sampled;
+    #####:  154:}

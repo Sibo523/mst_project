@@ -1,0 +1,243 @@
+        -:    0:Source:src/tests/test_mst_algorithms.cpp
+        -:    1:// test_mst_algorithms.cpp
+        -:    2:#include <gtest/gtest.h>
+        -:    3:#include "graph/Graph.hpp"
+        -:    4:#include "factory/MSTFactory.hpp"
+        -:    5:#include "analysis/MSTAnalysis.hpp"
+        -:    6:#include <memory>
+        -:    7:#include <vector>
+        -:    8:#include <string>
+        -:    9:#include <future>
+        -:   10:#include <algorithm>
+        -:   11:
+        -:   12:class MSTTest : public ::testing::Test
+        -:   13:{
+        -:   14:protected:
+        4:   15:    void SetUp() override
+        -:   16:    {
+        -:   17:        // Create a sample graph
+        4:   18:        g = std::make_unique<Graph>(5);
+        4:   19:        g->addEdge(0, 1, 2);
+        4:   20:        g->addEdge(0, 3, 6);
+        4:   21:        g->addEdge(1, 2, 3);
+        4:   22:        g->addEdge(1, 3, 8);
+        4:   23:        g->addEdge(1, 4, 5);
+        4:   24:        g->addEdge(2, 4, 7);
+        4:   25:        g->addEdge(3, 4, 9);
+        4:   26:    }
+        -:   27:
+        -:   28:    std::unique_ptr<Graph> g;
+        -:   29:    std::vector<std::string> algorithms = {"Boruvka", "Prim", "Kruskal", "Tarjan"};
+        -:   30:};
+        -:   31:
+        4:   32:TEST_F(MSTTest, CorrectTotalWeight)
+        -:   33:{
+        5:   34:    for (const auto &algo : algorithms)
+        -:   35:    {
+        4:   36:        auto mstAlgo = MSTFactory::createMSTAlgorithm(algo);
+       4*:   37:        ASSERT_NE(mstAlgo, nullptr) << "Failed to create " << algo << " algorithm";
+        -:   38:
+        4:   39:        auto mst = mstAlgo->findMST(*g);
+        4:   40:        auto totalWeightFuture = calculateTotalWeightAsync(mst);
+       4*:   41:        EXPECT_EQ(totalWeightFuture.get(), 16) << "Incorrect total weight for " << algo << " algorithm";
+        4:   42:    }
+        -:   43:}
+------------------
+_ZN31MSTTest_CorrectTotalWeight_TestC2Ev:
+        1:   32:TEST_F(MSTTest, CorrectTotalWeight)
+------------------
+_ZN31MSTTest_CorrectTotalWeight_TestD0Ev:
+        1:   32:TEST_F(MSTTest, CorrectTotalWeight)
+------------------
+_ZN31MSTTest_CorrectTotalWeight_TestD2Ev:
+        1:   32:TEST_F(MSTTest, CorrectTotalWeight)
+------------------
+_ZN31MSTTest_CorrectTotalWeight_Test8TestBodyEv:
+        1:   32:TEST_F(MSTTest, CorrectTotalWeight)
+        -:   33:{
+        5:   34:    for (const auto &algo : algorithms)
+        -:   35:    {
+        4:   36:        auto mstAlgo = MSTFactory::createMSTAlgorithm(algo);
+       4*:   37:        ASSERT_NE(mstAlgo, nullptr) << "Failed to create " << algo << " algorithm";
+        -:   38:
+        4:   39:        auto mst = mstAlgo->findMST(*g);
+        4:   40:        auto totalWeightFuture = calculateTotalWeightAsync(mst);
+       4*:   41:        EXPECT_EQ(totalWeightFuture.get(), 16) << "Incorrect total weight for " << algo << " algorithm";
+        4:   42:    }
+        -:   43:}
+------------------
+        -:   44:
+        4:   45:TEST_F(MSTTest, CorrectEdgeCount)
+        -:   46:{
+        5:   47:    for (const auto &algo : algorithms)
+        -:   48:    {
+        4:   49:        auto mstAlgo = MSTFactory::createMSTAlgorithm(algo);
+       4*:   50:        ASSERT_NE(mstAlgo, nullptr) << "Failed to create " << algo << " algorithm";
+        -:   51:
+        4:   52:        auto mst = mstAlgo->findMST(*g);
+        -:   53:
+       4*:   54:        EXPECT_EQ(mst.size(), g->getVertices() - 1) << "Incorrect number of edges in MST for " << algo << " algorithm";
+        4:   55:    }
+        -:   56:}
+------------------
+_ZN29MSTTest_CorrectEdgeCount_TestC2Ev:
+        1:   45:TEST_F(MSTTest, CorrectEdgeCount)
+------------------
+_ZN29MSTTest_CorrectEdgeCount_TestD0Ev:
+        1:   45:TEST_F(MSTTest, CorrectEdgeCount)
+------------------
+_ZN29MSTTest_CorrectEdgeCount_TestD2Ev:
+        1:   45:TEST_F(MSTTest, CorrectEdgeCount)
+------------------
+_ZN29MSTTest_CorrectEdgeCount_Test8TestBodyEv:
+        1:   45:TEST_F(MSTTest, CorrectEdgeCount)
+        -:   46:{
+        5:   47:    for (const auto &algo : algorithms)
+        -:   48:    {
+        4:   49:        auto mstAlgo = MSTFactory::createMSTAlgorithm(algo);
+       4*:   50:        ASSERT_NE(mstAlgo, nullptr) << "Failed to create " << algo << " algorithm";
+        -:   51:
+        4:   52:        auto mst = mstAlgo->findMST(*g);
+        -:   53:
+       4*:   54:        EXPECT_EQ(mst.size(), g->getVertices() - 1) << "Incorrect number of edges in MST for " << algo << " algorithm";
+        4:   55:    }
+        -:   56:}
+------------------
+        -:   57:
+        4:   58:TEST_F(MSTTest, ConnectedMST)
+        -:   59:{
+        5:   60:    for (const auto &algo : algorithms)
+        -:   61:    {
+        4:   62:        auto mstAlgo = MSTFactory::createMSTAlgorithm(algo);
+       4*:   63:        ASSERT_NE(mstAlgo, nullptr) << "Failed to create " << algo << " algorithm";
+        -:   64:
+        4:   65:        auto mst = mstAlgo->findMST(*g);
+        -:   66:
+        -:   67:        // Check if MST is connected (simplified check)
+        8:   68:        std::vector<bool> visited(g->getVertices(), false);
+       20:   69:        std::function<void(int)> dfs = [&](int v)
+        -:   70:        {
+       20:   71:            visited[v] = true;
+      100:   72:            for (const auto &edge : mst)
+        -:   73:            {
+       80:   74:                if (edge.second.first == v && !visited[edge.second.second])
+        -:   75:                {
+       16:   76:                    dfs(edge.second.second);
+        -:   77:                }
+      64*:   78:                else if (edge.second.second == v && !visited[edge.second.first])
+        -:   79:                {
+    #####:   80:                    dfs(edge.second.first);
+        -:   81:                }
+        -:   82:            }
+       28:   83:        };
+        4:   84:        dfs(0);
+        -:   85:
+       24:   86:        bool all_visited = std::all_of(visited.begin(), visited.end(), [](bool v)
+       24:   87:                                       { return v; });
+       4*:   88:        EXPECT_TRUE(all_visited) << "MST is not connected for " << algo << " algorithm";
+        4:   89:    }
+        -:   90:}
+------------------
+_ZN25MSTTest_ConnectedMST_TestC2Ev:
+        1:   58:TEST_F(MSTTest, ConnectedMST)
+------------------
+_ZN25MSTTest_ConnectedMST_TestD0Ev:
+        1:   58:TEST_F(MSTTest, ConnectedMST)
+------------------
+_ZN25MSTTest_ConnectedMST_TestD2Ev:
+        1:   58:TEST_F(MSTTest, ConnectedMST)
+------------------
+_ZN25MSTTest_ConnectedMST_Test8TestBodyEv:
+        1:   58:TEST_F(MSTTest, ConnectedMST)
+        -:   59:{
+        5:   60:    for (const auto &algo : algorithms)
+        -:   61:    {
+        4:   62:        auto mstAlgo = MSTFactory::createMSTAlgorithm(algo);
+       4*:   63:        ASSERT_NE(mstAlgo, nullptr) << "Failed to create " << algo << " algorithm";
+        -:   64:
+        4:   65:        auto mst = mstAlgo->findMST(*g);
+        -:   66:
+        -:   67:        // Check if MST is connected (simplified check)
+        8:   68:        std::vector<bool> visited(g->getVertices(), false);
+    #####:   69:        std::function<void(int)> dfs = [&](int v)
+        -:   70:        {
+        -:   71:            visited[v] = true;
+        -:   72:            for (const auto &edge : mst)
+        -:   73:            {
+        -:   74:                if (edge.second.first == v && !visited[edge.second.second])
+        -:   75:                {
+        -:   76:                    dfs(edge.second.second);
+        -:   77:                }
+        -:   78:                else if (edge.second.second == v && !visited[edge.second.first])
+        -:   79:                {
+        -:   80:                    dfs(edge.second.first);
+        -:   81:                }
+        -:   82:            }
+        8:   83:        };
+        4:   84:        dfs(0);
+        -:   85:
+        4:   86:        bool all_visited = std::all_of(visited.begin(), visited.end(), [](bool v)
+        4:   87:                                       { return v; });
+       4*:   88:        EXPECT_TRUE(all_visited) << "MST is not connected for " << algo << " algorithm";
+        4:   89:    }
+        -:   90:}
+------------------
+        -:   91:
+        4:   92:TEST_F(MSTTest, AnalysisFunctions)
+        -:   93:{
+        5:   94:    for (const auto &algo : algorithms)
+        -:   95:    {
+        4:   96:        auto mstAlgo = MSTFactory::createMSTAlgorithm(algo);
+       4*:   97:        ASSERT_NE(mstAlgo, nullptr) << "Failed to create " << algo << " algorithm";
+        -:   98:
+        4:   99:        auto mst = mstAlgo->findMST(*g);
+        -:  100:
+        4:  101:        auto totalWeightFuture = calculateTotalWeightAsync(mst);
+        4:  102:        auto longestDistanceFuture = findLongestDistanceAsync(*g, mst);
+        4:  103:        auto averageDistanceFuture = calculateAverageDistanceAsync(*g, mst);
+        4:  104:        auto shortestMSTEdgeFuture = findShortestMSTEdgeAsync(mst);
+        -:  105:
+       4*:  106:        EXPECT_EQ(totalWeightFuture.get(), 16) << "Incorrect total weight for " << algo;
+       4*:  107:        EXPECT_GT(longestDistanceFuture.get(), 0) << "Invalid longest distance for " << algo;
+       4*:  108:        EXPECT_GT(averageDistanceFuture.get(), 0) << "Invalid average distance for " << algo;
+       4*:  109:        EXPECT_GT(shortestMSTEdgeFuture.get(), 0) << "Invalid shortest MST edge for " << algo;
+        4:  110:    }
+        -:  111:}
+------------------
+_ZN30MSTTest_AnalysisFunctions_TestC2Ev:
+        1:   92:TEST_F(MSTTest, AnalysisFunctions)
+------------------
+_ZN30MSTTest_AnalysisFunctions_TestD0Ev:
+        1:   92:TEST_F(MSTTest, AnalysisFunctions)
+------------------
+_ZN30MSTTest_AnalysisFunctions_TestD2Ev:
+        1:   92:TEST_F(MSTTest, AnalysisFunctions)
+------------------
+_ZN30MSTTest_AnalysisFunctions_Test8TestBodyEv:
+        1:   92:TEST_F(MSTTest, AnalysisFunctions)
+        -:   93:{
+        5:   94:    for (const auto &algo : algorithms)
+        -:   95:    {
+        4:   96:        auto mstAlgo = MSTFactory::createMSTAlgorithm(algo);
+       4*:   97:        ASSERT_NE(mstAlgo, nullptr) << "Failed to create " << algo << " algorithm";
+        -:   98:
+        4:   99:        auto mst = mstAlgo->findMST(*g);
+        -:  100:
+        4:  101:        auto totalWeightFuture = calculateTotalWeightAsync(mst);
+        4:  102:        auto longestDistanceFuture = findLongestDistanceAsync(*g, mst);
+        4:  103:        auto averageDistanceFuture = calculateAverageDistanceAsync(*g, mst);
+        4:  104:        auto shortestMSTEdgeFuture = findShortestMSTEdgeAsync(mst);
+        -:  105:
+       4*:  106:        EXPECT_EQ(totalWeightFuture.get(), 16) << "Incorrect total weight for " << algo;
+       4*:  107:        EXPECT_GT(longestDistanceFuture.get(), 0) << "Invalid longest distance for " << algo;
+       4*:  108:        EXPECT_GT(averageDistanceFuture.get(), 0) << "Invalid average distance for " << algo;
+       4*:  109:        EXPECT_GT(shortestMSTEdgeFuture.get(), 0) << "Invalid shortest MST edge for " << algo;
+        4:  110:    }
+        -:  111:}
+------------------
+        -:  112:
+        1:  113:int main(int argc, char **argv)
+        -:  114:{
+        1:  115:    ::testing::InitGoogleTest(&argc, argv);
+        1:  116:    return RUN_ALL_TESTS();
+        -:  117:}

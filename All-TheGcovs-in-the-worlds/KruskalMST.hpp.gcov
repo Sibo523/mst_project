@@ -1,0 +1,33 @@
+        -:    0:Source:src/mst/KruskalMST.hpp
+        -:    1:// src/mst/KruskalMST.hpp
+        -:    2:#pragma once
+        -:    3:#include "MSTAlgorithm.hpp"
+        -:    4:#include <vector>
+        -:    5:#include <iostream>
+        -:    6:
+        -:    7:class KruskalMST : public MSTAlgorithm
+        -:    8:{
+        -:    9:public:
+        -:   10:    std::vector<std::pair<int, std::pair<int, int>>> findMST(const Graph &graph) override;
+        -:   11:
+        -:   12:private:
+        -:   13:    // Helper functions for Kruskal's algorithm
+        -:   14:    int find(std::vector<int> &parent, int i);
+        -:   15:    void unionSet(std::vector<int> &parent, std::vector<int> &rank, int x, int y);
+        -:   16:};
+        -:   17:
+        -:   18:// Helper struct to represent an edge
+        -:   19:struct Edge
+        -:   20:{
+        -:   21:    int src, dest, weight;
+       28:   22:    Edge(int s, int d, int w) : src(s), dest(d), weight(w) {}
+        -:   23:};
+        -:   24:
+        -:   25:// Comparison function to sort edges
+        -:   26:struct CompareEdge
+        -:   27:{
+       64:   28:    bool operator()(const Edge &e1, const Edge &e2)
+        -:   29:    {
+       64:   30:        return e1.weight < e2.weight;
+        -:   31:    }
+        -:   32:};

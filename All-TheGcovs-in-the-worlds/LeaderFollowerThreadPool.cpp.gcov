@@ -1,0 +1,57 @@
+        -:    0:Source:src/utils/LeaderFollowerThreadPool.cpp
+        -:    1:
+        -:    2:// src/utils/LeaderFollowerThreadPool.cpp
+        -:    3:#include "LeaderFollowerThreadPool.hpp"
+        -:    4:
+        2:    5:LeaderFollowerThreadPool::LeaderFollowerThreadPool(size_t numThreads)
+        2:    6:    : stop(false), leader(0), active_threads(numThreads)
+        -:    7:{
+       10:    8:    for (size_t i = 0; i < numThreads; ++i)
+        8:    9:        workers.emplace_back(
+        8:   10:            [this, i]
+        8:   11:            { this->workerThread(i); });
+        2:   12:}
+        -:   13:
+        2:   14:LeaderFollowerThreadPool::~LeaderFollowerThreadPool()
+        -:   15:{
+        -:   16:    {
+        2:   17:        std::unique_lock<std::mutex> lock(queue_mutex);
+        2:   18:        stop = true;
+        2:   19:    }
+        2:   20:    condition.notify_all();
+       10:   21:    for (std::thread &worker : workers)
+        8:   22:        worker.join();
+        2:   23:}
+        -:   24:
+        8:   25:void LeaderFollowerThreadPool::workerThread(size_t id)
+        -:   26:{
+        -:   27:    while (true)
+        -:   28:    {
+      109:   29:        std::function<void()> task;
+        -:   30:        {
+      109:   31:            std::unique_lock<std::mutex> lock(this->queue_mutex);
+        -:   32:
+      109:   33:            this->condition.wait(lock,
+      367:   34:                                 [this, id]
+      367:   35:                                 { return this->stop || (!this->tasks.empty() && this->leader == id); });
+        -:   36:
+      109:   37:            if (this->stop && this->tasks.empty())
+        -:   38:            {
+        8:   39:                --active_threads;
+       16:   40:                return;
+        -:   41:            }
+        -:   42:
+     101*:   43:            if (!this->tasks.empty() && this->leader == id)
+        -:   44:            {
+      101:   45:                task = std::move(this->tasks.front());
+      101:   46:                this->tasks.pop();
+      101:   47:                this->leader = (id + 1) % this->workers.size();
+      101:   48:                this->condition.notify_all();
+        -:   49:            }
+      109:   50:        }
+      101:   51:        if (task)
+        -:   52:        {
+      101:   53:            task();
+        -:   54:        }
+      210:   55:    }
+        -:   56:}

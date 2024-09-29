@@ -1,0 +1,8 @@
+        -:    0:Source:src/utils/Pipeline.cpp
+        -:    1:// File: src/utils/Pipeline.cpp
+        -:    2:#include "Pipeline.hpp"
+        -:    3:
+        5:    4:void Pipeline::addStage(std::function<std::shared_ptr<void>(std::shared_ptr<void>)> stage)
+        -:    5:{
+        5:    6:    stages.push_back(stage);
+        5:    7:}

@@ -1,0 +1,42 @@
+        -:    0:Source:src/mst/MSTAlgorithm.hpp
+        -:    1:// src/mst/MSTAlgorithm.hpp
+        -:    2:#pragma once
+        -:    3:#include "../graph/Graph.hpp"
+        -:    4:#include <vector>
+        -:    5:
+        -:    6:class MSTAlgorithm {
+        -:    7:public:
+        -:    8:    virtual std::vector<std::pair<int, std::pair<int, int>>> findMST(const Graph& graph) = 0;
+      21*:    9:    virtual ~MSTAlgorithm() = default;
+------------------
+_ZN12MSTAlgorithmD0Ev:
+    #####:    9:    virtual ~MSTAlgorithm() = default;
+------------------
+_ZN12MSTAlgorithmD2Ev:
+       21:    9:    virtual ~MSTAlgorithm() = default;
+------------------
+_ZN12MSTAlgorithmD0Ev:
+    #####:    9:    virtual ~MSTAlgorithm() = default;
+------------------
+_ZN12MSTAlgorithmD2Ev:
+    #####:    9:    virtual ~MSTAlgorithm() = default;
+------------------
+_ZN12MSTAlgorithmD0Ev:
+    #####:    9:    virtual ~MSTAlgorithm() = default;
+------------------
+_ZN12MSTAlgorithmD2Ev:
+    #####:    9:    virtual ~MSTAlgorithm() = default;
+------------------
+_ZN12MSTAlgorithmD0Ev:
+    #####:    9:    virtual ~MSTAlgorithm() = default;
+------------------
+_ZN12MSTAlgorithmD2Ev:
+    #####:    9:    virtual ~MSTAlgorithm() = default;
+------------------
+_ZN12MSTAlgorithmD0Ev:
+    #####:    9:    virtual ~MSTAlgorithm() = default;
+------------------
+_ZN12MSTAlgorithmD2Ev:
+    #####:    9:    virtual ~MSTAlgorithm() = default;
+------------------
+        -:   10:};

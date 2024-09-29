@@ -1,0 +1,38 @@
+        -:    0:Source:src/Tree/Tree.cpp
+        -:    1:// Tree.cpp
+        -:    2:#include "Tree.hpp"
+        -:    3:
+       14:    4:Tree::Tree(int vertices) : V(vertices), adjList(vertices) {
+        7:    5:    if (vertices <= 0) {
+    #####:    6:        throw std::invalid_argument("Number of vertices must be positive");
+        -:    7:    }
+        7:    8:}
+        -:    9:
+       14:   10:void Tree::addEdge(int src, int dest, int weight) {
+       14:   11:    if (src < 0 || src >= V || dest < 0 || dest >= V) {
+        3:   12:        throw std::out_of_range("Vertex index out of bounds");
+        -:   13:    }
+        -:   14:    // For a tree, we need to ensure that adding this edge doesn't create a cycle
+        -:   15:    // This is a simplified version; a real implementation would need more checks
+       11:   16:    adjList[src].emplace_back(dest, weight);
+       11:   17:    adjList[dest].emplace_back(src, weight);
+       11:   18:}
+        -:   19:
+        5:   20:const std::vector<std::pair<int, int>>& Tree::getNeighbors(int v) const {
+        5:   21:    if (v < 0 || v >= V) {
+        2:   22:        throw std::out_of_range("Vertex index out of bounds");
+        -:   23:    }
+        3:   24:    return adjList[v];
+        -:   25:}
+        -:   26:
+        1:   27:std::vector<std::pair<int, std::pair<int, int>>> Tree::getEdges() const {
+        1:   28:    std::vector<std::pair<int, std::pair<int, int>>> edges;
+        6:   29:    for (int i = 0; i < V; ++i) {
+       13:   30:        for (const auto& neighbor : adjList[i]) {
+        8:   31:            if (i < neighbor.first) {  // Add each edge only once
+        4:   32:                edges.emplace_back(i, std::make_pair(neighbor.first, neighbor.second));
+        -:   33:            }
+        -:   34:        }
+        -:   35:    }
+        1:   36:    return edges;
+    =====:   37:}

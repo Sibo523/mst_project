@@ -1,0 +1,99 @@
+        -:    0:Source:src/tests/leader-follower-thread-pool-tests.cpp
+        -:    1:#include <gtest/gtest.h>
+        -:    2:#include "utils/LeaderFollowerThreadPool.hpp"
+        -:    3:#include <vector>
+        -:    4:#include <atomic>
+        -:    5:#include <chrono>
+        -:    6:
+        -:    7:class LeaderFollowerThreadPoolTest : public ::testing::Test
+        -:    8:{
+        -:    9:protected:
+        -:   10:    const size_t NUM_THREADS = 4;
+        -:   11:    LeaderFollowerThreadPool pool{NUM_THREADS};
+        -:   12:};
+        -:   13:
+        4:   14:TEST_F(LeaderFollowerThreadPoolTest, ExceptionHandling)
+        -:   15:{
+        1:   16:    auto future = pool.enqueue([]
+        2:   17:                               { throw std::runtime_error("Test exception"); });
+        -:   18:
+       1*:   19:    EXPECT_THROW(future.get(), std::runtime_error);
+        1:   20:}
+------------------
+_ZN51LeaderFollowerThreadPoolTest_ExceptionHandling_TestC2Ev:
+        1:   14:TEST_F(LeaderFollowerThreadPoolTest, ExceptionHandling)
+------------------
+_ZN51LeaderFollowerThreadPoolTest_ExceptionHandling_TestD0Ev:
+        1:   14:TEST_F(LeaderFollowerThreadPoolTest, ExceptionHandling)
+------------------
+_ZN51LeaderFollowerThreadPoolTest_ExceptionHandling_TestD2Ev:
+        1:   14:TEST_F(LeaderFollowerThreadPoolTest, ExceptionHandling)
+------------------
+_ZN51LeaderFollowerThreadPoolTest_ExceptionHandling_Test8TestBodyEv:
+        1:   14:TEST_F(LeaderFollowerThreadPoolTest, ExceptionHandling)
+        -:   15:{
+    #####:   16:    auto future = pool.enqueue([]
+        1:   17:                               { throw std::runtime_error("Test exception"); });
+        -:   18:
+       1*:   19:    EXPECT_THROW(future.get(), std::runtime_error);
+        1:   20:}
+------------------
+        -:   21:
+        4:   22:TEST_F(LeaderFollowerThreadPoolTest, LeaderFollowerBehavior)
+        -:   23:{
+        1:   24:    std::atomic<int> leaderCount(0);
+        1:   25:    std::vector<std::future<void>> futures;
+        -:   26:
+      101:   27:    for (int i = 0; i < 100; ++i)
+        -:   28:    {
+      100:   29:        futures.emplace_back(
+      300:   30:            pool.enqueue([&leaderCount]
+        -:   31:                         {
+      100:   32:                if (leaderCount++ == 0) {
+       25:   33:                    std::this_thread::sleep_for(std::chrono::milliseconds(10));
+        -:   34:                }
+      100:   35:                leaderCount--; }));
+        -:   36:    }
+        -:   37:
+      101:   38:    for (auto &future : futures)
+        -:   39:    {
+      100:   40:        future.wait();
+        -:   41:    }
+        -:   42:
+       1*:   43:    EXPECT_EQ(leaderCount, 0);
+        1:   44:}
+------------------
+_ZN56LeaderFollowerThreadPoolTest_LeaderFollowerBehavior_TestC2Ev:
+        1:   22:TEST_F(LeaderFollowerThreadPoolTest, LeaderFollowerBehavior)
+------------------
+_ZN56LeaderFollowerThreadPoolTest_LeaderFollowerBehavior_TestD0Ev:
+        1:   22:TEST_F(LeaderFollowerThreadPoolTest, LeaderFollowerBehavior)
+------------------
+_ZN56LeaderFollowerThreadPoolTest_LeaderFollowerBehavior_TestD2Ev:
+        1:   22:TEST_F(LeaderFollowerThreadPoolTest, LeaderFollowerBehavior)
+------------------
+_ZN56LeaderFollowerThreadPoolTest_LeaderFollowerBehavior_Test8TestBodyEv:
+        1:   22:TEST_F(LeaderFollowerThreadPoolTest, LeaderFollowerBehavior)
+        -:   23:{
+        1:   24:    std::atomic<int> leaderCount(0);
+        1:   25:    std::vector<std::future<void>> futures;
+        -:   26:
+      101:   27:    for (int i = 0; i < 100; ++i)
+        -:   28:    {
+      100:   29:        futures.emplace_back(
+      200:   30:            pool.enqueue([&leaderCount]
+        -:   31:                         {
+        -:   32:                if (leaderCount++ == 0) {
+        -:   33:                    std::this_thread::sleep_for(std::chrono::milliseconds(10));
+        -:   34:                }
+        -:   35:                leaderCount--; }));
+        -:   36:    }
+        -:   37:
+      101:   38:    for (auto &future : futures)
+        -:   39:    {
+      100:   40:        future.wait();
+        -:   41:    }
+        -:   42:
+       1*:   43:    EXPECT_EQ(leaderCount, 0);
+        1:   44:}
+------------------

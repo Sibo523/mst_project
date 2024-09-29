@@ -1,0 +1,19 @@
+        -:    0:Source:src/Tree/Tree.hpp
+        -:    1:// Tree.hpp
+        -:    2:#pragma once
+        -:    3:#include <vector>
+        -:    4:#include <stdexcept>
+        -:    5:
+        -:    6:class Tree
+        -:    7:{
+        -:    8:public:
+        -:    9:    Tree(int vertices);
+        -:   10:    void addEdge(int src, int dest, int weight);
+        1:   11:    int getVertices() const { return V; }
+        -:   12:    const std::vector<std::pair<int, int>>& getNeighbors(int v) const;
+        -:   13:    std::vector<std::pair<int, std::pair<int, int>>> getEdges() const;
+        -:   14:
+        -:   15:private:
+        -:   16:    int V;  // Number of vertices
+        -:   17:    std::vector<std::vector<std::pair<int, int>>> adjList;  // Adjacency list
+        -:   18:};

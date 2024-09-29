@@ -1,0 +1,111 @@
+        -:    0:Source:src/mst/IntegerMST.cpp
+        -:    1:// src/mst/IntegerMST.cpp
+        -:    2:#include "IntegerMST.hpp"
+        -:    3:#include <algorithm>
+        -:    4:#include <cmath>
+        -:    5:#include <limits>
+        -:    6:
+    #####:    7:std::vector<std::pair<int, std::pair<int, int>>> IntegerMST::findMST(const Graph &graph)
+        -:    8:{
+    #####:    9:    int V = graph.getVertices();
+    #####:   10:    if (V == 0)
+        -:   11:    {
+    #####:   12:        std::cout << "Warning: Empty graph passed to IntegerMST::findMST" << std::endl;
+    #####:   13:        return {}; // Return empty MST for empty graph
+        -:   14:    }
+    #####:   15:    std::vector<std::pair<int, std::pair<int, int>>> mst;
+    #####:   16:    std::vector<int> parent(V);
+    #####:   17:    std::vector<int> rank(V, 0);
+        -:   18:
+        -:   19:    // Initialize disjoint set
+    #####:   20:    for (int i = 0; i < V; i++)
+        -:   21:    {
+    #####:   22:        parent[i] = i;
+        -:   23:    }
+        -:   24:
+    #####:   25:    int maxWeight = getMaxWeight(graph);
+    #####:   26:    int bucketSize = std::max(1, static_cast<int>(std::sqrt(maxWeight)));
+    #####:   27:    std::vector<std::vector<std::pair<int, std::pair<int, int>>>> buckets(bucketSize + 1);
+        -:   28:
+        -:   29:    // Distribute edges into buckets
+    #####:   30:    for (int i = 0; i < V; i++)
+        -:   31:    {
+    #####:   32:        for (const auto &[dest, weight] : graph.getNeighbors(i))
+        -:   33:        {
+    #####:   34:            if (i < dest)
+        -:   35:            { // Avoid adding edges twice
+    #####:   36:                int bucket = weight / bucketSize;
+    #####:   37:                buckets[bucket].push_back({weight, {i, dest}});
+        -:   38:            }
+        -:   39:        }
+        -:   40:    }
+        -:   41:
+        -:   42:    // Process buckets
+    #####:   43:    for (const auto &bucket : buckets)
+        -:   44:    {
+    #####:   45:        for (const auto &edge : bucket)
+        -:   46:        {
+    #####:   47:            int weight = edge.first;
+    #####:   48:            int u = edge.second.first;
+    #####:   49:            int v = edge.second.second;
+        -:   50:
+    #####:   51:            int set_u = find(parent, u);
+    #####:   52:            int set_v = find(parent, v);
+        -:   53:
+    #####:   54:            if (set_u != set_v)
+        -:   55:            {
+    #####:   56:                mst.push_back(edge);
+    #####:   57:                unionSet(parent, rank, set_u, set_v);
+        -:   58:            }
+        -:   59:
+    #####:   60:            if (mst.size() == V - 1)
+        -:   61:            {
+    #####:   62:                return mst;
+        -:   63:            }
+        -:   64:        }
+        -:   65:    }
+        -:   66:
+    #####:   67:    return mst;
+    #####:   68:}
+        -:   69:
+    #####:   70:int IntegerMST::find(std::vector<int> &parent, int i)
+        -:   71:{
+    #####:   72:    if (parent[i] != i)
+        -:   73:    {
+    #####:   74:        parent[i] = find(parent, parent[i]);
+        -:   75:    }
+    #####:   76:    return parent[i];
+        -:   77:}
+        -:   78:
+    #####:   79:void IntegerMST::unionSet(std::vector<int> &parent, std::vector<int> &rank, int x, int y)
+        -:   80:{
+    #####:   81:    int xroot = find(parent, x);
+    #####:   82:    int yroot = find(parent, y);
+        -:   83:
+    #####:   84:    if (rank[xroot] < rank[yroot])
+        -:   85:    {
+    #####:   86:        parent[xroot] = yroot;
+        -:   87:    }
+    #####:   88:    else if (rank[xroot] > rank[yroot])
+        -:   89:    {
+    #####:   90:        parent[yroot] = xroot;
+        -:   91:    }
+        -:   92:    else
+        -:   93:    {
+    #####:   94:        parent[yroot] = xroot;
+    #####:   95:        rank[xroot]++;
+        -:   96:    }
+    #####:   97:}
+        -:   98:
+    #####:   99:int IntegerMST::getMaxWeight(const Graph &graph)
+        -:  100:{
+    #####:  101:    int maxWeight = 0;
+    #####:  102:    for (int i = 0; i < graph.getVertices(); i++)
+        -:  103:    {
+    #####:  104:        for (const auto &[dest, weight] : graph.getNeighbors(i))
+        -:  105:        {
+    #####:  106:            maxWeight = std::max(maxWeight, weight);
+        -:  107:        }
+        -:  108:    }
+    #####:  109:    return maxWeight;
+        -:  110:}

@@ -1,0 +1,119 @@
+        -:    0:Source:src/utils/LeaderFollowerThreadPool.hpp
+        -:    1:// src/utils/LeaderFollowerThreadPool.hpp
+        -:    2:#pragma once
+        -:    3:#include <vector>
+        -:    4:#include <queue>
+        -:    5:#include <thread>
+        -:    6:#include <mutex>
+        -:    7:#include <condition_variable>
+        -:    8:#include <functional>
+        -:    9:#include <future>
+        -:   10:#include <atomic>
+        -:   11:
+        -:   12:class LeaderFollowerThreadPool
+        -:   13:{
+        -:   14:public:
+        -:   15:    LeaderFollowerThreadPool(size_t numThreads);
+        -:   16:    ~LeaderFollowerThreadPool();
+        -:   17:
+        -:   18:    template <class F, class... Args>
+        -:   19:    auto enqueue(F &&f, Args &&...args)
+        -:   20:        -> std::future<typename std::result_of<F(Args...)>::type>;
+        -:   21:
+        -:   22:private:
+        -:   23:    std::vector<std::thread> workers;
+        -:   24:    std::queue<std::function<void()>> tasks;
+        -:   25:
+        -:   26:    std::mutex queue_mutex;
+        -:   27:    std::condition_variable condition;
+        -:   28:    std::atomic<bool> stop;
+        -:   29:    std::atomic<size_t> leader;
+        -:   30:    std::atomic<size_t> active_threads;
+        -:   31:
+        -:   32:    void workerThread(size_t id);
+        -:   33:};
+        -:   34:
+        -:   35:template <class F, class... Args>
+     101*:   36:auto LeaderFollowerThreadPool::enqueue(F &&f, Args &&...args)
+        -:   37:    -> std::future<typename std::result_of<F(Args...)>::type>
+        -:   38:{
+        -:   39:    using return_type = typename std::result_of<F(Args...)>::type;
+        -:   40:
+     101*:   41:    auto task = std::make_shared<std::packaged_task<return_type()>>(
+     101*:   42:        std::bind(std::forward<F>(f), std::forward<Args>(args)...));
+        -:   43:
+     101*:   44:    std::future<return_type> res = task->get_future();
+        -:   45:    {
+     101*:   46:        std::unique_lock<std::mutex> lock(queue_mutex);
+     101*:   47:        if (stop)
+    #####:   48:            throw std::runtime_error("enqueue on stopped ThreadPool");
+     303*:   49:        tasks.emplace([task]()
+     101*:   50:                      { (*task)(); });
+     101*:   51:    }
+     101*:   52:    condition.notify_one();
+     101*:   53:    return res;
+     101*:   54:}
+------------------
+_ZN24LeaderFollowerThreadPool7enqueueIZN6Server5startEvEUlvE_JEEESt6futureINSt9result_ofIFT_DpT0_EE4typeEEOS5_DpOS6_:
+    #####:   36:auto LeaderFollowerThreadPool::enqueue(F &&f, Args &&...args)
+        -:   37:    -> std::future<typename std::result_of<F(Args...)>::type>
+        -:   38:{
+        -:   39:    using return_type = typename std::result_of<F(Args...)>::type;
+        -:   40:
+    #####:   41:    auto task = std::make_shared<std::packaged_task<return_type()>>(
+    #####:   42:        std::bind(std::forward<F>(f), std::forward<Args>(args)...));
+        -:   43:
+    #####:   44:    std::future<return_type> res = task->get_future();
+        -:   45:    {
+    #####:   46:        std::unique_lock<std::mutex> lock(queue_mutex);
+    #####:   47:        if (stop)
+    #####:   48:            throw std::runtime_error("enqueue on stopped ThreadPool");
+    #####:   49:        tasks.emplace([task]()
+        -:   50:                      { (*task)(); });
+    #####:   51:    }
+    #####:   52:    condition.notify_one();
+    #####:   53:    return res;
+    #####:   54:}
+------------------
+_ZN24LeaderFollowerThreadPool7enqueueIZN56LeaderFollowerThreadPoolTest_LeaderFollowerBehavior_Test8TestBodyEvEUlvE_JEEESt6futureINSt9result_ofIFT_DpT0_EE4typeEEOS5_DpOS6_:
+      100:   36:auto LeaderFollowerThreadPool::enqueue(F &&f, Args &&...args)
+        -:   37:    -> std::future<typename std::result_of<F(Args...)>::type>
+        -:   38:{
+        -:   39:    using return_type = typename std::result_of<F(Args...)>::type;
+        -:   40:
+      100:   41:    auto task = std::make_shared<std::packaged_task<return_type()>>(
+      100:   42:        std::bind(std::forward<F>(f), std::forward<Args>(args)...));
+        -:   43:
+      100:   44:    std::future<return_type> res = task->get_future();
+        -:   45:    {
+      100:   46:        std::unique_lock<std::mutex> lock(queue_mutex);
+      100:   47:        if (stop)
+    #####:   48:            throw std::runtime_error("enqueue on stopped ThreadPool");
+      100:   49:        tasks.emplace([task]()
+        -:   50:                      { (*task)(); });
+      100:   51:    }
+      100:   52:    condition.notify_one();
+      100:   53:    return res;
+      100:   54:}
+------------------
+_ZN24LeaderFollowerThreadPool7enqueueIZN51LeaderFollowerThreadPoolTest_ExceptionHandling_Test8TestBodyEvEUlvE_JEEESt6futureINSt9result_ofIFT_DpT0_EE4typeEEOS5_DpOS6_:
+        1:   36:auto LeaderFollowerThreadPool::enqueue(F &&f, Args &&...args)
+        -:   37:    -> std::future<typename std::result_of<F(Args...)>::type>
+        -:   38:{
+        -:   39:    using return_type = typename std::result_of<F(Args...)>::type;
+        -:   40:
+        1:   41:    auto task = std::make_shared<std::packaged_task<return_type()>>(
+        1:   42:        std::bind(std::forward<F>(f), std::forward<Args>(args)...));
+        -:   43:
+        1:   44:    std::future<return_type> res = task->get_future();
+        -:   45:    {
+        1:   46:        std::unique_lock<std::mutex> lock(queue_mutex);
+        1:   47:        if (stop)
+    #####:   48:            throw std::runtime_error("enqueue on stopped ThreadPool");
+        1:   49:        tasks.emplace([task]()
+        -:   50:                      { (*task)(); });
+        1:   51:    }
+        1:   52:    condition.notify_one();
+        1:   53:    return res;
+        1:   54:}
+------------------

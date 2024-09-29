@@ -1,0 +1,90 @@
+        -:    0:Source:src/mst/KruskalMST.cpp
+        -:    1:// src/mst/KruskalMST.cpp
+        -:    2:#include "KruskalMST.hpp"
+        -:    3:#include <algorithm>
+        -:    4:
+        4:    5:std::vector<std::pair<int, std::pair<int, int>>> KruskalMST::findMST(const Graph &graph)
+        -:    6:{
+        4:    7:    int V = graph.getVertices();
+        4:    8:    if (V == 0)
+        -:    9:    {
+    #####:   10:        std::cout << "Warning: Empty graph passed to KruskalMST::findMST" << std::endl;
+    #####:   11:        return {};
+        -:   12:    }
+        4:   13:    std::vector<Edge> edges;
+        4:   14:    std::vector<std::pair<int, std::pair<int, int>>> mst;
+        -:   15:
+        -:   16:    // Collect all edges from the graph
+       24:   17:    for (int i = 0; i < V; i++)
+        -:   18:    {
+       48:   19:        for (const auto &[dest, weight] : graph.getNeighbors(i))
+        -:   20:        {
+       28:   21:            if (i < dest) // Avoid duplicate edges
+        -:   22:            {
+       28:   23:                edges.emplace_back(i, dest, weight);
+        -:   24:            }
+        -:   25:        }
+        -:   26:    }
+        -:   27:
+        -:   28:    // Sort edges in non-decreasing order of their weight
+        4:   29:    std::sort(edges.begin(), edges.end(), CompareEdge());
+        -:   30:
+        -:   31:    // Create disjoint sets
+        8:   32:    std::vector<int> parent(V);
+        4:   33:    std::vector<int> rank(V, 0);
+       24:   34:    for (int i = 0; i < V; i++)
+        -:   35:    {
+       20:   36:        parent[i] = i;
+        -:   37:    }
+        -:   38:
+        -:   39:    // Process edges in sorted order
+       16:   40:    for (const auto &edge : edges)
+        -:   41:    {
+       16:   42:        int x = find(parent, edge.src);
+       16:   43:        int y = find(parent, edge.dest);
+        -:   44:
+        -:   45:        // If including this edge doesn't create a cycle, include it in MST
+       16:   46:        if (x != y)
+        -:   47:        {
+       16:   48:            mst.push_back({edge.weight, {edge.src, edge.dest}});
+       16:   49:            unionSet(parent, rank, x, y);
+        -:   50:        }
+        -:   51:
+       16:   52:        if (mst.size() == V - 1)
+        -:   53:        {
+        4:   54:            break; // MST is complete
+        -:   55:        }
+        -:   56:    }
+        -:   57:
+        4:   58:    return mst;
+        4:   59:}
+       72:   60:int KruskalMST::find(std::vector<int> &parent, int i)
+        -:   61:{
+       72:   62:    if (parent[i] != i)
+        -:   63:    {
+        8:   64:        parent[i] = find(parent, parent[i]);
+        -:   65:    }
+       72:   66:    return parent[i];
+        -:   67:}
+        -:   68:
+       16:   69:void KruskalMST::unionSet(std::vector<int> &parent, std::vector<int> &rank, int x, int y)
+        -:   70:{
+       16:   71:    int xroot = find(parent, x);
+       16:   72:    int yroot = find(parent, y);
+        -:   73:
+        -:   74:    // Attach smaller rank tree under root of high rank tree
+       16:   75:    if (rank[xroot] < rank[yroot])
+        -:   76:    {
+    #####:   77:        parent[xroot] = yroot;
+        -:   78:    }
+       16:   79:    else if (rank[xroot] > rank[yroot])
+        -:   80:    {
+       12:   81:        parent[yroot] = xroot;
+        -:   82:    }
+        -:   83:    // If ranks are same, then make one as root and increment its rank
+        -:   84:    else
+        -:   85:    {
+        4:   86:        parent[yroot] = xroot;
+        4:   87:        rank[xroot]++;
+        -:   88:    }
+       16:   89:}
