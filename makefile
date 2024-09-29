@@ -51,8 +51,8 @@ coverage: clean test
 
 profile: CXXFLAGS += -pg
 profile: LDFLAGS += -pg
-profile: clean $(EXEC)
-	./$(EXEC)
+profile:  $(TEST_EXEC)
+	./$(TEST_EXEC)
 	gprof $(EXEC) gmon.out > profile_report.txt
 
 
