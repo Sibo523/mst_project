@@ -185,7 +185,7 @@ void Server::handleClient(int clientSocket)
     {
         memset(buffer, 0, sizeof(buffer));
         sendMessage(clientSocket, "Enter command:\n");
-        sendMessage(clientSocket, "1. addGraph\n2. updateGraph\n3. solveMST\n4. exit\n");
+        sendMessage(clientSocket, "1. addGraph\n2. updateGraph\n3. solveMST\n4. exit\n5. help\n6. clear\n");
         int valread = read(clientSocket, buffer, 1024);
         if (valread <= 0)
         {

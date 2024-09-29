@@ -1,7 +1,6 @@
 mst_project/
 │
 ├── Makefile
-├── run_all_features.sh
 │
 ├── src/
 │   ├── main.cpp
@@ -20,6 +19,8 @@ mst_project/
 │   │   ├── KruskalMST.cpp
 │   │   ├── TarjanMST.hpp
 │   │   └── TarjanMST.cpp
+│   │   └── IntegerMST.cpp
+│   │   └── IntegerMST.hpp
 │   │
 │   ├── factory/
 │   │   ├── MSTFactory.hpp
@@ -40,9 +41,6 @@ mst_project/
 │       └── LeaderFollowerThreadPool.cpp
 │
 ├── tests/
-│   ├── GraphTests.cpp
-│   ├── MSTAlgorithmTests.cpp
-│   ├── ServerTests.cpp
-│   └── AnalysisTests.cpp
+│   ├── test_mst_algorithms
 │
 └── README.md

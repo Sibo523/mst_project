@@ -74,7 +74,7 @@ std::future<int> findLongestDistanceAsync(const Graph &graph, const std::vector<
             }
         }
         //for debug
-        std::cout << "Longest distance: " << maxDist << std::endl;
+        // std::cout << "Longest distance: " << maxDist << std::endl;
         return maxDist; });
 }
 
@@ -124,7 +124,7 @@ std::future<double> calculateAverageDistanceAsync(const Graph &graph, const std:
             }
         }
         //for debug
-        std::cout << "Average distance: " << (count > 0 ? static_cast<double>(sum) / count : 0.0) << std::endl;
+        // std::cout << "Average distance: " << (count > 0 ? static_cast<double>(sum) / count : 0.0) << std::endl;
         return count > 0 ? static_cast<double>(sum) / count : 0.0; });
 }
 
@@ -140,7 +140,7 @@ std::future<int> findShortestMSTEdgeAsync(const std::vector<std::pair<int, std::
         {
             shortestEdge = std::min(shortestEdge, edge.first);
         }
-        std::cout << "Shortest MST edge: " << shortestEdge << std::endl;
+        // std::cout << "Shortest MST edge: " << shortestEdge << std::endl;
         return shortestEdge; });
 }
 
