@@ -33,6 +33,14 @@ void Server::start()
     serverAddr.sin_addr.s_addr = INADDR_ANY;
     serverAddr.sin_port = htons(port);
 
+    // Set SO_REUSEADDR option
+    int opt = 1;
+    if (setsockopt(serverSocket, SOL_SOCKET, SO_REUSEADDR, &opt, sizeof(opt)) < 0)
+    {
+        std::cerr << "Failed to set SO_REUSEADDR option\n";
+        return;
+    }
+
     if (bind(serverSocket, (struct sockaddr *)&serverAddr, sizeof(serverAddr)) < 0)
     {
         std::cerr << "Failed to bind to port " << port << "\n";
@@ -60,11 +68,40 @@ void Server::start()
             continue;
         }
 
+        std::cout << "Accepted new client connection\n";
+
         threadPool.enqueue([this, clientSocket]()
                            { this->handleClient(clientSocket); });
     }
 }
 
+void Server::handleClient(int clientSocket)
+{
+    char buffer[1024] = {0};
+    while (true)
+    {
+        memset(buffer, 0, sizeof(buffer));
+        // sendMessage(clientSocket, "Enter command:\n");
+        int valread = read(clientSocket, buffer, 1024);
+        if (valread <= 0)
+        {
+            std::cout << "Client disconnected\n";
+            break;
+        }
+        std::string request(buffer);
+        std::cout << "Received request: " << request << std::endl;
+
+        if (request == "exit\n")
+        {
+            std::cout << "Client requested exit\n";
+            break;
+        }
+
+        std::string response = handleRequest(request, clientSocket);
+        sendMessage(clientSocket, response);
+    }
+    close(clientSocket);
+}
 void Server::stop()
 {
     running = false;
@@ -160,7 +197,7 @@ std::string Server::handleRequest(const std::string &request, int clientSocket)
     }
     else if (command == "clear")
     {
-        /* code */
+        // maybe if I have time.
     }
 
     else
@@ -177,31 +214,6 @@ std::string trimString(const std::string &str)
         return "";
     size_t last = str.find_last_not_of(" \t\n\r");
     return str.substr(first, (last - first + 1));
-}
-void Server::handleClient(int clientSocket)
-{
-    char buffer[1024] = {0};
-    while (true)
-    {
-        memset(buffer, 0, sizeof(buffer));
-        sendMessage(clientSocket, "Enter command:\n");
-        sendMessage(clientSocket, "1. addGraph\n2. updateGraph\n3. solveMST\n4. exit\n5. help\n6. clear\n");
-        int valread = read(clientSocket, buffer, 1024);
-        if (valread <= 0)
-        {
-            break;
-        }
-        std::string request(buffer);
-
-        if (request == "exit")
-        {
-            break;
-        }
-
-        std::string response = handleRequest(request, clientSocket);
-        sendMessage(clientSocket, response);
-    }
-    close(clientSocket);
 }
 void Server::sendMessage(int clientSocket, const std::string &message)
 {
@@ -275,7 +287,6 @@ std::string Server::solveMST(const std::string &algorithm)
         return "Error: Exception occurred while processing MST result.";
     }
 }
-
 
 // true
 std::shared_ptr<void> Server::analyzeMSTStage(std::shared_ptr<void> input)

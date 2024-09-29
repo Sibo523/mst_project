@@ -55,8 +55,6 @@ profile: clean $(EXEC)
 	./$(EXEC)
 	gprof $(EXEC) gmon.out > profile_report.txt
 
-run_all: $(EXEC)
-	./run_all_features.sh
 
 clean:
 	rm -rf $(BUILD_DIR) $(EXEC) $(TEST_EXEC) *.gcov coverage.info coverage_report profile_report.txt gmon.out
