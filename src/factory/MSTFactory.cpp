@@ -1,4 +1,3 @@
-// src/factory/MSTFactory.cpp
 #include "MSTFactory.hpp"
 #include "../mst/BoruvkaMST.hpp"
 #include "../mst/PrimMST.hpp"
@@ -7,6 +6,7 @@
 #include "../mst/IntegerMST.hpp"
 #include <stdexcept>
 
+// simple factory pattern
 std::unique_ptr<MSTAlgorithm> MSTFactory::createMSTAlgorithm(const std::string &algorithmName)
 {
     if (algorithmName == "Boruvka")

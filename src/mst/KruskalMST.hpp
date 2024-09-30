@@ -1,4 +1,3 @@
-// src/mst/KruskalMST.hpp
 #pragma once
 #include "MSTAlgorithm.hpp"
 #include <vector>

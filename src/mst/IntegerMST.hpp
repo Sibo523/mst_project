@@ -1,4 +1,3 @@
-// src/mst/IntegerMST.hpp
 #pragma once
 #include "MSTAlgorithm.hpp"
 #include <vector>

@@ -1,4 +1,3 @@
-// src/graph/Graph.hpp
 #pragma once
 #include <vector>
 #include <stdexcept>
@@ -6,6 +5,7 @@
 class Graph
 {
 public:
+    // nothing special just a graph class
     Graph(int vertices);
     void addEdge(int src, int dest, int weight);
     int getVertices() const { return V; }

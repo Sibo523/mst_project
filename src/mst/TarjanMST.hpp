@@ -1,4 +1,3 @@
-// src/mst/TarjanMST.hpp
 #pragma once
 #include "MSTAlgorithm.hpp"
 #include <vector>

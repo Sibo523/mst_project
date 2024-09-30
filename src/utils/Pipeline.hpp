@@ -1,4 +1,3 @@
-// File: src/utils/Pipeline.hpp
 #pragma once
 #include <vector>
 #include <functional>

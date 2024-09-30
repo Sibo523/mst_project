@@ -1,4 +1,3 @@
-// src/mst/KruskalMST.cpp
 #include "KruskalMST.hpp"
 #include <algorithm>
 

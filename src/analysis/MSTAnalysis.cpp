@@ -1,4 +1,3 @@
-// src/analysis/MSTAnalysis.cpp
 #include "MSTAnalysis.hpp"
 #include <algorithm>
 #include <limits>
@@ -29,7 +28,7 @@ std::future<int> calculateTotalWeightAsync(const std::vector<std::pair<int, std:
         }
         return totalWeight; });
 }
-
+// folyd warshall algorithm but now we do the opposite, we find the longest distance
 std::future<int> findLongestDistanceAsync(const Graph &graph, const std::vector<std::pair<int, std::pair<int, int>>> &mst)
 {
     return std::async(std::launch::async, [&graph, &mst]()
@@ -77,7 +76,7 @@ std::future<int> findLongestDistanceAsync(const Graph &graph, const std::vector<
         // std::cout << "Longest distance: " << maxDist << std::endl;
         return maxDist; });
 }
-
+// also floyd warsahll
 std::future<double> calculateAverageDistanceAsync(const Graph &graph, const std::vector<std::pair<int, std::pair<int, int>>> &mst)
 {
     return std::async(std::launch::async, [&graph, &mst]()
@@ -146,6 +145,7 @@ std::future<int> findShortestMSTEdgeAsync(const std::vector<std::pair<int, std::
 
 std::future<MSTAnalysis> analyzeMSTAsync(const Graph &graph, const std::vector<std::pair<int, std::pair<int, int>>> &mst)
 {
+    // this is the functino that is being called from outside (server in this instance)
     return std::async(std::launch::async, [&graph, &mst]()
                       {
         MSTAnalysis analysis;

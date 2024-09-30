@@ -1,4 +1,3 @@
-// src/mst/PrimMST.hpp
 #pragma once
 #include "MSTAlgorithm.hpp"
 #include <queue>

@@ -1,4 +1,3 @@
-// Tree.cpp
 #include "Tree.hpp"
 
 Tree::Tree(int vertices) : V(vertices), adjList(vertices) {

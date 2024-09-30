@@ -1,4 +1,3 @@
-// src/graph/Graph.cpp
 #include "Graph.hpp"
 
 Graph::Graph(int vertices) : V(vertices), adjList(vertices) {}

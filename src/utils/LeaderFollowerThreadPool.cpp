@@ -1,5 +1,3 @@
-
-// src/utils/LeaderFollowerThreadPool.cpp
 #include "LeaderFollowerThreadPool.hpp"
 
 LeaderFollowerThreadPool::LeaderFollowerThreadPool(size_t numThreads)

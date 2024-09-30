@@ -1,4 +1,3 @@
-// src/mst/PrimMST.cpp
 #include "PrimMST.hpp"
 #include <limits>
 #include <ostream>

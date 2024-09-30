@@ -1,4 +1,3 @@
-// src/server/Server.cpp
 #include "Server.hpp"
 #include "../factory/MSTFactory.hpp"
 #include "../analysis/MSTAnalysis.hpp"
@@ -107,7 +106,7 @@ void Server::stop()
     running = false;
     close(serverSocket);
 }
-
+// handle the requests of the user and return the response
 std::string Server::handleRequest(const std::string &request, int clientSocket)
 {
     std::istringstream iss(request);
@@ -197,7 +196,7 @@ std::string Server::handleRequest(const std::string &request, int clientSocket)
     }
     else if (command == "clear")
     {
-        // maybe if I have time.
+        // I have no time :) (supposed to clear the graph and start from scratch)
     }
 
     else
@@ -206,7 +205,7 @@ std::string Server::handleRequest(const std::string &request, int clientSocket)
     }
 }
 
-// Helper function to trim whitespace from a string
+// Helper function to trim whitespace from a string (copied from https://stackoverflow.com/a/217605)
 std::string trimString(const std::string &str)
 {
     size_t first = str.find_first_not_of(" \t\n\r");
@@ -215,11 +214,12 @@ std::string trimString(const std::string &str)
     size_t last = str.find_last_not_of(" \t\n\r");
     return str.substr(first, (last - first + 1));
 }
+// send the message to the client easily managed
 void Server::sendMessage(int clientSocket, const std::string &message)
 {
     send(clientSocket, message.c_str(), message.length(), 0);
 }
-
+// get the input from the client easily mangaged
 std::string Server::getClientInput(int clientSocket)
 {
     char buffer[1024] = {0};
@@ -230,13 +230,13 @@ std::string Server::getClientInput(int clientSocket)
     }
     return std::string(buffer);
 }
-
+// overide the old graph, and print the message
 void Server::addGraph(const Graph &graph)
 {
     currentGraph = graph;
     std::cout << "Graph added successfully." << std::endl;
 }
-
+// update the current graph
 void Server::updateGraph(const std::string &changes)
 {
     std::istringstream iss(changes);
@@ -247,7 +247,8 @@ void Server::updateGraph(const std::string &changes)
     }
     std::cout << "Graph updated successfully." << std::endl;
 }
-
+// solve the MST problem with the given algorithm
+// main part of the server/project
 std::string Server::solveMST(const std::string &algorithm)
 {
     std::cout << "Solving MST with algorithm: " << algorithm << std::endl;
@@ -288,7 +289,7 @@ std::string Server::solveMST(const std::string &algorithm)
     }
 }
 
-// true
+// split to 2 stages
 std::shared_ptr<void> Server::analyzeMSTStage(std::shared_ptr<void> input)
 {
     try
@@ -319,6 +320,7 @@ std::shared_ptr<void> Server::analyzeMSTStage(std::shared_ptr<void> input)
         throw;
     }
 }
+// format the result to a string
 std::shared_ptr<void> Server::formatResultStage(std::shared_ptr<void> input)
 {
     auto pair = std::static_pointer_cast<std::pair<std::string, MSTAnalysis>>(input);

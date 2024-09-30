@@ -2,6 +2,12 @@ mst_project/
 │
 ├── Makefile
 │
+├──Gcovs/
+│   ├── coverage for all files
+│
+├──Profiling/
+│   ├──  Profiling for the program test_mst_algorithms
+│
 ├── src/
 │   ├── main.cpp
 │   │

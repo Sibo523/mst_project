@@ -1,4 +1,3 @@
-// src/mst/BoruvkaMST.cpp
 #include "BoruvkaMST.hpp"
 #include <algorithm>
 #include <limits>

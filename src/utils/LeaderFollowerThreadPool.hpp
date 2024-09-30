@@ -1,4 +1,3 @@
-// src/utils/LeaderFollowerThreadPool.hpp
 #pragma once
 #include <vector>
 #include <queue>

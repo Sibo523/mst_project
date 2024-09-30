@@ -1,4 +1,3 @@
-// File: src/utils/Pipeline.cpp
 #include "Pipeline.hpp"
 
 void Pipeline::addStage(std::function<std::shared_ptr<void>(std::shared_ptr<void>)> stage)

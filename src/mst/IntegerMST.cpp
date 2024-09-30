@@ -1,4 +1,3 @@
-// src/mst/IntegerMST.cpp
 #include "IntegerMST.hpp"
 #include <algorithm>
 #include <cmath>

@@ -1,4 +1,3 @@
-// src/mst/BoruvkaMST.hpp
 #pragma once
 #include "MSTAlgorithm.hpp"
 #include <vector>
