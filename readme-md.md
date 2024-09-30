@@ -64,7 +64,7 @@ This will generate a `profile_report.txt` file with profiling information.
 After building, you can run the application with:
 
 ```
-./mst_project
+./mst_project <port_num> <numbeOf_threads>
 ```
 
 The application accepts the following commands:
@@ -76,8 +76,18 @@ The application accepts the following commands:
 Example usage:
 
 ```
-./mst_project
-addGraph 4 0 1 10 0 2 6 0 3 5 1 3 15 2 3 4
+./mst_project ./mst_project <port_num> <numbeOf_threads>
+```
+```
+nc localhost <port_num>
+addGraph 
+4 // amount of vertices
+ 0 1 10 //<src> <dest> <weight>
+ 0 2 6 
+ 0 3 5 
+ 1 3 15 
+ 2 3 4
+ -1 //to finsih the addition
 solveMST Prim
 ```
 
@@ -88,20 +98,7 @@ solveMST Prim
   - `mst/`: MST algorithm implementations
   - `factory/`: MST algorithm factory
   - `server/`: Server implementation
-  - `utils/`: Utility classes (e.g., Proactor)
+  - `utils/`: Utility classes (e.g., Pipeline leaderfollower-threadpool)
   - `analysis/`: MST analysis functions
 - `tests/`: Test files
 - `Makefile`: Build configuration
-- `run_all_features.sh`: Script to run all features of the program
-
-## Contributing
-
-1. Fork the repository
-2. Create a new branch for your feature
-3. Commit your changes
-4. Push to your branch
-5. Create a new Pull Request
-
-## License
-
-This project is licensed under the MIT License - see the [LICENSE](LICENSE) file for details.
