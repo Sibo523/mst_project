@@ -80,7 +80,7 @@ void Server::handleClient(int clientSocket)
     while (true)
     {
         memset(buffer, 0, sizeof(buffer));
-        // sendMessage(clientSocket, "Enter command:\n");
+        sendMessage(clientSocket, "Enter command:\n");
         int valread = read(clientSocket, buffer, 1024);
         if (valread <= 0)
         {

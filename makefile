@@ -22,7 +22,7 @@ TEST_OBJS := $(TEST_SRCS:$(TEST_DIR)/%.cpp=$(OBJ_DIR)/$(TEST_DIR)/%.o)
 TEST_DEPS := $(TEST_OBJS:.o=.d)
 
 # Executables
-EXEC := $(BIN_DIR)/mst_project
+EXEC := mst_project
 TEST_EXEC := $(BIN_DIR)/test_mst_project
 
 # Add Google Test
