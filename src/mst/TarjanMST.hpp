@@ -18,8 +18,8 @@ private:
     };
     // Helper functions for Tarjan's algorithm
     void iterativeMST(const Graph &graph, std::vector<std::pair<int, std::pair<int, int>>> &mst,
-                                 std::vector<int> &parent, std::vector<int> &rank,
-                                 std::vector<Edge> &edges);
+                      std::vector<int> &parent, std::vector<int> &rank,
+                      std::vector<Edge> &edges);
     int find(std::vector<int> &parent, int i);
     void unionSet(std::vector<int> &parent, std::vector<int> &rank, int x, int y);
     std::vector<Edge> sampleEdges(const std::vector<Edge> &edges, int k);

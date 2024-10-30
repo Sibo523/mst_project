@@ -7,14 +7,11 @@
 
 struct MSTAnalysis
 {
-    int totalWeight;
-    int longestDistance;
-    double averageDistance;
-    int shortestMSTEdge;
+  
     std::vector<std::pair<int, std::pair<int, int>>> mstEdges;
+    static int calculateTotalWeight(const std::vector<std::pair<int, std::pair<int, int>>> &mst);
+    static int findLongestDistance(const Graph &graph, const std::vector<std::pair<int, std::pair<int, int>>> &mst);
+    static double calculateAverageDistance(const Graph &graph, const std::vector<std::pair<int, std::pair<int, int>>> &mst);
+    static std::pair<int, int> findShortestMSTEdge(const std::vector<std::pair<int, std::pair<int, int>>> &mst);
+    static std::vector<std::function<void(void *)>> getPipelineFunctions();
 };
-// doing all this async like we have been asked
-std::future<int> calculateTotalWeightAsync(const std::vector<std::pair<int, std::pair<int, int>>> &mst);
-std::future<int> findLongestDistanceAsync(const Graph &graph, const std::vector<std::pair<int, std::pair<int, int>>> &mst);
-std::future<double> calculateAverageDistanceAsync(const Graph &graph, const std::vector<std::pair<int, std::pair<int, int>>> &mst);
-std::future<int> findShortestMSTEdgeAsync(const std::vector<std::pair<int, std::pair<int, int>>> &mst);

@@ -13,10 +13,8 @@ Server::Server(int port, int threads)
       port(port),
       running(false)
 {
-    pipeline.addStage([this](std::shared_ptr<void> input)
-                      { return this->analyzeMSTStage(input); });
-    pipeline.addStage([this](std::shared_ptr<void> input)
-                      { return this->formatResultStage(input); });
+    Pipeline(MSTAnalysis::getPipelineFunctions());
+    threadPool = LeaderFollowerThreadPool(threads);
 }
 void Server::start()
 {
@@ -169,7 +167,11 @@ std::string Server::handleRequest(const std::string &request, int clientSocket)
         {
             std::cout << "Solving MST with algorithm: " << algorithm << std::endl;
             std::cout << currentGraph.getVertices() << std::endl;
-            std::string result = solveMST(algorithm);
+            sendMessage(clientSocket, "do you want to use leaderfollower or pipeline? 1 for leaderfollower, 2 for pipeline\n");
+            // reveive the choice of the user and solve the mst
+            std::string choice = getClientInput(clientSocket);
+            choice = trimString(choice);
+            std::string result = solveMST(algorithm, choice[0] - '0');
             std::cout << "MST result: " << result << std::endl;
             return result;
         }
@@ -249,7 +251,7 @@ void Server::updateGraph(const std::string &changes)
 }
 // solve the MST problem with the given algorithm
 // main part of the server/project
-std::string Server::solveMST(const std::string &algorithm)
+std::string Server::solveMST(const std::string &algorithm, int choice)
 {
     std::cout << "Solving MST with algorithm: " << algorithm << std::endl;
 
@@ -273,72 +275,31 @@ std::string Server::solveMST(const std::string &algorithm)
 
     try
     {
-        std::cout << "before pipeline::process" << std::endl;
-        auto result = pipeline.process<std::string>(
-            [&]() -> std::shared_ptr<void>
-            {
-                return std::make_shared<std::pair<std::string, std::vector<std::pair<int, std::pair<int, int>>>>>(algorithm, mst);
-            });
+        // we are going of the choice of the user
+        std::string result;
+        switch (choice)
+        {
+        case 1:
+            // LeaderFollower
+            result = threadPool.processMST(mst);
+            break;
+
+        case 2:
+            // Pipeline
+            result = pipeline.execute(mst);
+            break;
+
+        default:
+            result = "Error: wrong choice propebly";
+            break;
+        }
 
         return result;
     }
     catch (const std::exception &e)
     {
-        std::cerr << "Exception in pipeline processing: " << e.what() << std::endl;
+        std::string choice_str = choice == 1 ? "LeaderFollower" : "Pipeline";
+        std::cerr << "Exception in " << choice_str << " processing: " << e.what() << std::endl;
         return "Error: Exception occurred while processing MST result.";
     }
-}
-
-// split to 2 stages
-std::shared_ptr<void> Server::analyzeMSTStage(std::shared_ptr<void> input)
-{
-    try
-    {
-        auto pair = std::static_pointer_cast<std::pair<std::string, std::vector<std::pair<int, std::pair<int, int>>>>>(input);
-        auto &algorithm = pair->first;
-        auto &mst = pair->second;
-
-        MSTAnalysis analysis;
-
-        auto totalWeightFuture = calculateTotalWeightAsync(mst);
-        auto longestDistanceFuture = findLongestDistanceAsync(currentGraph, mst);
-        auto averageDistanceFuture = calculateAverageDistanceAsync(currentGraph, mst);
-        auto shortestMSTEdgeFuture = findShortestMSTEdgeAsync(mst);
-
-        // Wait for all futures to complete
-        analysis.totalWeight = totalWeightFuture.get();
-        analysis.longestDistance = longestDistanceFuture.get();
-        analysis.averageDistance = averageDistanceFuture.get();
-        analysis.shortestMSTEdge = shortestMSTEdgeFuture.get();
-        analysis.mstEdges = mst;
-
-        return std::make_shared<std::pair<std::string, MSTAnalysis>>(algorithm, analysis);
-    }
-    catch (const std::exception &e)
-    {
-        std::cerr << "Exception in analyzeMSTStage: " << e.what() << std::endl;
-        throw;
-    }
-}
-// format the result to a string
-std::shared_ptr<void> Server::formatResultStage(std::shared_ptr<void> input)
-{
-    auto pair = std::static_pointer_cast<std::pair<std::string, MSTAnalysis>>(input);
-    auto &algorithm = pair->first;
-    auto &analysis = pair->second;
-
-    std::ostringstream oss;
-    oss << "MST Analysis using " << algorithm << " algorithm:\n";
-    oss << "Total weight: " << analysis.totalWeight << "\n";
-    oss << "Longest distance: " << analysis.longestDistance << "\n";
-    oss << "Average distance: " << analysis.averageDistance << "\n";
-    oss << "Shortest MST edge: " << analysis.shortestMSTEdge << "\n";
-    oss << "MST edges: ";
-    for (const auto &edge : analysis.mstEdges)
-    {
-        oss << "(" << edge.second.first << "-" << edge.second.second << ", " << edge.first << ") ";
-    }
-    oss << "\n";
-
-    return std::make_shared<std::string>(oss.str());
 }

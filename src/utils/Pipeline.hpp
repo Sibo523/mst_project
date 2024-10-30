@@ -1,22 +1,42 @@
+// Pipeline.hpp
 #pragma once
 #include <vector>
+#include <queue>
 #include <functional>
-#include <memory>
+#include <thread>
+#include <mutex>
+#include <condition_variable>
 
-class Pipeline {
+class Pipeline
+{
 public:
-    void addStage(std::function<std::shared_ptr<void>(std::shared_ptr<void>)> stage);
-    
-    template<typename T>
-    T process(std::function<std::shared_ptr<void>()> inputGenerator) {
-        std::shared_ptr<void> data = inputGenerator();
-        for (const auto& stage : stages) {
-            data = stage(data);
-        }
-        return *std::static_pointer_cast<T>(data);
-    }
+    Pipeline(const std::vector<std::function<void(void *)>> &functions);
+    Pipeline() = default;
+    ~Pipeline();
+
+    void start();                                                   // Start the pipeline
+    void stop();                                                    // Stop the pipeline
+    void execute(std::vector<std::pair<int, std::pair<int, int>>>); // Execute the pipeline with data
 
 private:
-    std::vector<std::function<std::shared_ptr<void>(std::shared_ptr<void>)>> stages;
-};
+    struct ActiveObject
+    {
+        ActiveObject(std::function<void(void *)> func)
+            : function(func), shouldStop(false) {}
 
+        std::function<void(void *)> function;
+        std::thread thread;
+        std::mutex mutex;
+        std::condition_variable condition;
+        std::queue<std::vector<std::pair<int, std::pair<int, int>>>> taskQueue; // Queue to store tasks/data
+        bool shouldStop;
+
+        int totalWeight;
+        int longestDistance;
+        double averageDistance;
+        int shortestMSTEdge;
+    };
+
+    std::vector<ActiveObject> activeObjects; // Vector of active objects (pipeline stages)
+    bool isStarted = false;
+};

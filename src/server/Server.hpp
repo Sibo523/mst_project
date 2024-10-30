@@ -3,7 +3,7 @@
 #include "../mst/MSTAlgorithm.hpp"
 #include "../utils/LeaderFollowerThreadPool.hpp"
 #include "../utils/Pipeline.hpp"
-#include "../analysis/MSTAnalysis.hpp" 
+#include "../analysis/MSTAnalysis.hpp"
 #include <memory>
 #include <string>
 #include <sys/socket.h>
@@ -29,13 +29,9 @@ private:
     void handleClient(int clientSocket);
     void addGraph(const Graph &graph);
     void updateGraph(const std::string &changes);
-    std::string solveMST(const std::string &algorithm);
+    std::string solveMST(const std::string &algorithm, int choice);
     void sendMessage(int clientSocket, const std::string &message);
     std::string getClientInput(int clientSocket);
-
-    // Update these method signatures
-    std::shared_ptr<void> analyzeMSTStage(std::shared_ptr<void> input);
-    std::shared_ptr<void> formatResultStage(std::shared_ptr<void> input);
 
     Graph currentGraph;
     std::unique_ptr<MSTAlgorithm> currentAlgorithm;
