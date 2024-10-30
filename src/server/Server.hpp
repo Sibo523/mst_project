@@ -29,7 +29,7 @@ private:
     void handleClient(int clientSocket);
     void addGraph(const Graph &graph);
     void updateGraph(const std::string &changes);
-    std::string solveMST(const std::string &algorithm, int choice);
+    std::string solveMST(const std::string &algorithm, int choice, int clientSocket);
     void sendMessage(int clientSocket, const std::string &message);
     std::string getClientInput(int clientSocket);
 

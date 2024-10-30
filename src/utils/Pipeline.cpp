@@ -1,4 +1,6 @@
-Pipeline::Pipeline(const std::vector<std::function<void(void *)>> &functions)
+#include "Pipeline.hpp"
+
+Pipeline(const std::vector<std::function<std::vector<std::pair<int, std::pair<int, int>>>>> &functions)
 {
     // Create active objects for each function
     for (const auto &function : functions)
@@ -26,12 +28,12 @@ void Pipeline::start()
     {
         auto &ao = activeObjects[i];
 
-        ao.thread = std::thread([this, i]()
+        ao.thread = std::thread([this, i, &ao]()
                                 {
             auto& current = activeObjects[i];
             
             while (true) {
-                void* data = nullptr;
+                std::vector<std::pair<int, std::pair<int, int>>> data;
                 
                 // Wait for and get data from queue
                 {
@@ -44,22 +46,26 @@ void Pipeline::start()
                         break;
                     }
 
-                    data = current.taskQueue.front();
+                    data = std::move(current.taskQueue.front());
                     current.taskQueue.pop();
                 }
 
                 // Process data run the function on the mst
-                if (data) {
-                    current.function(data);
+                if (!data.empty()) {
+                    std::pair<int,double> output = current.function((&data));
+                    ao.ans[output.first] = output.second;
                 }
 
                 // Pass data to next stage if not the last stage
                 if (i < activeObjects.size() - 1) {
+                    // format msg and send it
+                    std::string msg = this->format_msg(ao);
                     auto& next = activeObjects[i + 1];
                     std::unique_lock<std::mutex> lock(next.mutex);
                     next.taskQueue.push(data);
                     next.condition.notify_one();
                 }
+
             } });
     }
 }
@@ -89,7 +95,7 @@ void Pipeline::stop()
     isStarted = false;
 }
 // the graph I think
-void Pipeline::execute(std::vector<std::pair<int, std::pair<int, int>>> data)
+void Pipeline::execute(std::vector<std::pair<int, std::pair<int, int>>> data, int clientSocket)
 {
     if (!isStarted || activeObjects.empty())
         return;
@@ -97,8 +103,16 @@ void Pipeline::execute(std::vector<std::pair<int, std::pair<int, int>>> data)
     // Push data to the first stage
     auto &first = activeObjects[0];
     {
+        first.clientSocket = clientSocket;
         std::unique_lock<std::mutex> lock(first.mutex);
         first.taskQueue.push(data);
         first.condition.notify_one();
     }
+}
+
+std::string Pipeline::format_msg(ActiveObject &ao)
+{
+    return "Total weight: " + std::to_string(ao.ans[0]) + "Longest distance: " +
+           std::to_string(ao.ans[1]) + "Average distance: " + std::to_string(ao.ans[2]) +
+           "Shortest MST edge: " + std::to_string(ao.ans[3]);
 }

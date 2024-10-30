@@ -5,12 +5,12 @@
 #include <vector>
 #include <iostream>
 
-int MSTAnalysis::calculateTotalWeight(const std::vector<std::pair<int, std::pair<int, int>>> &mst)
+std::pair<int, double> MSTAnalysis::calculateTotalWeight(const std::vector<std::pair<int, std::pair<int, int>>> &mst)
 {
     if (mst.empty())
     {
         std::cerr << "Warning: Empty MST passed to calculateTotalWeight" << std::endl;
-        return 0;
+        return std::make_pair(0, 0);
     }
 
     int totalWeight = 0;
@@ -23,12 +23,12 @@ int MSTAnalysis::calculateTotalWeight(const std::vector<std::pair<int, std::pair
         }
         totalWeight += edge.first;
     }
-    return totalWeight;
+    return std::make_pair(0, totalWeight);
 }
 
-int MSTAnalysis::findLongestDistance(const Graph &graph, const std::vector<std::pair<int, std::pair<int, int>>> &mst)
+std::pair<int, double> MSTAnalysis::findLongestDistance(const std::vector<std::pair<int, std::pair<int, int>>> &mst)
 {
-    int V = graph.getVertices();
+    int V = mst.size() + 1;
     std::vector<std::vector<int>> dist(V, std::vector<int>(V, std::numeric_limits<int>::max()));
 
     // Initialize distances with MST edges
@@ -67,12 +67,12 @@ int MSTAnalysis::findLongestDistance(const Graph &graph, const std::vector<std::
             }
         }
     }
-    return maxDist;
+    return std::make_pair(1, maxDist);
 }
 
-double MSTAnalysis::calculateAverageDistance(const Graph &graph, const std::vector<std::pair<int, std::pair<int, int>>> &mst)
+std::pair<int, double> MSTAnalysis::calculateAverageDistance(const std::vector<std::pair<int, std::pair<int, int>>> &mst)
 {
-    int V = graph.getVertices();
+    int V = mst.size() + 1;
     std::vector<std::vector<int>> dist(V, std::vector<int>(V, std::numeric_limits<int>::max()));
 
     // Initialize distances with MST edges
@@ -113,30 +113,20 @@ double MSTAnalysis::calculateAverageDistance(const Graph &graph, const std::vect
             }
         }
     }
-    return count > 0 ? static_cast<double>(sum) / count : 0.0;
+    return std::make_pair(2, count > 0 ? static_cast<double>(sum) / count : 0.0);
 }
 
-int MSTAnalysis::findShortestMSTEdge(const std::vector<std::pair<int, std::pair<int, int>>> &mst)
+std::pair<int, double> MSTAnalysis::findShortestMSTEdge(const std::vector<std::pair<int, std::pair<int, int>>> &mst)
 {
     if (mst.empty())
-        return 0;
+    {
+        return std::make_pair(3, 0);
+    }
 
     int shortestEdge = std::numeric_limits<int>::max();
     for (const auto &edge : mst)
     {
         shortestEdge = std::min(shortestEdge, edge.first);
     }
-    return shortestEdge;
-}
-
-// returning all the function in this object
-// return type is: const std::vector<std::function<void(void *)>>
-auto MSTAnalysis::getPipelineFunctions()
-{
-    std::vector<std::function<void(void *)>> functions;
-    functions.push_back(&MSTAnalysis::calculateTotalWeight);
-    functions.push_back(&MSTAnalysis::findLongestDistance);
-    functions.push_back(&MSTAnalysis::calculateAverageDistance);
-    functions.push_back(&MSTAnalysis::findShortestMSTEdge);
-    return functions;
+    return std::make_pair(3, shortestEdge);
 }

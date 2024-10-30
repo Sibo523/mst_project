@@ -171,7 +171,7 @@ std::string Server::handleRequest(const std::string &request, int clientSocket)
             // reveive the choice of the user and solve the mst
             std::string choice = getClientInput(clientSocket);
             choice = trimString(choice);
-            std::string result = solveMST(algorithm, choice[0] - '0');
+            std::string result = solveMST(algorithm, choice[0] - '0', clientSocket);
             std::cout << "MST result: " << result << std::endl;
             return result;
         }
@@ -251,7 +251,7 @@ void Server::updateGraph(const std::string &changes)
 }
 // solve the MST problem with the given algorithm
 // main part of the server/project
-std::string Server::solveMST(const std::string &algorithm, int choice)
+std::string Server::solveMST(const std::string &algorithm, int choice, int clientSocket)
 {
     std::cout << "Solving MST with algorithm: " << algorithm << std::endl;
 
@@ -281,12 +281,12 @@ std::string Server::solveMST(const std::string &algorithm, int choice)
         {
         case 1:
             // LeaderFollower
-            result = threadPool.processMST(mst);
+            threadPool.processMST(mst);
             break;
 
         case 2:
             // Pipeline
-            result = pipeline.execute(mst);
+            pipeline.execute(mst, clientSocket);
             break;
 
         default:
