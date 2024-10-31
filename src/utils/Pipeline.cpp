@@ -119,8 +119,8 @@ std::string Pipeline::getResult()
 {
     while (ans[3] == 0)
     {
-        continue;
-    }
+    } // wait for it to fill up.
+
     std::string msg = format_msg();
     for (int i = 0; i < 4; i++)
     {
@@ -131,7 +131,7 @@ std::string Pipeline::getResult()
 
 std::string Pipeline::format_msg()
 {
-    return "New message \nTotal weight: " + std::to_string(ans[0]) + "Longest distance: " +
-           std::to_string(ans[1]) + "Average distance: " + std::to_string(ans[2]) +
-           "Shortest MST edge: " + std::to_string(ans[3]) + "\n";
+    return "New message \nTotal weight: " + std::to_string(ans[0]) + "\nLongest distance: " +
+           std::to_string(ans[1]) + "\nAverage distance: " + std::to_string(ans[2]) +
+           "\nShortest MST edge: " + std::to_string(ans[3]) + "\n";
 }

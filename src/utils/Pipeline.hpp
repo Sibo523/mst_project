@@ -24,31 +24,32 @@ public:
     std::string getResult();
 
 private:
+ 
     class ActiveObject
     {
-        public:
-            ActiveObject(std::function<std::pair<int, double>(const std::vector<std::pair<int, std::pair<int, int>>> &)> func)
-                : function(std::move(func)), shouldStop(false) {}
+    public:
+        ActiveObject(std::function<std::pair<int, double>(const std::vector<std::pair<int, std::pair<int, int>>> &)> func)
+            : function(std::move(func)), shouldStop(false) {}
 
-            // Delete copy constructor and assignment operator
-            ActiveObject(const ActiveObject &) = delete;
-            ActiveObject &operator=(const ActiveObject &) = delete;
+        // Delete copy constructor and assignment operator
+        ActiveObject(const ActiveObject &) = delete;
+        ActiveObject &operator=(const ActiveObject &) = delete;
 
-            // Add move constructor and assignment operator
-            ActiveObject(ActiveObject &&) = default;
-            ActiveObject &operator=(ActiveObject &&) = default;
+        // Add move constructor and assignment operator
+        ActiveObject(ActiveObject &&) = default;
+        ActiveObject &operator=(ActiveObject &&) = default;
 
-            std::function<std::pair<int, double>(const std::vector<std::pair<int, std::pair<int, int>>> &)> function;
-            std::thread thread;
-            std::mutex mutex;
-            std::condition_variable condition;
-            std::queue<std::vector<std::pair<int, std::pair<int, int>>>> taskQueue;
-            bool shouldStop;
+        std::function<std::pair<int, double>(const std::vector<std::pair<int, std::pair<int, int>>> &)> function;
+        std::thread thread;
+        std::mutex mutex;
+        std::condition_variable condition;
+        std::queue<std::vector<std::pair<int, std::pair<int, int>>>> taskQueue;
+        bool shouldStop;
     };
-    
-    std::vector<double> ans;
+       std::vector<double> ans;
     std::string format_msg();
     std::vector<std::unique_ptr<ActiveObject>> activeObjects;
     bool isStarted = false;
+
 };
 ;
