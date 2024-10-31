@@ -5,17 +5,18 @@
 #include <sstream>
 #include <unistd.h>
 #include <cstring>
+#include <time.h>
 
 Server::Server(int port, int threads)
     : currentGraph(0),
       threadPool(threads),
-      pipeline(),
+      pipeline(MSTAnalysis::getPipelineFunctions()),
       port(port),
       running(false)
 {
-    Pipeline(MSTAnalysis::getPipelineFunctions());
-    threadPool = LeaderFollowerThreadPool(threads);
+    pipeline.start();
 }
+
 void Server::start()
 {
     serverSocket = socket(AF_INET, SOCK_STREAM, 0);
@@ -66,19 +67,21 @@ void Server::start()
         }
 
         std::cout << "Accepted new client connection\n";
-
-        threadPool.enqueue([this, clientSocket]()
-                           { this->handleClient(clientSocket); });
+        handleClient(clientSocket);
+        // threadPool.enqueue([this, clientSocket]()
+        //                    { this->handleClient(clientSocket); });
     }
 }
 
 void Server::handleClient(int clientSocket)
 {
+    std::cout << "got to here";
     char buffer[1024] = {0};
     while (true)
     {
         memset(buffer, 0, sizeof(buffer));
-        sendMessage(clientSocket, "Enter command:\n");
+        sendMessage(clientSocket, "Enter command:\n addGraph, solveMST");
+
         int valread = read(clientSocket, buffer, 1024);
         if (valread <= 0)
         {
@@ -281,12 +284,15 @@ std::string Server::solveMST(const std::string &algorithm, int choice, int clien
         {
         case 1:
             // LeaderFollower
-            threadPool.processMST(mst);
+            // threadPool.processMST(mst);
             break;
 
         case 2:
             // Pipeline
-            pipeline.execute(mst, clientSocket);
+
+            pipeline.execute(mst);
+            sleep(1); // 
+            result = pipeline.getResult();
             break;
 
         default:

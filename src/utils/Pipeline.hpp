@@ -9,36 +9,46 @@
 #include <iostream>
 #include <sstream>
 #include <string>
+#include <memory>
 
 class Pipeline
 {
 public:
-    Pipeline(const std::vector<std::function<std::vector<std::pair<int, std::pair<int, int>>>>>& functions);
+    Pipeline(const std::vector<std::function<std::pair<int, double>(const std::vector<std::pair<int, std::pair<int, int>>> &)>> &functions);
     Pipeline() = default;
     ~Pipeline();
 
-    void start();                                                                     // Start the pipeline
-    void stop();                                                                      // Stop the pipeline
-    void execute(std::vector<std::pair<int, std::pair<int, int>>>, int clientSocket); // Execute the pipeline with data
+    void start();
+    void stop();
+    void execute(std::vector<std::pair<int, std::pair<int, int>>> data);
+    std::string getResult();
 
 private:
-    struct ActiveObject
+    class ActiveObject
     {
-        ActiveObject(std::function<void(std::pair<int, double>)> func)
-            : function(func), shouldStop(false) {}
+        public:
+            ActiveObject(std::function<std::pair<int, double>(const std::vector<std::pair<int, std::pair<int, int>>> &)> func)
+                : function(std::move(func)), shouldStop(false) {}
 
-        std::function<void(std::pair<int, double>)> function;
-        std::thread thread;
-        std::mutex mutex;
-        std::condition_variable condition;
-        std::queue<std::vector<std::pair<int, std::pair<int, int>>>> taskQueue; // Queue to store tasks/data
-        bool shouldStop;
-        int clientSocket;
-        std::vector<double> ans{0, 0, 0, 0};
+            // Delete copy constructor and assignment operator
+            ActiveObject(const ActiveObject &) = delete;
+            ActiveObject &operator=(const ActiveObject &) = delete;
+
+            // Add move constructor and assignment operator
+            ActiveObject(ActiveObject &&) = default;
+            ActiveObject &operator=(ActiveObject &&) = default;
+
+            std::function<std::pair<int, double>(const std::vector<std::pair<int, std::pair<int, int>>> &)> function;
+            std::thread thread;
+            std::mutex mutex;
+            std::condition_variable condition;
+            std::queue<std::vector<std::pair<int, std::pair<int, int>>>> taskQueue;
+            bool shouldStop;
     };
-
-    std::string format_msg(ActiveObject &ao);
-
-    std::vector<ActiveObject> activeObjects; // Vector of active objects (pipeline stages)
+    
+    std::vector<double> ans;
+    std::string format_msg();
+    std::vector<std::unique_ptr<ActiveObject>> activeObjects;
     bool isStarted = false;
 };
+;

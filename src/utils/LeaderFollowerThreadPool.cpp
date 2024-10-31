@@ -1,3 +1,5 @@
+
+#include "LeaderFollowerThreadPool.hpp"
 void LeaderFollowerThreadPool::workerThread(size_t id)
 {
     while (true)
@@ -38,27 +40,35 @@ std::string LeaderFollowerThreadPool::processMST(const std::vector<std::pair<int
     }
 
     std::stringstream result;
-    std::vector<std::future<std::string>> futures;
+    std::vector<std::future<std::pair<int, double>>> futures;
 
     // Enqueue MST analysis tasks
     futures.push_back(enqueue([&mst]()
-                              { return "Total Weight: " + std::to_string(MSTAnalysis::calculateTotalWeight(mst)); }));
+                              { return MSTAnalysis::calculateTotalWeight(mst); }));
 
     futures.push_back(enqueue([&mst]()
-                              { return "Longest Distance: " + std::to_string(MSTAnalysis::findLongestDistance(currentGraph, mst)); }));
+                              { return MSTAnalysis::findLongestDistance(mst); }));
 
     futures.push_back(enqueue([&mst]()
-                              { return "Average Distance: " + std::to_string(MSTAnalysis::calculateAverageDistance(currentGraph, mst)); }));
+                              { return MSTAnalysis::calculateAverageDistance(mst); }));
 
     futures.push_back(enqueue([&mst]()
-                              { return "Shortest Edge: " + std::to_string(MSTAnalysis::findShortestMSTEdge(mst)); }));
+                              { return MSTAnalysis::findShortestMSTEdge(mst); }));
 
     // Collect results
-    for (auto &future : futures)
+    std::vector<std::pair<std::string, double>> results = {
+        {"Total Weight: ", 0.0},
+        {"Longest Distance: ", 0.0},
+        {"Average Distance: ", 0.0},
+        {"Shortest Edge: ", 0.0}};
+
+    // Collect and order results
+    for (size_t i = 0; i < futures.size(); ++i)
     {
         try
         {
-            result << future.get() << "\n";
+            auto [index, value] = futures[i].get();
+            results[index].second = value;
         }
         catch (const std::exception &e)
         {
@@ -66,26 +76,11 @@ std::string LeaderFollowerThreadPool::processMST(const std::vector<std::pair<int
         }
     }
 
-    return result.str();
-}
-
-template <class F>
-auto enqueue(F &&f) -> std::future<typename std::result_of<F()>::type>
-{
-    using return_type = typename std::result_of<F()>::type;
-
-    auto task = std::make_shared<std::packaged_task<return_type()>>(std::forward<F>(f));
-    std::future<return_type> res = task->get_future();
-
+    // Format results in order
+    for (const auto &[label, value] : results)
     {
-        std::unique_lock<std::mutex> lock(queue_mutex);
-        if (stop)
-        {
-            throw std::runtime_error("enqueue on stopped ThreadPool");
-        }
-        tasks.emplace([task]()
-                      { (*task)(); });
+        result << label << value << "\n";
     }
-    condition.notify_one();
-    return res;
+
+    return result.str();
 }

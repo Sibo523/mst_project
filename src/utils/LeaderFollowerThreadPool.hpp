@@ -1,3 +1,4 @@
+// LeaderFollowerThreadPool.hpp
 #pragma once
 #include <vector>
 #include <queue>
@@ -8,6 +9,8 @@
 #include <future>
 #include <atomic>
 #include <sstream>
+#include <string>
+#include "../analysis/MSTAnalysis.hpp" // Add this include
 
 class LeaderFollowerThreadPool
 {
@@ -38,9 +41,35 @@ public:
         }
     }
 
+    // Template function for enqueueing tasks
+    template <class F>
+    auto enqueue(F &&f) -> std::future<typename std::invoke_result<F>::type>
+    {                                                             // Updated to use invoke_result
+        using return_type = typename std::invoke_result<F>::type; // Updated from result_of
+
+        auto task = std::make_shared<std::packaged_task<return_type()>>(std::forward<F>(f));
+        std::future<return_type> res = task->get_future();
+
+        {
+            std::unique_lock<std::mutex> lock(queue_mutex);
+            if (stop)
+            {
+                throw std::runtime_error("enqueue on stopped ThreadPool");
+            }
+            tasks.emplace([task]()
+                          { (*task)(); });
+        }
+        condition.notify_one();
+        return res;
+    }
+
     // Main method to process MST results
     std::string processMST(const std::vector<std::pair<int, std::pair<int, int>>> &mst);
-   
+
+    // Assignment operator
+    LeaderFollowerThreadPool &operator=(const LeaderFollowerThreadPool &other) = delete; // Better to delete it
+    LeaderFollowerThreadPool(const LeaderFollowerThreadPool &other) = delete;            // Delete copy constructor too
+
 private:
     void workerThread(size_t id);
 

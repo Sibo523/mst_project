@@ -7,11 +7,17 @@
 
 struct MSTAnalysis
 {
+    static std::vector<std::function<std::pair<int, double>(const std::vector<std::pair<int, std::pair<int, int>>> &)>> getPipelineFunctions()
+    {
+        return {
+            calculateTotalWeight,
+            findLongestDistance,
+            calculateAverageDistance,
+            findShortestMSTEdge};
+    }
 
-    std::vector<std::pair<int, std::pair<int, int>>> mstEdges;
     static std::pair<int, double> calculateTotalWeight(const std::vector<std::pair<int, std::pair<int, int>>> &mst);
     static std::pair<int, double> findLongestDistance(const std::vector<std::pair<int, std::pair<int, int>>> &mst);
     static std::pair<int, double> calculateAverageDistance(const std::vector<std::pair<int, std::pair<int, int>>> &mst);
     static std::pair<int, double> findShortestMSTEdge(const std::vector<std::pair<int, std::pair<int, int>>> &mst);
-    static std::vector<std::function<void(void *)>> getPipelineFunctions();
 };
