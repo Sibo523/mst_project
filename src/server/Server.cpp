@@ -10,6 +10,7 @@
 Server::Server(int port, int threads)
     : currentGraph(0),
       threadPool(threads),
+      troll(10),
       pipeline(MSTAnalysis::getPipelineFunctions()),
       port(port),
       running(false)
@@ -67,9 +68,8 @@ void Server::start()
         }
 
         std::cout << "Accepted new client connection\n";
-        handleClient(clientSocket);
-        // threadPool.enqueue([this, clientSocket]()
-        //                    { this->handleClient(clientSocket); });
+        troll.enqueue([this, clientSocket]()
+                      { this->handleClient(clientSocket); });
     }
 }
 
@@ -107,6 +107,7 @@ void Server::stop()
     running = false;
     close(serverSocket);
 }
+
 // handle the requests of the user and return the response
 std::string Server::handleRequest(const std::string &request, int clientSocket)
 {
@@ -284,14 +285,12 @@ std::string Server::solveMST(const std::string &algorithm, int choice, int clien
         {
         case 1:
             // LeaderFollower
-            // threadPool.processMST(mst);
+            result = threadPool.processMST(mst);
             break;
 
         case 2:
             // Pipeline
-
             pipeline.execute(mst);
-            sleep(1); // 
             result = pipeline.getResult();
             break;
 

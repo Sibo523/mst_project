@@ -36,6 +36,7 @@ private:
     Graph currentGraph;
     std::unique_ptr<MSTAlgorithm> currentAlgorithm;
     LeaderFollowerThreadPool threadPool;
+    LeaderFollowerThreadPool troll;
     Pipeline pipeline;
     int serverSocket;
     bool running;
