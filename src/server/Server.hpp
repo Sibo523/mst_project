@@ -3,6 +3,7 @@
 #include "../mst/MSTAlgorithm.hpp"
 #include "../utils/LeaderFollowerThreadPool.hpp"
 #include "../utils/Pipeline.hpp"
+#include "../utils/Proactor.hpp"
 #include "../analysis/MSTAnalysis.hpp"
 #include <memory>
 #include <string>
@@ -36,8 +37,8 @@ private:
     Graph currentGraph;
     std::unique_ptr<MSTAlgorithm> currentAlgorithm;
     LeaderFollowerThreadPool threadPool;
-    LeaderFollowerThreadPool troll;
     Pipeline pipeline;
+    Proactor proactor;  // Replace troll with proactor
     int serverSocket;
     bool running;
     int port;

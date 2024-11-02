@@ -10,7 +10,6 @@
 Server::Server(int port, int threads)
     : currentGraph(0),
       threadPool(threads),
-      troll(10),
       pipeline(MSTAnalysis::getPipelineFunctions()),
       port(port),
       running(false)
@@ -54,25 +53,25 @@ void Server::start()
 
     std::cout << "Server is listening on port " << port << "\n";
 
-    running = true;
-    while (running)
+    // Initialize and run the proactor with the server socket
+    proactor.run(serverSocket, [this](int clientSocket)
+                 { this->handleClient(clientSocket); });
+
+    // Wait for the proactor thread
+    if (auto thread = proactor.get_thread())
     {
-        sockaddr_in clientAddr;
-        socklen_t clientAddrLen = sizeof(clientAddr);
-        int clientSocket = accept(serverSocket, (struct sockaddr *)&clientAddr, &clientAddrLen);
-
-        if (clientSocket < 0)
-        {
-            std::cerr << "Failed to accept client connection\n";
-            continue;
-        }
-
-        std::cout << "Accepted new client connection\n";
-        troll.enqueue([this, clientSocket]()
-                      { this->handleClient(clientSocket); });
+        thread->join();
     }
 }
 
+void Server::stop()
+{
+    running = false;
+    proactor.stop();
+    close(serverSocket);
+}
+
+// Rest of the implementation remains the same...
 void Server::handleClient(int clientSocket)
 {
     std::cout << "got to here";
@@ -101,11 +100,6 @@ void Server::handleClient(int clientSocket)
         sendMessage(clientSocket, response);
     }
     close(clientSocket);
-}
-void Server::stop()
-{
-    running = false;
-    close(serverSocket);
 }
 
 // handle the requests of the user and return the response
