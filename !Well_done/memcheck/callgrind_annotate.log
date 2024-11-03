@@ -1,0 +1,1900 @@
+--------------------------------------------------------------------------------
+Profile data file 'build/memcheck/callgrind.log' (creator: callgrind-3.23.0)
+--------------------------------------------------------------------------------
+I1 cache: 
+D1 cache: 
+LL cache: 
+Timerange: Basic block 0 - 41079724
+Trigger: Program termination
+Profiled target:  ./build/bin/test_mst_project (PID 439409, part 1)
+Events recorded:  Ir
+Events shown:     Ir
+Event sort order: Ir
+Thresholds:       99
+Include dirs:     
+User annotated:   
+Auto-annotation:  on
+
+--------------------------------------------------------------------------------
+Ir                   
+--------------------------------------------------------------------------------
+275,638,786 (100.0%)  PROGRAM TOTALS
+
+--------------------------------------------------------------------------------
+Ir                   file:function
+--------------------------------------------------------------------------------
+75,026,812 (27.22%)  /usr/include/c++/14.2.1/bits/stl_vector.h:std::vector<std::vector<int, std::allocator<int> >, std::allocator<std::vector<int, std::allocator<int> > > >::operator[](unsigned long) [/home/sibo/Desktop/Year_2_B/Maharahot_hafhala/need_to_do/mst_project/build/bin/test_mst_project]
+58,953,576 (21.39%)  /usr/include/c++/14.2.1/bits/stl_vector.h:std::vector<int, std::allocator<int> >::operator[](unsigned long) [/home/sibo/Desktop/Year_2_B/Maharahot_hafhala/need_to_do/mst_project/build/bin/test_mst_project]
+48,010,622 (17.42%)  src/analysis/MSTAnalysis.cpp:MSTAnalysis::findLongestDistance(std::vector<std::pair<int, std::pair<int, int> >, std::allocator<std::pair<int, std::pair<int, int> > > > const&) [/home/sibo/Desktop/Year_2_B/Maharahot_hafhala/need_to_do/mst_project/build/bin/test_mst_project]
+47,990,252 (17.41%)  src/analysis/MSTAnalysis.cpp:MSTAnalysis::calculateAverageDistance(std::vector<std::pair<int, std::pair<int, int> >, std::allocator<std::pair<int, std::pair<int, int> > > > const&) [/home/sibo/Desktop/Year_2_B/Maharahot_hafhala/need_to_do/mst_project/build/bin/test_mst_project]
+15,666,165 ( 5.68%)  /usr/include/c++/14.2.1/limits:std::numeric_limits<int>::max() [/home/sibo/Desktop/Year_2_B/Maharahot_hafhala/need_to_do/mst_project/build/bin/test_mst_project]
+12,233,822 ( 4.44%)  src/utils/Proactor.cpp:Proactor::workerThread() [/home/sibo/Desktop/Year_2_B/Maharahot_hafhala/need_to_do/mst_project/build/bin/test_mst_project]
+ 7,753,391 ( 2.81%)  /usr/src/debug/glibc/glibc/misc/../sysdeps/unix/sysv/linux/select.c:select [/usr/lib/libc.so.6]
+ 1,382,720 ( 0.50%)  /usr/src/debug/glibc/glibc/nptl/cancellation.c:__pthread_enable_asynccancel [/usr/lib/libc.so.6]
+ 1,296,255 ( 0.47%)  /usr/src/debug/glibc/glibc/nptl/cancellation.c:__pthread_disable_asynccancel [/usr/lib/libc.so.6]
+ 1,224,200 ( 0.44%)  /usr/src/debug/glibc/glibc/elf/dl-lookup.c:do_lookup_x [/usr/lib/ld-linux-x86-64.so.2]
+   967,426 ( 0.35%)  /usr/src/debug/glibc/glibc/elf/../sysdeps/generic/dl-new-hash.h:_dl_lookup_symbol_x
+   365,648 ( 0.13%)  /usr/src/debug/glibc/glibc/elf/dl-lookup.c:_dl_lookup_symbol_x [/usr/lib/ld-linux-x86-64.so.2]
+   267,935 ( 0.10%)  /usr/src/debug/glibc/glibc/elf/dl-reloc.c:_dl_relocate_object [/usr/lib/ld-linux-x86-64.so.2]
+   212,274 ( 0.08%)  /usr/src/debug/glibc/glibc/elf/dl-lookup.c:check_match [/usr/lib/ld-linux-x86-64.so.2]
+   185,056 ( 0.07%)  /usr/src/debug/glibc/glibc/elf/../sysdeps/x86_64/dl-machine.h:_dl_relocate_object
+   172,840 ( 0.06%)  /usr/src/debug/glibc/glibc/nptl/../nptl/descr.h:__pthread_enable_asynccancel
+   162,919 ( 0.06%)  /usr/src/debug/glibc/glibc/elf/do-rel.h:_dl_relocate_object
+   161,632 ( 0.06%)  /usr/src/debug/glibc/glibc/string/../sysdeps/x86_64/multiarch/../multiarch/strcmp-sse2.S:strcmp [/usr/lib/ld-linux-x86-64.so.2]
+   119,975 ( 0.04%)  /usr/src/debug/glibc/glibc/malloc/malloc.c:_int_free [/usr/lib/libc.so.6]
+   111,312 ( 0.04%)  /usr/src/debug/glibc/glibc/malloc/malloc.c:_int_malloc [/usr/lib/libc.so.6]
+   107,182 ( 0.04%)  /usr/src/debug/gtest/googletest-1.15.2/googletest/src/gtest.cc:__gnu_cxx::__normal_iterator<std::__cxx11::basic_string<char, std::char_traits<char>, std::allocator<char> > const*, std::vector<std::__cxx11::basic_string<char, std::char_traits<char>, std::allocator<char> >, std::allocator<std::__cxx11::basic_string<char, std::char_traits<char>, std::allocator<char> > > > > std::__find_if<__gnu_cxx::__normal_iterator<std::__cxx11::basic_string<char, std::char_traits<char>, std::allocator<char> > const*, std::vector<std::__cxx11::basic_string<char, std::char_traits<char>, std::allocator<char> >, std::allocator<std::__cxx11::basic_string<char, std::char_traits<char>, std::allocator<char> > > > >, __gnu_cxx::__ops::_Iter_pred<testing::internal::(anonymous namespace)::UnitTestFilter::MatchesName(std::__cxx11::basic_string<char, std::char_traits<char>, std::allocator<char> > const&) const::{lambda(std::__cxx11::basic_string<char, std::char_traits<char>, std::allocator<char> > const&)#1}> >(__gnu_cxx::__normal_iterator<std::__cxx11::basic_string<char, std::char_traits<char>, std::allocator<char> > const*, std::vector<std::__cxx11::basic_string<char, std::char_traits<char>, std::allocator<char> >, std::allocator<std::__cxx11::basic_string<char, std::char_traits<char>, std::allocator<char> > > > >, __gnu_cxx::__normal_iterator<std::__cxx11::basic_string<char, std::char_traits<char>, std::allocator<char> > const*, std::vector<std::__cxx11::basic_string<char, std::char_traits<char>, std::allocator<char> >, std::allocator<std::__cxx11::basic_string<char, std::char_traits<char>, std::allocator<char> > > > >, __gnu_cxx::__ops::_Iter_pred<testing::internal::(anonymous namespace)::UnitTestFilter::MatchesName(std::__cxx11::basic_string<char, std::char_traits<char>, std::allocator<char> > const&) const::{lambda(std::__cxx11::basic_string<char, std::char_traits<char>, std::allocator<char> > const&)#1}>, std::random_access_iterator_tag) [clone .isra.0]
+    83,438 ( 0.03%)  /usr/src/debug/glibc/glibc/malloc/malloc.c:malloc [/usr/lib/libc.so.6]
+    83,079 ( 0.03%)  /usr/src/debug/glibc/glibc/libio/fileops.c:_IO_file_xsputn@@GLIBC_2.2.5 [/usr/lib/libc.so.6]
+    66,479 ( 0.02%)  /usr/include/c++/14.2.1/bits/stl_algobase.h:int const& std::max<int>(int const&, int const&) [/home/sibo/Desktop/Year_2_B/Maharahot_hafhala/need_to_do/mst_project/build/bin/test_mst_project]
+    62,819 ( 0.02%)  /usr/src/debug/glibc/glibc/stdio-common/vfprintf-internal.c:__printf_buffer [/usr/lib/libc.so.6]
+    61,623 ( 0.02%)  /usr/src/debug/glibc/glibc/stdio-common/Xprintf_buffer_write.c:__printf_buffer_write [/usr/lib/libc.so.6]
+    59,684 ( 0.02%)  /usr/src/debug/glibc/glibc/malloc/malloc.c:free [/usr/lib/libc.so.6]
+    55,483 ( 0.02%)  /usr/src/debug/glibc/glibc/string/../sysdeps/x86_64/multiarch/memmove-vec-unaligned-erms.S:__memcpy_avx_unaligned_erms [/usr/lib/libc.so.6]
+    55,079 ( 0.02%)  /usr/src/debug/glibc/glibc/stdio-common/vfprintf-internal.c:__vfprintf_internal [/usr/lib/libc.so.6]
+
+--------------------------------------------------------------------------------
+-- Auto-annotated source: src/analysis/MSTAnalysis.cpp
+--------------------------------------------------------------------------------
+Ir                  
+
+         .           #include "MSTAnalysis.hpp"
+         .           #include <algorithm>
+         .           #include <limits>
+         .           #include <queue>
+         .           #include <vector>
+         .           #include <iostream>
+         .           
+         .           std::pair<int, double> MSTAnalysis::calculateTotalWeight(const std::vector<std::pair<int, std::pair<int, int>>> &mst)
+        77 ( 0.00%)  {
+        55 ( 0.00%)      if (mst.empty())
+     1,265 ( 0.00%)  => /usr/include/c++/14.2.1/bits/stl_vector.h:std::vector<std::pair<int, std::pair<int, int> >, std::allocator<std::pair<int, std::pair<int, int> > > >::empty() const (11x)
+         .               {
+        11 ( 0.00%)          std::cerr << "Warning: Empty MST passed to calculateTotalWeight" << std::endl;
+     1,034 ( 0.00%)  => /usr/src/debug/gcc/gcc-build/x86_64-pc-linux-gnu/libstdc++-v3/include/ostream:std::ostream::operator<<(std::ostream& (*)(std::ostream&)) (1x)
+       762 ( 0.00%)  => /usr/src/debug/gcc/gcc-build/x86_64-pc-linux-gnu/libstdc++-v3/include/ostream:std::basic_ostream<char, std::char_traits<char> >& std::operator<< <std::char_traits<char> >(std::basic_ostream<char, std::char_traits<char> >&, char const*) (1x)
+        16 ( 0.00%)          return std::make_pair(0, 0);
+        35 ( 0.00%)  => /usr/include/c++/14.2.1/bits/stl_pair.h:std::pair<int, double>::pair<int, int, true>(std::pair<int, int>&&) (1x)
+        74 ( 0.00%)  => /usr/include/c++/14.2.1/bits/stl_pair.h:std::pair<std::__strip_reference_wrapper<std::decay<int>::type>::__type, std::__strip_reference_wrapper<std::decay<int>::type>::__type> std::make_pair<int, int>(int&&, int&&) (1x)
+         .               }
+         .           
+        10 ( 0.00%)      int totalWeight = 0;
+     1,958 ( 0.00%)      for (const auto &edge : mst)
+     4,247 ( 0.00%)  => /usr/include/c++/14.2.1/bits/stl_iterator.h:bool __gnu_cxx::operator!=<std::pair<int, std::pair<int, int> > const*, std::vector<std::pair<int, std::pair<int, int> >, std::allocator<std::pair<int, std::pair<int, int> > > > >(__gnu_cxx::__normal_iterator<std::pair<int, std::pair<int, int> > const*, std::vector<std::pair<int, std::pair<int, int> >, std::allocator<std::pair<int, std::pair<int, int> > > > > const&, __gnu_cxx::__normal_iterator<std::pair<int, std::pair<int, int> > const*, std::vector<std::pair<int, std::pair<int, int> >, std::allocator<std::pair<int, std::pair<int, int> > > > > const&) (137x)
+     1,397 ( 0.00%)  => /usr/include/c++/14.2.1/bits/stl_iterator.h:__gnu_cxx::__normal_iterator<std::pair<int, std::pair<int, int> > const*, std::vector<std::pair<int, std::pair<int, int> >, std::allocator<std::pair<int, std::pair<int, int> > > > >::operator++() (127x)
+       889 ( 0.00%)  => /usr/include/c++/14.2.1/bits/stl_iterator.h:__gnu_cxx::__normal_iterator<std::pair<int, std::pair<int, int> > const*, std::vector<std::pair<int, std::pair<int, int> >, std::allocator<std::pair<int, std::pair<int, int> > > > >::operator*() const (127x)
+       300 ( 0.00%)  => /usr/include/c++/14.2.1/bits/stl_vector.h:std::vector<std::pair<int, std::pair<int, int> >, std::allocator<std::pair<int, std::pair<int, int> > > >::end() const (10x)
+       290 ( 0.00%)  => /usr/include/c++/14.2.1/bits/stl_vector.h:std::vector<std::pair<int, std::pair<int, int> >, std::allocator<std::pair<int, std::pair<int, int> > > >::begin() const (10x)
+         .               {
+       508 ( 0.00%)          if (edge.first < 0)
+         .                   {
+        11 ( 0.00%)              std::cerr << "Warning: Negative weight encountered in MST" << std::endl;
+     1,034 ( 0.00%)  => /usr/src/debug/gcc/gcc-build/x86_64-pc-linux-gnu/libstdc++-v3/include/ostream:std::ostream::operator<<(std::ostream& (*)(std::ostream&)) (1x)
+       706 ( 0.00%)  => /usr/src/debug/gcc/gcc-build/x86_64-pc-linux-gnu/libstdc++-v3/include/ostream:std::basic_ostream<char, std::char_traits<char> >& std::operator<< <std::char_traits<char> >(std::basic_ostream<char, std::char_traits<char> >&, char const*) (1x)
+         1 ( 0.00%)              continue;
+         .                   }
+       630 ( 0.00%)          totalWeight += edge.first;
+         .               }
+       140 ( 0.00%)      return std::make_pair(0, totalWeight);
+       740 ( 0.00%)  => /usr/include/c++/14.2.1/bits/stl_pair.h:std::pair<std::__strip_reference_wrapper<std::decay<int>::type>::__type, std::__strip_reference_wrapper<std::decay<int&>::type>::__type> std::make_pair<int, int&>(int&&, int&) (10x)
+       350 ( 0.00%)  => /usr/include/c++/14.2.1/bits/stl_pair.h:std::pair<int, double>::pair<int, int, true>(std::pair<int, int>&&) (10x)
+        88 ( 0.00%)  }
+         .           
+         .           std::pair<int, double> MSTAnalysis::findLongestDistance(const std::vector<std::pair<int, std::pair<int, int>>> &mst)
+       100 ( 0.00%)  {
+        70 ( 0.00%)      int V = mst.size() + 1;
+       130 ( 0.00%)  => /usr/include/c++/14.2.1/bits/stl_vector.h:std::vector<std::pair<int, std::pair<int, int> >, std::allocator<std::pair<int, std::pair<int, int> > > >::size() const (10x)
+       190 ( 0.00%)      std::vector<std::vector<int>> dist(V, std::vector<int>(V, std::numeric_limits<int>::max()));
+        50 ( 0.00%)  => /usr/include/c++/14.2.1/limits:std::numeric_limits<int>::max() (10x)
+   116,647 ( 0.04%)  => /usr/include/c++/14.2.1/bits/stl_vector.h:std::vector<std::vector<int, std::allocator<int> >, std::allocator<std::vector<int, std::allocator<int> > > >::vector(unsigned long, std::vector<int, std::allocator<int> > const&, std::allocator<std::vector<int, std::allocator<int> > > const&) (10x)
+     8,493 ( 0.00%)  => /usr/include/c++/14.2.1/bits/stl_vector.h:std::vector<int, std::allocator<int> >::vector(unsigned long, int const&, std::allocator<int> const&) (10x)
+     2,278 ( 0.00%)  => /usr/include/c++/14.2.1/bits/stl_vector.h:std::vector<int, std::allocator<int> >::~vector() (10x)
+         .           
+         .               // Initialize distances with MST edges
+     1,958 ( 0.00%)      for (const auto &edge : mst)
+     4,247 ( 0.00%)  => /usr/include/c++/14.2.1/bits/stl_iterator.h:bool __gnu_cxx::operator!=<std::pair<int, std::pair<int, int> > const*, std::vector<std::pair<int, std::pair<int, int> >, std::allocator<std::pair<int, std::pair<int, int> > > > >(__gnu_cxx::__normal_iterator<std::pair<int, std::pair<int, int> > const*, std::vector<std::pair<int, std::pair<int, int> >, std::allocator<std::pair<int, std::pair<int, int> > > > > const&, __gnu_cxx::__normal_iterator<std::pair<int, std::pair<int, int> > const*, std::vector<std::pair<int, std::pair<int, int> >, std::allocator<std::pair<int, std::pair<int, int> > > > > const&) (137x)
+     1,397 ( 0.00%)  => /usr/include/c++/14.2.1/bits/stl_iterator.h:__gnu_cxx::__normal_iterator<std::pair<int, std::pair<int, int> > const*, std::vector<std::pair<int, std::pair<int, int> >, std::allocator<std::pair<int, std::pair<int, int> > > > >::operator++() (127x)
+       889 ( 0.00%)  => /usr/include/c++/14.2.1/bits/stl_iterator.h:__gnu_cxx::__normal_iterator<std::pair<int, std::pair<int, int> > const*, std::vector<std::pair<int, std::pair<int, int> >, std::allocator<std::pair<int, std::pair<int, int> > > > >::operator*() const (127x)
+       300 ( 0.00%)  => /usr/include/c++/14.2.1/bits/stl_vector.h:std::vector<std::pair<int, std::pair<int, int> >, std::allocator<std::pair<int, std::pair<int, int> > > >::end() const (10x)
+       290 ( 0.00%)  => /usr/include/c++/14.2.1/bits/stl_vector.h:std::vector<std::pair<int, std::pair<int, int> >, std::allocator<std::pair<int, std::pair<int, int> > > >::begin() const (10x)
+         .               {
+     1,143 ( 0.00%)          int u = edge.second.first, v = edge.second.second, w = edge.first;
+     3,556 ( 0.00%)          dist[u][v] = dist[v][u] = w;
+     3,556 ( 0.00%)  => /usr/include/c++/14.2.1/bits/stl_vector.h:std::vector<std::vector<int, std::allocator<int> >, std::allocator<std::vector<int, std::allocator<int> > > >::operator[](unsigned long) (254x)
+     2,794 ( 0.00%)  => /usr/include/c++/14.2.1/bits/stl_vector.h:std::vector<int, std::allocator<int> >::operator[](unsigned long) (254x)
+         .               }
+         .           
+         .               // Floyd-Warshall algorithm to find all-pairs shortest paths
+       598 ( 0.00%)      for (int k = 0; k < V; k++)
+         .               {
+    42,065 ( 0.02%)          for (int i = 0; i < V; i++)
+         .                   {
+ 4,175,233 ( 1.51%)              for (int j = 0; j < V; j++)
+         .                       {
+17,555,396 ( 6.37%)                  if (dist[i][k] != std::numeric_limits<int>::max() &&
+14,432,278 ( 5.24%)  => /usr/include/c++/14.2.1/bits/stl_vector.h:std::vector<std::vector<int, std::allocator<int> >, std::allocator<std::vector<int, std::allocator<int> > > >::operator[](unsigned long) (1,030,877x)
+11,339,647 ( 4.11%)  => /usr/include/c++/14.2.1/bits/stl_vector.h:std::vector<int, std::allocator<int> >::operator[](unsigned long) (1,030,877x)
+ 5,154,385 ( 1.87%)  => /usr/include/c++/14.2.1/limits:std::numeric_limits<int>::max() (1,030,877x)
+11,250,522 ( 4.08%)                      dist[k][j] != std::numeric_limits<int>::max() &&
+ 7,429,548 ( 2.70%)  => /usr/include/c++/14.2.1/bits/stl_vector.h:std::vector<std::vector<int, std::allocator<int> >, std::allocator<std::vector<int, std::allocator<int> > > >::operator[](unsigned long) (530,682x)
+ 5,837,502 ( 2.12%)  => /usr/include/c++/14.2.1/bits/stl_vector.h:std::vector<int, std::allocator<int> >::operator[](unsigned long) (530,682x)
+ 2,653,410 ( 0.96%)  => /usr/include/c++/14.2.1/limits:std::numeric_limits<int>::max() (530,682x)
+14,365,040 ( 5.21%)                      dist[i][k] + dist[k][j] < dist[i][j])
+15,083,292 ( 5.47%)  => /usr/include/c++/14.2.1/bits/stl_vector.h:std::vector<std::vector<int, std::allocator<int> >, std::allocator<std::vector<int, std::allocator<int> > > >::operator[](unsigned long) (1,077,378x)
+11,851,158 ( 4.30%)  => /usr/include/c++/14.2.1/bits/stl_vector.h:std::vector<int, std::allocator<int> >::operator[](unsigned long) (1,077,378x)
+         .                           {
+   403,640 ( 0.15%)                      dist[i][j] = dist[i][k] + dist[k][j];
+   423,822 ( 0.15%)  => /usr/include/c++/14.2.1/bits/stl_vector.h:std::vector<std::vector<int, std::allocator<int> >, std::allocator<std::vector<int, std::allocator<int> > > >::operator[](unsigned long) (30,273x)
+   333,003 ( 0.12%)  => /usr/include/c++/14.2.1/bits/stl_vector.h:std::vector<int, std::allocator<int> >::operator[](unsigned long) (30,273x)
+         .                           }
+         .                       }
+         .                   }
+         .               }
+         .           
+         .               // Find the maximum distance
+        10 ( 0.00%)      int maxDist = 0;
+       598 ( 0.00%)      for (int i = 0; i < V; i++)
+         .               {
+    21,375 ( 0.01%)          for (int j = i + 1; j < V; j++)
+         .                   {
+    91,872 ( 0.03%)              if (dist[i][j] != std::numeric_limits<int>::max())
+    71,456 ( 0.03%)  => /usr/include/c++/14.2.1/bits/stl_vector.h:std::vector<std::vector<int, std::allocator<int> >, std::allocator<std::vector<int, std::allocator<int> > > >::operator[](unsigned long) (5,104x)
+    56,144 ( 0.02%)  => /usr/include/c++/14.2.1/bits/stl_vector.h:std::vector<int, std::allocator<int> >::operator[](unsigned long) (5,104x)
+    25,520 ( 0.01%)  => /usr/include/c++/14.2.1/limits:std::numeric_limits<int>::max() (5,104x)
+         .                       {
+    96,976 ( 0.04%)                  maxDist = std::max(maxDist, dist[i][j]);
+    71,456 ( 0.03%)  => /usr/include/c++/14.2.1/bits/stl_vector.h:std::vector<std::vector<int, std::allocator<int> >, std::allocator<std::vector<int, std::allocator<int> > > >::operator[](unsigned long) (5,104x)
+    56,144 ( 0.02%)  => /usr/include/c++/14.2.1/bits/stl_vector.h:std::vector<int, std::allocator<int> >::operator[](unsigned long) (5,104x)
+    66,479 ( 0.02%)  => /usr/include/c++/14.2.1/bits/stl_algobase.h:int const& std::max<int>(int const&, int const&) (5,104x)
+         .                       }
+         .                   }
+         .               }
+       160 ( 0.00%)      return std::make_pair(1, maxDist);
+       740 ( 0.00%)  => /usr/include/c++/14.2.1/bits/stl_pair.h:std::pair<std::__strip_reference_wrapper<std::decay<int>::type>::__type, std::__strip_reference_wrapper<std::decay<int&>::type>::__type> std::make_pair<int, int&>(int&&, int&) (10x)
+       350 ( 0.00%)  => /usr/include/c++/14.2.1/bits/stl_pair.h:std::pair<int, double>::pair<int, int, true>(std::pair<int, int>&&) (10x)
+       120 ( 0.00%)  }
+    49,296 ( 0.02%)  => /usr/include/c++/14.2.1/bits/stl_vector.h:std::vector<std::vector<int, std::allocator<int> >, std::allocator<std::vector<int, std::allocator<int> > > >::~vector() (10x)
+         .           
+         .           std::pair<int, double> MSTAnalysis::calculateAverageDistance(const std::vector<std::pair<int, std::pair<int, int>>> &mst)
+        90 ( 0.00%)  {
+        63 ( 0.00%)      int V = mst.size() + 1;
+       117 ( 0.00%)  => /usr/include/c++/14.2.1/bits/stl_vector.h:std::vector<std::pair<int, std::pair<int, int> >, std::allocator<std::pair<int, std::pair<int, int> > > >::size() const (9x)
+       171 ( 0.00%)      std::vector<std::vector<int>> dist(V, std::vector<int>(V, std::numeric_limits<int>::max()));
+        45 ( 0.00%)  => /usr/include/c++/14.2.1/limits:std::numeric_limits<int>::max() (9x)
+   111,580 ( 0.04%)  => /usr/include/c++/14.2.1/bits/stl_vector.h:std::vector<std::vector<int, std::allocator<int> >, std::allocator<std::vector<int, std::allocator<int> > > >::vector(unsigned long, std::vector<int, std::allocator<int> > const&, std::allocator<std::vector<int, std::allocator<int> > > const&) (9x)
+     8,366 ( 0.00%)  => /usr/include/c++/14.2.1/bits/stl_vector.h:std::vector<int, std::allocator<int> >::vector(unsigned long, int const&, std::allocator<int> const&) (9x)
+     2,055 ( 0.00%)  => /usr/include/c++/14.2.1/bits/stl_vector.h:std::vector<int, std::allocator<int> >::~vector() (9x)
+         .           
+         .               // Initialize distances with MST edges
+     1,898 ( 0.00%)      for (const auto &edge : mst)
+     4,123 ( 0.00%)  => /usr/include/c++/14.2.1/bits/stl_iterator.h:bool __gnu_cxx::operator!=<std::pair<int, std::pair<int, int> > const*, std::vector<std::pair<int, std::pair<int, int> >, std::allocator<std::pair<int, std::pair<int, int> > > > >(__gnu_cxx::__normal_iterator<std::pair<int, std::pair<int, int> > const*, std::vector<std::pair<int, std::pair<int, int> >, std::allocator<std::pair<int, std::pair<int, int> > > > > const&, __gnu_cxx::__normal_iterator<std::pair<int, std::pair<int, int> > const*, std::vector<std::pair<int, std::pair<int, int> >, std::allocator<std::pair<int, std::pair<int, int> > > > > const&) (133x)
+     1,364 ( 0.00%)  => /usr/include/c++/14.2.1/bits/stl_iterator.h:__gnu_cxx::__normal_iterator<std::pair<int, std::pair<int, int> > const*, std::vector<std::pair<int, std::pair<int, int> >, std::allocator<std::pair<int, std::pair<int, int> > > > >::operator++() (124x)
+       868 ( 0.00%)  => /usr/include/c++/14.2.1/bits/stl_iterator.h:__gnu_cxx::__normal_iterator<std::pair<int, std::pair<int, int> > const*, std::vector<std::pair<int, std::pair<int, int> >, std::allocator<std::pair<int, std::pair<int, int> > > > >::operator*() const (124x)
+       270 ( 0.00%)  => /usr/include/c++/14.2.1/bits/stl_vector.h:std::vector<std::pair<int, std::pair<int, int> >, std::allocator<std::pair<int, std::pair<int, int> > > >::end() const (9x)
+       261 ( 0.00%)  => /usr/include/c++/14.2.1/bits/stl_vector.h:std::vector<std::pair<int, std::pair<int, int> >, std::allocator<std::pair<int, std::pair<int, int> > > >::begin() const (9x)
+         .               {
+     1,116 ( 0.00%)          int u = edge.second.first, v = edge.second.second, w = edge.first;
+     3,472 ( 0.00%)          dist[u][v] = dist[v][u] = w;
+     3,472 ( 0.00%)  => /usr/include/c++/14.2.1/bits/stl_vector.h:std::vector<std::vector<int, std::allocator<int> >, std::allocator<std::vector<int, std::allocator<int> > > >::operator[](unsigned long) (248x)
+     2,728 ( 0.00%)  => /usr/include/c++/14.2.1/bits/stl_vector.h:std::vector<int, std::allocator<int> >::operator[](unsigned long) (248x)
+         .               }
+         .           
+         .               // Floyd-Warshall algorithm to find all-pairs shortest paths
+       577 ( 0.00%)      for (int k = 0; k < V; k++)
+         .               {
+    41,981 ( 0.02%)          for (int i = 0; i < V; i++)
+         .                   {
+ 4,174,897 ( 1.51%)              for (int j = 0; j < V; j++)
+         .                       {
+17,554,276 ( 6.37%)                  if (dist[i][k] != std::numeric_limits<int>::max() &&
+14,431,382 ( 5.24%)  => /usr/include/c++/14.2.1/bits/stl_vector.h:std::vector<std::vector<int, std::allocator<int> >, std::allocator<std::vector<int, std::allocator<int> > > >::operator[](unsigned long) (1,030,813x)
+11,338,943 ( 4.11%)  => /usr/include/c++/14.2.1/bits/stl_vector.h:std::vector<int, std::allocator<int> >::operator[](unsigned long) (1,030,813x)
+ 5,154,065 ( 1.87%)  => /usr/include/c++/14.2.1/limits:std::numeric_limits<int>::max() (1,030,813x)
+11,249,564 ( 4.08%)                      dist[k][j] != std::numeric_limits<int>::max() &&
+ 7,428,876 ( 2.70%)  => /usr/include/c++/14.2.1/bits/stl_vector.h:std::vector<std::vector<int, std::allocator<int> >, std::allocator<std::vector<int, std::allocator<int> > > >::operator[](unsigned long) (530,634x)
+ 5,836,974 ( 2.12%)  => /usr/include/c++/14.2.1/bits/stl_vector.h:std::vector<int, std::allocator<int> >::operator[](unsigned long) (530,634x)
+ 2,653,170 ( 0.96%)  => /usr/include/c++/14.2.1/limits:std::numeric_limits<int>::max() (530,634x)
+14,363,360 ( 5.21%)                      dist[i][k] + dist[k][j] < dist[i][j])
+15,081,528 ( 5.47%)  => /usr/include/c++/14.2.1/bits/stl_vector.h:std::vector<std::vector<int, std::allocator<int> >, std::allocator<std::vector<int, std::allocator<int> > > >::operator[](unsigned long) (1,077,252x)
+11,849,772 ( 4.30%)  => /usr/include/c++/14.2.1/bits/stl_vector.h:std::vector<int, std::allocator<int> >::operator[](unsigned long) (1,077,252x)
+         .                           {
+   403,240 ( 0.15%)                      dist[i][j] = dist[i][k] + dist[k][j];
+   423,402 ( 0.15%)  => /usr/include/c++/14.2.1/bits/stl_vector.h:std::vector<std::vector<int, std::allocator<int> >, std::allocator<std::vector<int, std::allocator<int> > > >::operator[](unsigned long) (30,243x)
+   332,673 ( 0.12%)  => /usr/include/c++/14.2.1/bits/stl_vector.h:std::vector<int, std::allocator<int> >::operator[](unsigned long) (30,243x)
+         .                           }
+         .                       }
+         .                   }
+         .               }
+         .           
+         .               // Calculate average distance
+         9 ( 0.00%)      long long sum = 0;
+         9 ( 0.00%)      int count = 0;
+       577 ( 0.00%)      for (int i = 0; i < V; i++)
+         .               {
+    21,323 ( 0.01%)          for (int j = i + 1; j < V; j++)
+         .                   {
+    91,764 ( 0.03%)              if (dist[i][j] != std::numeric_limits<int>::max())
+    71,372 ( 0.03%)  => /usr/include/c++/14.2.1/bits/stl_vector.h:std::vector<std::vector<int, std::allocator<int> >, std::allocator<std::vector<int, std::allocator<int> > > >::operator[](unsigned long) (5,098x)
+    56,078 ( 0.02%)  => /usr/include/c++/14.2.1/bits/stl_vector.h:std::vector<int, std::allocator<int> >::operator[](unsigned long) (5,098x)
+    25,490 ( 0.01%)  => /usr/include/c++/14.2.1/limits:std::numeric_limits<int>::max() (5,098x)
+         .                       {
+    76,470 ( 0.03%)                  sum += dist[i][j];
+    71,372 ( 0.03%)  => /usr/include/c++/14.2.1/bits/stl_vector.h:std::vector<std::vector<int, std::allocator<int> >, std::allocator<std::vector<int, std::allocator<int> > > >::operator[](unsigned long) (5,098x)
+    56,078 ( 0.02%)  => /usr/include/c++/14.2.1/bits/stl_vector.h:std::vector<int, std::allocator<int> >::operator[](unsigned long) (5,098x)
+     5,098 ( 0.00%)                  count++;
+         .                       }
+         .                   }
+         .               }
+       189 ( 0.00%)      return std::make_pair(2, count > 0 ? static_cast<double>(sum) / count : 0.0);
+       702 ( 0.00%)  => /usr/include/c++/14.2.1/bits/stl_pair.h:std::pair<std::__strip_reference_wrapper<std::decay<int>::type>::__type, std::__strip_reference_wrapper<std::decay<double>::type>::__type> std::make_pair<int, double>(int&&, double&&) (9x)
+       108 ( 0.00%)  }
+    48,062 ( 0.02%)  => /usr/include/c++/14.2.1/bits/stl_vector.h:std::vector<std::vector<int, std::allocator<int> >, std::allocator<std::vector<int, std::allocator<int> > > >::~vector() (9x)
+         .           
+         .           std::pair<int, double> MSTAnalysis::findShortestMSTEdge(const std::vector<std::pair<int, std::pair<int, int>>> &mst)
+        70 ( 0.00%)  {
+        50 ( 0.00%)      if (mst.empty())
+     1,150 ( 0.00%)  => /usr/include/c++/14.2.1/bits/stl_vector.h:std::vector<std::pair<int, std::pair<int, int> >, std::allocator<std::pair<int, std::pair<int, int> > > >::empty() const (10x)
+         .               {
+        16 ( 0.00%)          return std::make_pair(3, 0);
+        35 ( 0.00%)  => /usr/include/c++/14.2.1/bits/stl_pair.h:std::pair<int, double>::pair<int, int, true>(std::pair<int, int>&&) (1x)
+        74 ( 0.00%)  => /usr/include/c++/14.2.1/bits/stl_pair.h:std::pair<std::__strip_reference_wrapper<std::decay<int>::type>::__type, std::__strip_reference_wrapper<std::decay<int>::type>::__type> std::make_pair<int, int>(int&&, int&&) (1x)
+         .               }
+         .           
+         9 ( 0.00%)      int shortestEdge = std::numeric_limits<int>::max();
+     1,898 ( 0.00%)      for (const auto &edge : mst)
+     4,123 ( 0.00%)  => /usr/include/c++/14.2.1/bits/stl_iterator.h:bool __gnu_cxx::operator!=<std::pair<int, std::pair<int, int> > const*, std::vector<std::pair<int, std::pair<int, int> >, std::allocator<std::pair<int, std::pair<int, int> > > > >(__gnu_cxx::__normal_iterator<std::pair<int, std::pair<int, int> > const*, std::vector<std::pair<int, std::pair<int, int> >, std::allocator<std::pair<int, std::pair<int, int> > > > > const&, __gnu_cxx::__normal_iterator<std::pair<int, std::pair<int, int> > const*, std::vector<std::pair<int, std::pair<int, int> >, std::allocator<std::pair<int, std::pair<int, int> > > > > const&) (133x)
+     1,364 ( 0.00%)  => /usr/include/c++/14.2.1/bits/stl_iterator.h:__gnu_cxx::__normal_iterator<std::pair<int, std::pair<int, int> > const*, std::vector<std::pair<int, std::pair<int, int> >, std::allocator<std::pair<int, std::pair<int, int> > > > >::operator++() (124x)
+       868 ( 0.00%)  => /usr/include/c++/14.2.1/bits/stl_iterator.h:__gnu_cxx::__normal_iterator<std::pair<int, std::pair<int, int> > const*, std::vector<std::pair<int, std::pair<int, int> >, std::allocator<std::pair<int, std::pair<int, int> > > > >::operator*() const (124x)
+       270 ( 0.00%)  => /usr/include/c++/14.2.1/bits/stl_vector.h:std::vector<std::pair<int, std::pair<int, int> >, std::allocator<std::pair<int, std::pair<int, int> > > >::end() const (9x)
+       261 ( 0.00%)  => /usr/include/c++/14.2.1/bits/stl_vector.h:std::vector<std::pair<int, std::pair<int, int> >, std::allocator<std::pair<int, std::pair<int, int> > > >::begin() const (9x)
+         .               {
+       868 ( 0.00%)          shortestEdge = std::min(shortestEdge, edge.first);
+     1,621 ( 0.00%)  => /usr/include/c++/14.2.1/bits/stl_algobase.h:int const& std::min<int>(int const&, int const&) (124x)
+         .               }
+       126 ( 0.00%)      return std::make_pair(3, shortestEdge);
+       666 ( 0.00%)  => /usr/include/c++/14.2.1/bits/stl_pair.h:std::pair<std::__strip_reference_wrapper<std::decay<int>::type>::__type, std::__strip_reference_wrapper<std::decay<int&>::type>::__type> std::make_pair<int, int&>(int&&, int&) (9x)
+       315 ( 0.00%)  => /usr/include/c++/14.2.1/bits/stl_pair.h:std::pair<int, double>::pair<int, int, true>(std::pair<int, int>&&) (9x)
+        80 ( 0.00%)  }
+
+--------------------------------------------------------------------------------
+-- Auto-annotated source: /usr/include/c++/14.2.1/limits
+--------------------------------------------------------------------------------
+Ir                  
+
+-- line 1060 ----------------------------------------
+         .               struct numeric_limits<int>
+         .               {
+         .                 static _GLIBCXX_USE_CONSTEXPR bool is_specialized = true;
+         .           
+         .                 static _GLIBCXX_CONSTEXPR int
+         .                 min() _GLIBCXX_USE_NOEXCEPT { return -__INT_MAX__ - 1; }
+         .           
+         .                 static _GLIBCXX_CONSTEXPR int
+15,666,165 ( 5.68%)        max() _GLIBCXX_USE_NOEXCEPT { return __INT_MAX__; }
+         .           
+         .           #if __cplusplus >= 201103L
+         .                 static constexpr int
+         .                 lowest() noexcept { return min(); }
+         .           #endif
+         .           
+         .                 static _GLIBCXX_USE_CONSTEXPR int digits = __glibcxx_digits (int);
+         .                 static _GLIBCXX_USE_CONSTEXPR int digits10 = __glibcxx_digits10 (int);
+-- line 1076 ----------------------------------------
+
+--------------------------------------------------------------------------------
+-- Auto-annotated source: src/utils/Proactor.cpp
+--------------------------------------------------------------------------------
+Ir                 
+
+        .           #include "Proactor.hpp"
+        .           #include <sys/socket.h>
+        .           #include <netinet/in.h>
+        .           #include <unistd.h>
+        .           #include <iostream>
+        .           
+       87 ( 0.00%)  Proactor::Proactor() : running(true)
+    2,116 ( 0.00%)  => /usr/include/c++/14.2.1/bits/stl_queue.h:std::queue<std::pair<int, std::function<void (int)> >, std::deque<std::pair<int, std::function<void (int)> >, std::allocator<std::pair<int, std::function<void (int)> > > > >::queue<std::deque<std::pair<int, std::function<void (int)> >, std::allocator<std::pair<int, std::function<void (int)> > > >, void>() (3x)
+      144 ( 0.00%)  => /usr/include/c++/14.2.1/bits/stl_vector.h:std::vector<std::thread, std::allocator<std::thread> >::vector() (3x)
+       81 ( 0.00%)  => /usr/include/c++/14.2.1/bits/std_function.h:std::function<void (int)>::function() (3x)
+       75 ( 0.00%)  => /usr/include/c++/14.2.1/atomic:std::atomic<bool>::atomic(bool) (3x)
+       63 ( 0.00%)  => /usr/include/c++/14.2.1/bits/std_mutex.h:std::mutex::mutex() (3x)
+       18 ( 0.00%)  => /usr/src/debug/gcc/gcc/libstdc++-v3/src/c++11/condition_variable.cc:std::condition_variable::condition_variable() (3x)
+        .           {
+        .               // We'll initialize the worker thread in the run method
+        9 ( 0.00%)  }
+        .           
+       15 ( 0.00%)  Proactor::~Proactor()
+        .           {
+        9 ( 0.00%)      stop();
+    3,891 ( 0.00%)  => src/utils/Proactor.cpp:Proactor::stop() (3x)
+       42 ( 0.00%)      if (eventLoopThread && eventLoopThread->joinable())
+      120 ( 0.00%)  => /usr/include/c++/14.2.1/bits/std_thread.h:std::thread::joinable() const (3x)
+        .               {
+       12 ( 0.00%)          eventLoopThread->join();
+    1,275 ( 0.00%)  => ???:0x00000000001169d0 (3x)
+       30 ( 0.00%)          delete eventLoopThread;
+      267 ( 0.00%)  => /usr/src/debug/gcc/gcc/libstdc++-v3/libsupc++/del_ops.cc:operator delete(void*, unsigned long) (3x)
+      156 ( 0.00%)  => /usr/include/c++/14.2.1/bits/std_thread.h:std::thread::~thread() (3x)
+        .               }
+       33 ( 0.00%)      std::cout << "Proactor stopped and worker thread joined." << std::endl;
+    1,548 ( 0.00%)  => /usr/src/debug/gcc/gcc-build/x86_64-pc-linux-gnu/libstdc++-v3/include/ostream:std::ostream::operator<<(std::ostream& (*)(std::ostream&)) (3x)
+    1,440 ( 0.00%)  => /usr/src/debug/gcc/gcc-build/x86_64-pc-linux-gnu/libstdc++-v3/include/ostream:std::basic_ostream<char, std::char_traits<char> >& std::operator<< <std::char_traits<char> >(std::basic_ostream<char, std::char_traits<char> >&, char const*) (3x)
+       60 ( 0.00%)  }
+    2,010 ( 0.00%)  => /usr/include/c++/14.2.1/bits/stl_queue.h:std::queue<std::pair<int, std::function<void (int)> >, std::deque<std::pair<int, std::function<void (int)> >, std::allocator<std::pair<int, std::function<void (int)> > > > >::~queue() (3x)
+      336 ( 0.00%)  => /usr/include/c++/14.2.1/bits/stl_vector.h:std::vector<std::thread, std::allocator<std::thread> >::~vector() (3x)
+      285 ( 0.00%)  => /usr/include/c++/14.2.1/bits/std_function.h:std::function<void (int)>::~function() (3x)
+       84 ( 0.00%)  => /usr/src/debug/gcc/gcc/libstdc++-v3/src/c++11/condition_variable.cc:std::condition_variable::~condition_variable() (3x)
+        .           
+        .           void Proactor::stop()
+       63 ( 0.00%)  {
+        .               {
+       54 ( 0.00%)          std::unique_lock<std::mutex> lock(handlersMutex);
+    1,053 ( 0.00%)  => /usr/include/c++/14.2.1/bits/unique_lock.h:std::unique_lock<std::mutex>::unique_lock(std::mutex&) (9x)
+       45 ( 0.00%)          running = false;
+      495 ( 0.00%)  => /usr/include/c++/14.2.1/atomic:std::atomic<bool>::operator=(bool) (9x)
+       27 ( 0.00%)      }
+      891 ( 0.00%)  => /usr/include/c++/14.2.1/bits/unique_lock.h:std::unique_lock<std::mutex>::~unique_lock() (9x)
+       45 ( 0.00%)      handlersCondition.notify_all();
+      279 ( 0.00%)  => /usr/src/debug/gcc/gcc/libstdc++-v3/src/c++11/condition_variable.cc:std::condition_variable::notify_all() (9x)
+       99 ( 0.00%)      std::cout << "Stop signal sent to worker thread." << std::endl;
+    4,644 ( 0.00%)  => /usr/src/debug/gcc/gcc-build/x86_64-pc-linux-gnu/libstdc++-v3/include/ostream:std::ostream::operator<<(std::ostream& (*)(std::ostream&)) (9x)
+    3,924 ( 0.00%)  => /usr/src/debug/gcc/gcc-build/x86_64-pc-linux-gnu/libstdc++-v3/include/ostream:std::basic_ostream<char, std::char_traits<char> >& std::operator<< <std::char_traits<char> >(std::basic_ostream<char, std::char_traits<char> >&, char const*) (9x)
+       54 ( 0.00%)  }
+        .           
+        .           void Proactor::post(int clientSocket, Handler handler)
+        .           {
+        .               {
+        .                   std::unique_lock<std::mutex> lock(handlersMutex);
+        .                   handlers.emplace(clientSocket, handler);
+        .               }
+        .               // std::thread(&handler, clientSocket).detach();
+        .               handlersCondition.notify_one();
+        .               std::cout << "New task posted for client socket: " << clientSocket << std::endl;
+        .           }
+        .           
+        .           void Proactor::run(int fd, Handler handler)
+       72 ( 0.00%)  {
+       18 ( 0.00%)      this->fd = fd;
+       36 ( 0.00%)      this->handler = handler;
+    2,878 ( 0.00%)  => /usr/include/c++/14.2.1/bits/std_function.h:std::function<void (int)>::operator=(std::function<void (int)> const&) (6x)
+        .               {
+       36 ( 0.00%)          std::unique_lock<std::mutex> lock(handlersMutex);
+      702 ( 0.00%)  => /usr/include/c++/14.2.1/bits/unique_lock.h:std::unique_lock<std::mutex>::unique_lock(std::mutex&) (6x)
+       30 ( 0.00%)          running = true;
+      330 ( 0.00%)  => /usr/include/c++/14.2.1/atomic:std::atomic<bool>::operator=(bool) (6x)
+       18 ( 0.00%)      }
+      594 ( 0.00%)  => /usr/include/c++/14.2.1/bits/unique_lock.h:std::unique_lock<std::mutex>::~unique_lock() (6x)
+      102 ( 0.00%)      this->eventLoopThread = new std::thread(&Proactor::workerThread, this);
+   10,683 ( 0.00%)  => /usr/include/c++/14.2.1/bits/std_thread.h:std::thread::thread<void (Proactor::*)(), Proactor*, void>(void (Proactor::*&&)(), Proactor*&&) (6x)
+      348 ( 0.00%)  => /usr/src/debug/gcc/gcc/libstdc++-v3/libsupc++/new_op.cc:operator new(unsigned long) (6x)
+       60 ( 0.00%)  }
+        .           
+        .           void Proactor::workerThread()
+       48 ( 0.00%)  {
+       66 ( 0.00%)      std::cout << "Worker thread started." << std::endl;
+    3,096 ( 0.00%)  => /usr/src/debug/gcc/gcc-build/x86_64-pc-linux-gnu/libstdc++-v3/include/ostream:std::ostream::operator<<(std::ostream& (*)(std::ostream&)) (6x)
+    2,202 ( 0.00%)  => /usr/src/debug/gcc/gcc-build/x86_64-pc-linux-gnu/libstdc++-v3/include/ostream:std::basic_ostream<char, std::char_traits<char> >& std::operator<< <std::char_traits<char> >(std::basic_ostream<char, std::char_traits<char> >&, char const*) (6x)
+        .           
+        6 ( 0.00%)      bool run = true;
+        .           
+        .               struct timeval tv;
+        6 ( 0.00%)      tv.tv_sec = 1;
+        6 ( 0.00%)      tv.tv_usec = 0;
+  172,306 ( 0.06%)      while (run)
+        .               {
+        .                   fd_set readfds;
+8,787,300 ( 3.19%)          FD_ZERO(&readfds);
+1,636,850 ( 0.59%)          FD_SET(fd, &readfds);
+1,033,801 ( 0.38%)          int s = select(fd + 1, &readfds, NULL, NULL, &tv);
+10,596,296 ( 3.84%)  => /usr/src/debug/glibc/glibc/misc/../sysdeps/unix/sysv/linux/select.c:select (86,150x)
+      919 ( 0.00%)  => /usr/src/debug/glibc/glibc/elf/../sysdeps/x86_64/dl-trampoline.h:_dl_runtime_resolve_xsave (1x)
+  172,294 ( 0.06%)          if (s > 0)
+        .                   {
+       60 ( 0.00%)              int clientSocket = accept(fd, NULL, NULL);
+      887 ( 0.00%)  => /usr/src/debug/glibc/glibc/elf/../sysdeps/x86_64/dl-trampoline.h:_dl_runtime_resolve_xsave (1x)
+      404 ( 0.00%)  => /usr/src/debug/glibc/glibc/socket/../sysdeps/unix/sysv/linux/accept.c:accept (7x)
+       21 ( 0.00%)              if (clientSocket < 0)
+        .                       {
+       11 ( 0.00%)                  std::cout << "Accept failed." << std::endl;
+      516 ( 0.00%)  => /usr/src/debug/gcc/gcc-build/x86_64-pc-linux-gnu/libstdc++-v3/include/ostream:std::ostream::operator<<(std::ostream& (*)(std::ostream&)) (1x)
+      329 ( 0.00%)  => /usr/src/debug/gcc/gcc-build/x86_64-pc-linux-gnu/libstdc++-v3/include/ostream:std::basic_ostream<char, std::char_traits<char> >& std::operator<< <std::char_traits<char> >(std::basic_ostream<char, std::char_traits<char> >&, char const*) (1x)
+        .                           break;
+        .                       }
+      106 ( 0.00%)              std::cout << "Accepted new client socket: " << clientSocket << std::endl;
+    3,096 ( 0.00%)  => /usr/src/debug/gcc/gcc-build/x86_64-pc-linux-gnu/libstdc++-v3/include/ostream:std::ostream::operator<<(std::ostream& (*)(std::ostream&)) (6x)
+    2,382 ( 0.00%)  => /usr/src/debug/gcc/gcc-build/x86_64-pc-linux-gnu/libstdc++-v3/include/ostream:std::basic_ostream<char, std::char_traits<char> >& std::operator<< <std::char_traits<char> >(std::basic_ostream<char, std::char_traits<char> >&, char const*) (6x)
+      800 ( 0.00%)  => /usr/src/debug/glibc/glibc/elf/../sysdeps/x86_64/dl-trampoline.h:_dl_runtime_resolve_xsave (1x)
+    2,468 ( 0.00%)  => /usr/src/debug/gcc/gcc-build/x86_64-pc-linux-gnu/libstdc++-v3/include/bits/ostream.tcc:std::ostream::operator<<(int) (6x)
+       88 ( 0.00%)              std::thread(handler, clientSocket).detach();
+   13,428 ( 0.00%)  => /usr/include/c++/14.2.1/bits/std_thread.h:std::thread::thread<std::function<void (int)>&, int&, void>(std::function<void (int)>&, int&) (6x)
+      942 ( 0.00%)  => /usr/src/debug/glibc/glibc/elf/../sysdeps/x86_64/dl-trampoline.h:_dl_runtime_resolve_xsave (1x)
+      312 ( 0.00%)  => /usr/include/c++/14.2.1/bits/std_thread.h:std::thread::~thread() (6x)
+      162 ( 0.00%)  => /usr/src/debug/gcc/gcc/libstdc++-v3/src/c++11/thread.cc:std::thread::detach() (6x)
+        .                   }
+  172,292 ( 0.06%)          if (s < 0)
+        .                   {
+       22 ( 0.00%)              std::cout << "Select failed." << std::endl;
+    1,032 ( 0.00%)  => /usr/src/debug/gcc/gcc-build/x86_64-pc-linux-gnu/libstdc++-v3/include/ostream:std::ostream::operator<<(std::ostream& (*)(std::ostream&)) (2x)
+      658 ( 0.00%)  => /usr/src/debug/gcc/gcc-build/x86_64-pc-linux-gnu/libstdc++-v3/include/ostream:std::basic_ostream<char, std::char_traits<char> >& std::operator<< <std::char_traits<char> >(std::basic_ostream<char, std::char_traits<char> >&, char const*) (2x)
+        2 ( 0.00%)              break;
+        .                   }
+  172,288 ( 0.06%)          else if (s == 0)
+        .                   {
+   86,138 ( 0.03%)              continue;
+        .                   }
+        .                   {
+       36 ( 0.00%)              std::lock_guard<std::mutex> guard(handlersMutex);
+      510 ( 0.00%)  => /usr/include/c++/14.2.1/bits/std_mutex.h:std::lock_guard<std::mutex>::lock_guard(std::mutex&) (6x)
+       30 ( 0.00%)              run = running; // Update the still_running variable
+      198 ( 0.00%)  => /usr/include/c++/14.2.1/atomic:std::atomic<bool>::operator bool() const (6x)
+       24 ( 0.00%)          }
+      444 ( 0.00%)  => /usr/include/c++/14.2.1/bits/std_mutex.h:std::lock_guard<std::mutex>::~lock_guard() (6x)
+        .               }
+       21 ( 0.00%)  }
+        .           
+        .           std::thread *Proactor::get_thread()
+        3 ( 0.00%)  {
+        2 ( 0.00%)      return this->eventLoopThread;
+        2 ( 0.00%)  }
+
+--------------------------------------------------------------------------------
+-- Auto-annotated source: /usr/include/c++/14.2.1/bits/stl_algobase.h
+--------------------------------------------------------------------------------
+Ir              
+
+-- line 225 ----------------------------------------
+     .              *
+     .              *  This is the simple classic generic implementation.  It will work on
+     .              *  temporary expressions, since they are only evaluated once, unlike a
+     .              *  preprocessor macro.
+     .             */
+     .             template<typename _Tp>
+     .               _GLIBCXX_NODISCARD _GLIBCXX14_CONSTEXPR
+     .               inline const _Tp&
+ 2,320 ( 0.00%)      min(const _Tp& __a, const _Tp& __b)
+     .               {
+     .                 // concept requirements
+     .                 __glibcxx_function_requires(_LessThanComparableConcept<_Tp>)
+     .                 //return __b < __a ? __b : __a;
+ 3,480 ( 0.00%)        if (__b < __a)
+    20 ( 0.00%)  	return __b;
+   570 ( 0.00%)        return __a;
+ 1,160 ( 0.00%)      }
+     .           
+     .             /**
+     .              *  @brief This does what you think it does.
+     .              *  @ingroup sorting_algorithms
+     .              *  @param  __a  A thing of arbitrary type.
+     .              *  @param  __b  Another thing of arbitrary type.
+     .              *  @return   The greater of the parameters.
+     .              *
+     .              *  This is the simple classic generic implementation.  It will work on
+     .              *  temporary expressions, since they are only evaluated once, unlike a
+     .              *  preprocessor macro.
+     .             */
+     .             template<typename _Tp>
+     .               _GLIBCXX_NODISCARD _GLIBCXX14_CONSTEXPR
+     .               inline const _Tp&
+21,100 ( 0.01%)      max(const _Tp& __a, const _Tp& __b)
+     .               {
+     .                 // concept requirements
+     .                 __glibcxx_function_requires(_LessThanComparableConcept<_Tp>)
+     .                 //return  __a < __b ? __b : __a;
+32,285 ( 0.01%)        if (__a < __b)
+   402 ( 0.00%)  	return __b;
+ 5,074 ( 0.00%)        return __a;
+10,550 ( 0.00%)      }
+     .           
+     .             /**
+     .              *  @brief This does what you think it does.
+     .              *  @ingroup sorting_algorithms
+     .              *  @param  __a  A thing of arbitrary type.
+     .              *  @param  __b  Another thing of arbitrary type.
+     .              *  @param  __comp  A @link comparison_functors comparison functor@endlink.
+     .              *  @return   The lesser of the parameters.
+-- line 273 ----------------------------------------
+-- line 308 ----------------------------------------
+     .                 return __a;
+     .               }
+     .           
+     .             // Fallback implementation of the function in bits/stl_iterator.h used to
+     .             // remove the __normal_iterator wrapper. See copy, fill, ...
+     .             template<typename _Iterator>
+     .               _GLIBCXX20_CONSTEXPR
+     .               inline _Iterator
+ 2,169 ( 0.00%)      __niter_base(_Iterator __it)
+     .               _GLIBCXX_NOEXCEPT_IF(std::is_nothrow_copy_constructible<_Iterator>::value)
+ 2,169 ( 0.00%)      { return __it; }
+     .           
+     .           #if __cplusplus < 201103L
+     .             template<typename _Ite, typename _Seq>
+     .               _Ite
+     .               __niter_base(const ::__gnu_debug::_Safe_iterator<_Ite, _Seq,
+     .           		 std::random_access_iterator_tag>&);
+     .           
+     .            template<typename _Ite, typename _Cont, typename _Seq>
+-- line 326 ----------------------------------------
+-- line 345 ----------------------------------------
+     .               inline _From
+     .               __niter_wrap(_From __from, _To __res)
+     .               { return __from + (std::__niter_base(__res) - std::__niter_base(__from)); }
+     .           
+     .             // No need to wrap, iterator already has the right type.
+     .             template<typename _Iterator>
+     .               _GLIBCXX20_CONSTEXPR
+     .               inline _Iterator
+ 1,080 ( 0.00%)      __niter_wrap(const _Iterator&, _Iterator __res)
+   810 ( 0.00%)      { return __res; }
+     .           
+     .             // All of these auxiliary structs serve two purposes.  (1) Replace
+     .             // calls to copy with memmove whenever possible.  (Memmove, not memcpy,
+     .             // because the input and output ranges are permitted to overlap.)
+     .             // (2) If we're using random access iterators, then write the loop as
+     .             // a for loop with an explicit count.
+     .           
+     .             template<bool _IsMove, bool _IsSimple, typename _Category>
+-- line 362 ----------------------------------------
+-- line 418 ----------------------------------------
+     .               struct __copy_move<true, false, random_access_iterator_tag>
+     .               {
+     .                 template<typename _II, typename _OI>
+     .           	_GLIBCXX20_CONSTEXPR
+     .           	static _OI
+     .           	__copy_m(_II __first, _II __last, _OI __result)
+     .           	{
+     .           	  typedef typename iterator_traits<_II>::difference_type _Distance;
+   297 ( 0.00%)  	  for(_Distance __n = __last - __first; __n > 0; --__n)
+     .           	    {
+     .           	      *__result = std::move(*__first);
+    25 ( 0.00%)  	      ++__first;
+     .           	      ++__result;
+     .           	    }
+     .           	  return __result;
+     .           	}
+     .           
+     .                 template<typename _Tp, typename _Up>
+     .           	static void
+     .           	__assign_one(_Tp* __to, _Up* __from)
+     4 ( 0.00%)  	{ *__to = std::move(*__from); }
+     .               };
+     .           #endif
+     .           
+     .             template<bool _IsMove>
+     .               struct __copy_move<_IsMove, true, random_access_iterator_tag>
+     .               {
+     .                 template<typename _Tp, typename _Up>
+     .           	_GLIBCXX20_CONSTEXPR
+     .           	static _Up*
+ 1,620 ( 0.00%)  	__copy_m(_Tp* __first, _Tp* __last, _Up* __result)
+     .           	{
+ 1,106 ( 0.00%)  	  const ptrdiff_t _Num = __last - __first;
+ 1,372 ( 0.00%)  	  if (__builtin_expect(_Num > 1, true))
+ 2,462 ( 0.00%)  	    __builtin_memmove(__result, __first, sizeof(_Tp) * _Num);
+    91 ( 0.00%)  => /usr/src/debug/glibc/glibc/string/../sysdeps/x86_64/multiarch/memmove-vec-unaligned-erms.S:__memcpy_avx_unaligned_erms (8x)
+     3 ( 0.00%)  	  else if (_Num == 1)
+     .           	    std::__copy_move<_IsMove, false, random_access_iterator_tag>::
+     .           	      __assign_one(__result, __first);
+ 1,095 ( 0.00%)  	  return __result + _Num;
+   540 ( 0.00%)  	}
+     .               };
+     .           
+     .           _GLIBCXX_BEGIN_NAMESPACE_CONTAINER
+     .           
+     .             template<typename _Tp, typename _Ref, typename _Ptr>
+     .               struct _Deque_iterator;
+     .           
+     .             struct _Bit_iterator;
+-- line 465 ----------------------------------------
+-- line 504 ----------------------------------------
+     .           	istreambuf_iterator<_CharT, char_traits<_CharT> >,
+     .           	istreambuf_iterator<_CharT, char_traits<_CharT> >,
+     .           	_GLIBCXX_STD_C::_Deque_iterator<_CharT, _CharT&, _CharT*>);
+     .           #endif // HOSTED
+     .           
+     .             template<bool _IsMove, typename _II, typename _OI>
+     .               _GLIBCXX20_CONSTEXPR
+     .               inline _OI
+ 1,620 ( 0.00%)      __copy_move_a2(_II __first, _II __last, _OI __result)
+     .               {
+     .                 typedef typename iterator_traits<_II>::iterator_category _Category;
+     .           #ifdef __cpp_lib_is_constant_evaluated
+     .                 if (std::is_constant_evaluated())
+     .           	return std::__copy_move<_IsMove, false, _Category>::
+     .           	  __copy_m(__first, __last, __result);
+     .           #endif
+     .                 return std::__copy_move<_IsMove, __memcpyable<_OI, _II>::__value,
+ 1,620 ( 0.00%)  			      _Category>::__copy_m(__first, __last, __result);
+25,277 ( 0.01%)  => /usr/include/c++/14.2.1/bits/stl_algobase.h:int* std::__copy_move<false, true, std::random_access_iterator_tag>::__copy_m<int const, int>(int const*, int const*, int*) (270x)
+   540 ( 0.00%)      }
+     .           
+     .             template<bool _IsMove,
+     .           	   typename _Tp, typename _Ref, typename _Ptr, typename _OI>
+     .               _OI
+     .               __copy_move_a1(_GLIBCXX_STD_C::_Deque_iterator<_Tp, _Ref, _Ptr>,
+     .           		   _GLIBCXX_STD_C::_Deque_iterator<_Tp, _Ref, _Ptr>,
+     .           		   _OI);
+     .           
+-- line 530 ----------------------------------------
+-- line 539 ----------------------------------------
+     .               typename __gnu_cxx::__enable_if<
+     .                 __is_random_access_iter<_II>::__value,
+     .                 _GLIBCXX_STD_C::_Deque_iterator<_Tp, _Tp&, _Tp*> >::__type
+     .               __copy_move_a1(_II, _II, _GLIBCXX_STD_C::_Deque_iterator<_Tp, _Tp&, _Tp*>);
+     .           
+     .             template<bool _IsMove, typename _II, typename _OI>
+     .               _GLIBCXX20_CONSTEXPR
+     .               inline _OI
+ 1,620 ( 0.00%)      __copy_move_a1(_II __first, _II __last, _OI __result)
+ 2,160 ( 0.00%)      { return std::__copy_move_a2<_IsMove>(__first, __last, __result); }
+29,057 ( 0.01%)  => /usr/include/c++/14.2.1/bits/stl_algobase.h:int* std::__copy_move_a2<false, int const*, int*>(int const*, int const*, int*) (270x)
+     .           
+     .             template<bool _IsMove, typename _II, typename _OI>
+     .               _GLIBCXX20_CONSTEXPR
+     .               inline _OI
+ 2,160 ( 0.00%)      __copy_move_a(_II __first, _II __last, _OI __result)
+     .               {
+ 5,400 ( 0.00%)        return std::__niter_wrap(__result,
+32,837 ( 0.01%)  => /usr/include/c++/14.2.1/bits/stl_algobase.h:int* std::__copy_move_a1<false, int const*, int*>(int const*, int const*, int*) (270x)
+ 8,640 ( 0.00%)  => /usr/include/c++/14.2.1/bits/stl_iterator.h:int const* std::__niter_base<int const*, std::vector<int, std::allocator<int> > >(__gnu_cxx::__normal_iterator<int const*, std::vector<int, std::allocator<int> > >) (540x)
+ 1,890 ( 0.00%)  => /usr/include/c++/14.2.1/bits/stl_algobase.h:int* std::__niter_wrap<int*>(int* const&, int*) (270x)
+ 1,620 ( 0.00%)  => /usr/include/c++/14.2.1/bits/stl_algobase.h:int* std::__niter_base<int*>(int*) (270x)
+     .           		std::__copy_move_a1<_IsMove>(std::__niter_base(__first),
+     .           					     std::__niter_base(__last),
+     .           					     std::__niter_base(__result)));
+ 1,350 ( 0.00%)      }
+     .           
+     .             template<bool _IsMove,
+     .           	   typename _Ite, typename _Seq, typename _Cat, typename _OI>
+     .               _GLIBCXX20_CONSTEXPR
+     .               _OI
+     .               __copy_move_a(const ::__gnu_debug::_Safe_iterator<_Ite, _Seq, _Cat>&,
+     .           		  const ::__gnu_debug::_Safe_iterator<_Ite, _Seq, _Cat>&,
+     .           		  _OI);
+-- line 567 ----------------------------------------
+-- line 634 ----------------------------------------
+     .              *  [first,last); the copy_backward function should be used instead.
+     .              *
+     .              *  Note that the end of the output range is permitted to be contained
+     .              *  within [first,last).
+     .             */
+     .             template<typename _II, typename _OI>
+     .               _GLIBCXX20_CONSTEXPR
+     .               inline _OI
+ 1,890 ( 0.00%)      copy(_II __first, _II __last, _OI __result)
+     .               {
+     .                 // concept requirements
+     .                 __glibcxx_function_requires(_InputIteratorConcept<_II>)
+     .                 __glibcxx_function_requires(_OutputIteratorConcept<_OI,
+     .           	    typename iterator_traits<_II>::reference>)
+     .                 __glibcxx_requires_can_increment_range(__first, __last, __result);
+     .           
+     .                 return std::__copy_move_a<__is_move_iterator<_II>::__value>
+ 3,510 ( 0.00%)  	     (std::__miter_base(__first), std::__miter_base(__last), __result);
+53,897 ( 0.02%)  => /usr/include/c++/14.2.1/bits/stl_algobase.h:int* std::__copy_move_a<false, __gnu_cxx::__normal_iterator<int const*, std::vector<int, std::allocator<int> > >, int*>(__gnu_cxx::__normal_iterator<int const*, std::vector<int, std::allocator<int> > >, __gnu_cxx::__normal_iterator<int const*, std::vector<int, std::allocator<int> > >, int*) (270x)
+ 3,240 ( 0.00%)  => /usr/include/c++/14.2.1/bits/cpp_type_traits.h:__gnu_cxx::__normal_iterator<int const*, std::vector<int, std::allocator<int> > > std::__miter_base<__gnu_cxx::__normal_iterator<int const*, std::vector<int, std::allocator<int> > > >(__gnu_cxx::__normal_iterator<int const*, std::vector<int, std::allocator<int> > >) (540x)
+   810 ( 0.00%)      }
+     .           
+     .           #if __cplusplus >= 201103L
+     .             /**
+     .              *  @brief Moves the range [first,last) into result.
+     .              *  @ingroup mutating_algorithms
+     .              *  @param  __first  An input iterator.
+     .              *  @param  __last   An input iterator.
+     .              *  @param  __result An output iterator.
+-- line 660 ----------------------------------------
+-- line 928 ----------------------------------------
+     .           #else
+     .           #define _GLIBCXX_MOVE_BACKWARD3(_Tp, _Up, _Vp) std::copy_backward(_Tp, _Up, _Vp)
+     .           #endif
+     .           
+     .             template<typename _ForwardIterator, typename _Tp>
+     .               _GLIBCXX20_CONSTEXPR
+     .               inline typename
+     .               __gnu_cxx::__enable_if<!__is_scalar<_Tp>::__value, void>::__type
+     6 ( 0.00%)      __fill_a1(_ForwardIterator __first, _ForwardIterator __last,
+     .           	      const _Tp& __value)
+     .               {
+    16 ( 0.00%)        for (; __first != __last; ++__first)
+    15 ( 0.00%)  	*__first = __value;
+   102 ( 0.00%)  => /usr/include/c++/14.2.1/bits/stl_pair.h:std::pair<int, std::pair<int, int> >::operator=(std::pair<int, std::pair<int, int> > const&) (3x)
+     4 ( 0.00%)      }
+     .           
+     .             template<typename _ForwardIterator, typename _Tp>
+     .               _GLIBCXX20_CONSTEXPR
+     .               inline typename
+     .               __gnu_cxx::__enable_if<__is_scalar<_Tp>::__value, void>::__type
+   210 ( 0.00%)      __fill_a1(_ForwardIterator __first, _ForwardIterator __last,
+     .           	      const _Tp& __value)
+     .               {
+   126 ( 0.00%)        const _Tp __tmp = __value;
+ 1,504 ( 0.00%)        for (; __first != __last; ++__first)
+ 1,002 ( 0.00%)  	*__first = __tmp;
+   168 ( 0.00%)      }
+     .           
+     .             // Specialization: for char types we can use memset.
+     .             template<typename _Tp>
+     .               _GLIBCXX20_CONSTEXPR
+     .               inline typename
+     .               __gnu_cxx::__enable_if<__is_byte<_Tp>::__value, void>::__type
+     .               __fill_a1(_Tp* __first, _Tp* __last, const _Tp& __c)
+     .               {
+-- line 961 ----------------------------------------
+-- line 970 ----------------------------------------
+     .           #endif
+     .                 if (const size_t __len = __last - __first)
+     .           	__builtin_memset(__first, static_cast<unsigned char>(__tmp), __len);
+     .               }
+     .           
+     .             template<typename _Ite, typename _Cont, typename _Tp>
+     .               _GLIBCXX20_CONSTEXPR
+     .               inline void
+     7 ( 0.00%)      __fill_a1(::__gnu_cxx::__normal_iterator<_Ite, _Cont> __first,
+     .           	      ::__gnu_cxx::__normal_iterator<_Ite, _Cont> __last,
+     .           	      const _Tp& __value)
+    16 ( 0.00%)      { std::__fill_a1(__first.base(), __last.base(), __value); }
+   143 ( 0.00%)  => /usr/include/c++/14.2.1/bits/stl_algobase.h:__gnu_cxx::__enable_if<!std::__is_scalar<std::pair<int, std::pair<int, int> > >::__value, void>::__type std::__fill_a1<std::pair<int, std::pair<int, int> >*, std::pair<int, std::pair<int, int> > >(std::pair<int, std::pair<int, int> >*, std::pair<int, std::pair<int, int> >*, std::pair<int, std::pair<int, int> > const&) (1x)
+    12 ( 0.00%)  => /usr/include/c++/14.2.1/bits/stl_iterator.h:__gnu_cxx::__normal_iterator<std::pair<int, std::pair<int, int> >*, std::vector<std::pair<int, std::pair<int, int> >, std::allocator<std::pair<int, std::pair<int, int> > > > >::base() const (2x)
+     .           
+     .             template<typename _Tp, typename _VTp>
+     .               void
+     .               __fill_a1(const _GLIBCXX_STD_C::_Deque_iterator<_Tp, _Tp&, _Tp*>&,
+     .           	      const _GLIBCXX_STD_C::_Deque_iterator<_Tp, _Tp&, _Tp*>&,
+     .           	      const _VTp&);
+     .           
+     .             _GLIBCXX20_CONSTEXPR
+     .             void
+     .             __fill_a1(_GLIBCXX_STD_C::_Bit_iterator, _GLIBCXX_STD_C::_Bit_iterator,
+     .           	    const bool&);
+     .           
+     .             template<typename _FIte, typename _Tp>
+     .               _GLIBCXX20_CONSTEXPR
+     .               inline void
+   268 ( 0.00%)      __fill_a(_FIte __first, _FIte __last, const _Tp& __value)
+   399 ( 0.00%)      { std::__fill_a1(__first, __last, __value); }
+    64 ( 0.00%)  => /usr/include/c++/14.2.1/bits/stl_bvector.h:std::__fill_a1(std::_Bit_iterator, std::_Bit_iterator, bool const&) (1x)
+     .           
+     .             template<typename _Ite, typename _Seq, typename _Cat, typename _Tp>
+     .               _GLIBCXX20_CONSTEXPR
+     .               void
+     .               __fill_a(const ::__gnu_debug::_Safe_iterator<_Ite, _Seq, _Cat>&,
+     .           	     const ::__gnu_debug::_Safe_iterator<_Ite, _Seq, _Cat>&,
+     .           	     const _Tp&);
+     .           
+-- line 1006 ----------------------------------------
+-- line 1014 ----------------------------------------
+     .              *
+     .              *  This function fills a range with copies of the same value.  For char
+     .              *  types filling contiguous areas of memory, this becomes an inline call
+     .              *  to @c memset or @c wmemset.
+     .             */
+     .             template<typename _ForwardIterator, typename _Tp>
+     .               _GLIBCXX20_CONSTEXPR
+     .               inline void
+    16 ( 0.00%)      fill(_ForwardIterator __first, _ForwardIterator __last, const _Tp& __value)
+     .               {
+     .                 // concept requirements
+     .                 __glibcxx_function_requires(_Mutable_ForwardIteratorConcept<
+     .           				  _ForwardIterator>)
+     .                 __glibcxx_requires_valid_range(__first, __last);
+     .           
+    15 ( 0.00%)        std::__fill_a(__first, __last, __value);
+   193 ( 0.00%)  => /usr/include/c++/14.2.1/bits/stl_algobase.h:void std::__fill_a<__gnu_cxx::__normal_iterator<std::pair<int, std::pair<int, int> >*, std::vector<std::pair<int, std::pair<int, int> >, std::allocator<std::pair<int, std::pair<int, int> > > > >, std::pair<int, std::pair<int, int> > >(__gnu_cxx::__normal_iterator<std::pair<int, std::pair<int, int> >*, std::vector<std::pair<int, std::pair<int, int> >, std::allocator<std::pair<int, std::pair<int, int> > > > >, __gnu_cxx::__normal_iterator<std::pair<int, std::pair<int, int> >*, std::vector<std::pair<int, std::pair<int, int> >, std::allocator<std::pair<int, std::pair<int, int> > > > >, std::pair<int, std::pair<int, int> > const&) (1x)
+     6 ( 0.00%)      }
+     .           
+     .             // Used by fill_n, generate_n, etc. to convert _Size to an integral type:
+     .             inline _GLIBCXX_CONSTEXPR int
+     .             __size_to_integer(int __n) { return __n; }
+     .             inline _GLIBCXX_CONSTEXPR unsigned
+     .             __size_to_integer(unsigned __n) { return __n; }
+     .             inline _GLIBCXX_CONSTEXPR long
+     .             __size_to_integer(long __n) { return __n; }
+     .             inline _GLIBCXX_CONSTEXPR unsigned long
+   270 ( 0.00%)    __size_to_integer(unsigned long __n) { return __n; }
+     .             inline _GLIBCXX_CONSTEXPR long long
+     .             __size_to_integer(long long __n) { return __n; }
+     .             inline _GLIBCXX_CONSTEXPR unsigned long long
+     .             __size_to_integer(unsigned long long __n) { return __n; }
+     .           
+     .           #if defined(__GLIBCXX_TYPE_INT_N_0)
+     .             __extension__ inline _GLIBCXX_CONSTEXPR __GLIBCXX_TYPE_INT_N_0
+     .             __size_to_integer(__GLIBCXX_TYPE_INT_N_0 __n) { return __n; }
+-- line 1048 ----------------------------------------
+-- line 1132 ----------------------------------------
+     .                 static_assert(is_integral<_Size>{}, "fill_n must pass integral size");
+     .           #endif
+     .                 return __fill_n_a1(__first, __n, __value);
+     .               }
+     .           
+     .             template<typename _OutputIterator, typename _Size, typename _Tp>
+     .               _GLIBCXX20_CONSTEXPR
+     .               inline _OutputIterator
+   270 ( 0.00%)      __fill_n_a(_OutputIterator __first, _Size __n, const _Tp& __value,
+     .           	       std::random_access_iterator_tag)
+     .               {
+     .           #if __cplusplus >= 201103L
+     .                 static_assert(is_integral<_Size>{}, "fill_n must pass integral size");
+     .           #endif
+    90 ( 0.00%)        if (__n <= 0)
+     6 ( 0.00%)  	return __first;
+     .           
+     .                 __glibcxx_requires_can_increment(__first, __n);
+     .           
+   378 ( 0.00%)        std::__fill_a(__first, __first + __n, __value);
+ 3,640 ( 0.00%)  => /usr/include/c++/14.2.1/bits/stl_algobase.h:void std::__fill_a<int*, int>(int*, int*, int const&) (42x)
+   168 ( 0.00%)        return __first + __n;
+    90 ( 0.00%)      }
+     .           
+     .             /**
+     .              *  @brief Fills the range [first,first+n) with copies of value.
+     .              *  @ingroup mutating_algorithms
+     .              *  @param  __first  An output iterator.
+     .              *  @param  __n      The count of copies to perform.
+     .              *  @param  __value  A reference-to-const of arbitrary type.
+     .              *  @return   The iterator at first+n.
+-- line 1161 ----------------------------------------
+-- line 1167 ----------------------------------------
+     .              *  If @p __n is negative, the function does nothing.
+     .             */
+     .             // _GLIBCXX_RESOLVE_LIB_DEFECTS
+     .             // DR 865. More algorithms that throw away information
+     .             // DR 426. search_n(), fill_n(), and generate_n() with negative n
+     .             template<typename _OI, typename _Size, typename _Tp>
+     .               _GLIBCXX20_CONSTEXPR
+     .               inline _OI
+   270 ( 0.00%)      fill_n(_OI __first, _Size __n, const _Tp& __value)
+     .               {
+     .                 // concept requirements
+     .                 __glibcxx_function_requires(_OutputIteratorConcept<_OI, const _Tp&>)
+     .           
+   405 ( 0.00%)        return std::__fill_n_a(__first, std::__size_to_integer(__n), __value,
+ 4,642 ( 0.00%)  => /usr/include/c++/14.2.1/bits/stl_algobase.h:int* std::__fill_n_a<int*, unsigned long, int>(int*, unsigned long, int const&, std::random_access_iterator_tag) (45x)
+   270 ( 0.00%)  => /usr/include/c++/14.2.1/bits/stl_algobase.h:std::__size_to_integer(unsigned long) (45x)
+     .           			       std::__iterator_category(__first));
+    90 ( 0.00%)      }
+     .           
+     .             template<bool _BoolType>
+     .               struct __equal
+     .               {
+     .                 template<typename _II1, typename _II2>
+     .           	_GLIBCXX20_CONSTEXPR
+     .           	static bool
+     .           	equal(_II1 __first1, _II1 __last1, _II2 __first2)
+-- line 1190 ----------------------------------------
+-- line 1536 ----------------------------------------
+     .                 return std::__lower_bound(__first, __last, __val,
+     .           				__gnu_cxx::__ops::__iter_less_val());
+     .               }
+     .           
+     .             /// This is a helper function for the sort routines and for random.tcc.
+     .             //  Precondition: __n > 0.
+     .             template<typename _Tp>
+     .               inline _GLIBCXX_CONSTEXPR _Tp
+    24 ( 0.00%)      __lg(_Tp __n)
+     .               {
+     .           #if __cplusplus >= 201402L
+    30 ( 0.00%)        return std::__bit_width(make_unsigned_t<_Tp>(__n)) - 1;
+   168 ( 0.00%)  => /usr/include/c++/14.2.1/bit:int std::__bit_width<unsigned long>(unsigned long) (6x)
+     .           #else
+     .                 // Use +__n so it promotes to at least int.
+     .                 return (sizeof(+__n) * __CHAR_BIT__ - 1)
+     .           	       - (sizeof(+__n) == sizeof(long long)
+     .           		    ? __builtin_clzll(+__n)
+     .           		    : (sizeof(+__n) == sizeof(long)
+     .           			 ? __builtin_clzl(+__n)
+     .           			 : __builtin_clz(+__n)));
+     .           #endif
+    12 ( 0.00%)      }
+     .           
+     .           _GLIBCXX_BEGIN_NAMESPACE_ALGO
+     .           
+     .             /**
+     .              *  @brief Tests a range for element-wise equality.
+     .              *  @ingroup non_mutating_algorithms
+     .              *  @param  __first1  An input iterator.
+     .              *  @param  __last1   An input iterator.
+-- line 1565 ----------------------------------------
+-- line 2081 ----------------------------------------
+     .           	++__first;
+     .                 return __first;
+     .               }
+     .           
+     .             /// This is an overload used by find algos for the RAI case.
+     .             template<typename _RandomAccessIterator, typename _Predicate>
+     .               _GLIBCXX20_CONSTEXPR
+     .               _RandomAccessIterator
+ 3,156 ( 0.00%)      __find_if(_RandomAccessIterator __first, _RandomAccessIterator __last,
+     .           	      _Predicate __pred, random_access_iterator_tag)
+     .               {
+     .                 typename iterator_traits<_RandomAccessIterator>::difference_type
+   313 ( 0.00%)  	__trip_count = (__last - __first) >> 2;
+     .           
+   628 ( 0.00%)        for (; __trip_count > 0; --__trip_count)
+     .           	{
+   100 ( 0.00%)  	  if (__pred(__first))
+     .           	    return __first;
+     .           	  ++__first;
+     .           
+     8 ( 0.00%)  	  if (__pred(__first))
+    23 ( 0.00%)  	    return __first;
+     .           	  ++__first;
+     .           
+     8 ( 0.00%)  	  if (__pred(__first))
+     .           	    return __first;
+     .           	  ++__first;
+     .           
+     8 ( 0.00%)  	  if (__pred(__first))
+     .           	    return __first;
+     .           	  ++__first;
+     .           	}
+     .           
+ 1,164 ( 0.00%)        switch (__last - __first)
+     .           	{
+     .           	case 3:
+     .           	  if (__pred(__first))
+     .           	    return __first;
+     .           	  ++__first;
+     .           	  // FALLTHRU
+     .           	case 2:
+     4 ( 0.00%)  	  if (__pred(__first))
+     .           	    return __first;
+     .           	  ++__first;
+     .           	  // FALLTHRU
+     .           	case 1:
+     2 ( 0.00%)  	  if (__pred(__first))
+     .           	    return __first;
+     .           	  ++__first;
+     .           	  // FALLTHRU
+     .           	case 0:
+     .           	default:
+     .           	  return __last;
+     .           	}
+ 2,367 ( 0.00%)      }
+     .           
+     .             template<typename _Iterator, typename _Predicate>
+     .               _GLIBCXX20_CONSTEXPR
+     .               inline _Iterator
+     .               __find_if(_Iterator __first, _Iterator __last, _Predicate __pred)
+     .               {
+ 1,104 ( 0.00%)        return __find_if(__first, __last, __pred,
+106,926 ( 0.04%)  => /usr/include/c++/14.2.1/bits/stl_algobase.h:__gnu_cxx::__normal_iterator<std::__cxx11::basic_string<char, std::char_traits<char>, std::allocator<char> > const*, std::vector<std::__cxx11::basic_string<char, std::char_traits<char>, std::allocator<char> >, std::allocator<std::__cxx11::basic_string<char, std::char_traits<char>, std::allocator<char> > > > > std::__find_if<__gnu_cxx::__normal_iterator<std::__cxx11::basic_string<char, std::char_traits<char>, std::allocator<char> > const*, std::vector<std::__cxx11::basic_string<char, std::char_traits<char>, std::allocator<char> >, std::allocator<std::__cxx11::basic_string<char, std::char_traits<char>, std::allocator<char> > > > >, __gnu_cxx::__ops::_Iter_pred<testing::internal::(anonymous namespace)::UnitTestFilter::MatchesName(std::__cxx11::basic_string<char, std::char_traits<char>, std::allocator<char> > const&) const::{lambda(std::__cxx11::basic_string<char, std::char_traits<char>, std::allocator<char> > const&)#1}> >(__gnu_cxx::__normal_iterator<std::__cxx11::basic_string<char, std::char_traits<char>, std::allocator<char> > const*, std::vector<std::__cxx11::basic_string<char, std::char_traits<char>, std::allocator<char> >, std::allocator<std::__cxx11::basic_string<char, std::char_traits<char>, std::allocator<char> > > > >, __gnu_cxx::__normal_iterator<std::__cxx11::basic_string<char, std::char_traits<char>, std::allocator<char> > const*, std::vector<std::__cxx11::basic_string<char, std::char_traits<char>, std::allocator<char> >, std::allocator<std::__cxx11::basic_string<char, std::char_traits<char>, std::allocator<char> > > > >, __gnu_cxx::__ops::_Iter_pred<testing::internal::(anonymous namespace)::UnitTestFilter::MatchesName(std::__cxx11::basic_string<char, std::char_traits<char>, std::allocator<char> > const&) const::{lambda(std::__cxx11::basic_string<char, std::char_traits<char>, std::allocator<char> > const&)#1}>, std::random_access_iterator_tag) [clone .isra.0] (252x)
+     .           		       std::__iterator_category(__first));
+     .               }
+     .           
+     .             template<typename _InputIterator, typename _Predicate>
+     .               _GLIBCXX20_CONSTEXPR
+     .               typename iterator_traits<_InputIterator>::difference_type
+     .               __count_if(_InputIterator __first, _InputIterator __last, _Predicate __pred)
+     .               {
+-- line 2150 ----------------------------------------
+
+--------------------------------------------------------------------------------
+-- Auto-annotated source: /usr/include/c++/14.2.1/bits/stl_vector.h
+--------------------------------------------------------------------------------
+Ir                  
+
+-- line 90 ----------------------------------------
+         .           
+         .                 struct _Vector_impl_data
+         .                 {
+         .           	pointer _M_start;
+         .           	pointer _M_finish;
+         .           	pointer _M_end_of_storage;
+         .           
+         .           	_GLIBCXX20_CONSTEXPR
+     1,806 ( 0.00%)  	_Vector_impl_data() _GLIBCXX_NOEXCEPT
+     4,108 ( 0.00%)  	: _M_start(), _M_finish(), _M_end_of_storage()
+     1,806 ( 0.00%)  	{ }
+         .           
+         .           #if __cplusplus >= 201103L
+         .           	_GLIBCXX20_CONSTEXPR
+        40 ( 0.00%)  	_Vector_impl_data(_Vector_impl_data&& __x) noexcept
+        80 ( 0.00%)  	: _M_start(__x._M_start), _M_finish(__x._M_finish),
+        40 ( 0.00%)  	  _M_end_of_storage(__x._M_end_of_storage)
+       130 ( 0.00%)  	{ __x._M_start = __x._M_finish = __x._M_end_of_storage = pointer(); }
+         .           #endif
+         .           
+         .           	_GLIBCXX20_CONSTEXPR
+         .           	void
+         .           	_M_copy_data(_Vector_impl_data const& __x) _GLIBCXX_NOEXCEPT
+         .           	{
+        76 ( 0.00%)  	  _M_start = __x._M_start;
+         .           	  _M_finish = __x._M_finish;
+        89 ( 0.00%)  	  _M_end_of_storage = __x._M_end_of_storage;
+         .           	}
+         .           
+         .           	_GLIBCXX20_CONSTEXPR
+         .           	void
+         .           	_M_swap_data(_Vector_impl_data& __x) _GLIBCXX_NOEXCEPT
+         .           	{
+         .           	  // Do not use std::swap(_M_start, __x._M_start), etc as it loses
+         .           	  // information used by TBAA.
+         .           	  _Vector_impl_data __tmp;
+         .           	  __tmp._M_copy_data(*this);
+         .           	  _M_copy_data(__x);
+         .           	  __x._M_copy_data(__tmp);
+         .           	}
+         .                 };
+         .           
+     5,508 ( 0.00%)        struct _Vector_impl
+         .           	: public _Tp_alloc_type, public _Vector_impl_data
+         .                 {
+         .           	_GLIBCXX20_CONSTEXPR
+     1,672 ( 0.00%)  	_Vector_impl() _GLIBCXX_NOEXCEPT_IF(
+         .           	    is_nothrow_default_constructible<_Tp_alloc_type>::value)
+         .           #if __cpp_lib_concepts
+         .           	requires is_default_constructible_v<_Tp_alloc_type>
+         .           #endif
+       627 ( 0.00%)  	: _Tp_alloc_type()
+     1,536 ( 0.00%)  => /usr/include/c++/14.2.1/bits/stl_vector.h:std::_Vector_base<std::pair<int, int>, std::allocator<std::pair<int, int> > >::_Vector_impl_data::_Vector_impl_data() (128x)
+       627 ( 0.00%)  	{ }
+         .           
+         .           	_GLIBCXX20_CONSTEXPR
+     5,096 ( 0.00%)  	_Vector_impl(_Tp_alloc_type const& __a) _GLIBCXX_NOEXCEPT
+     1,176 ( 0.00%)  	: _Tp_alloc_type(__a)
+       456 ( 0.00%)  => /usr/include/c++/14.2.1/bits/stl_vector.h:std::_Vector_base<std::vector<std::pair<int, int>, std::allocator<std::pair<int, int> > >, std::allocator<std::vector<std::pair<int, int>, std::allocator<std::pair<int, int> > > > >::_Vector_impl_data::_Vector_impl_data() (38x)
+     1,176 ( 0.00%)  	{ }
+         .           
+         .           #if __cplusplus >= 201103L
+         .           	// Not defaulted, to enforce noexcept(true) even when
+         .           	// !is_nothrow_move_constructible<_Tp_alloc_type>.
+         .           	_GLIBCXX20_CONSTEXPR
+        60 ( 0.00%)  	_Vector_impl(_Vector_impl&& __x) noexcept
+       170 ( 0.00%)  	: _Tp_alloc_type(std::move(__x)), _Vector_impl_data(std::move(__x))
+       290 ( 0.00%)  => /usr/include/c++/14.2.1/bits/stl_vector.h:std::_Vector_base<std::pair<int, std::pair<int, int> >, std::allocator<std::pair<int, std::pair<int, int> > > >::_Vector_impl_data::_Vector_impl_data(std::_Vector_base<std::pair<int, std::pair<int, int> >, std::allocator<std::pair<int, std::pair<int, int> > > >::_Vector_impl_data&&) (10x)
+       120 ( 0.00%)  => /usr/include/c++/14.2.1/bits/move.h:std::remove_reference<std::_Vector_base<std::pair<int, std::pair<int, int> >, std::allocator<std::pair<int, std::pair<int, int> > > >::_Vector_impl&>::type&& std::move<std::_Vector_base<std::pair<int, std::pair<int, int> >, std::allocator<std::pair<int, std::pair<int, int> > > >::_Vector_impl&>(std::_Vector_base<std::pair<int, std::pair<int, int> >, std::allocator<std::pair<int, std::pair<int, int> > > >::_Vector_impl&) (20x)
+        40 ( 0.00%)  	{ }
+         .           
+         .           	_GLIBCXX20_CONSTEXPR
+         .           	_Vector_impl(_Tp_alloc_type&& __a) noexcept
+         .           	: _Tp_alloc_type(std::move(__a))
+         .           	{ }
+         .           
+         .           	_GLIBCXX20_CONSTEXPR
+         .           	_Vector_impl(_Tp_alloc_type&& __a, _Vector_impl&& __rv) noexcept
+-- line 163 ----------------------------------------
+-- line 292 ----------------------------------------
+         .           #endif // _GLIBCXX_SANITIZE_STD_ALLOCATOR && _GLIBCXX_SANITIZE_VECTOR
+         .                 };
+         .           
+         .               public:
+         .                 typedef _Alloc allocator_type;
+         .           
+         .                 _GLIBCXX20_CONSTEXPR
+         .                 _Tp_alloc_type&
+     3,684 ( 0.00%)        _M_get_Tp_allocator() _GLIBCXX_NOEXCEPT
+     3,684 ( 0.00%)        { return this->_M_impl; }
+         .           
+         .                 _GLIBCXX20_CONSTEXPR
+         .                 const _Tp_alloc_type&
+     1,740 ( 0.00%)        _M_get_Tp_allocator() const _GLIBCXX_NOEXCEPT
+     1,740 ( 0.00%)        { return this->_M_impl; }
+         .           
+         .                 _GLIBCXX20_CONSTEXPR
+         .                 allocator_type
+         .                 get_allocator() const _GLIBCXX_NOEXCEPT
+         .                 { return allocator_type(_M_get_Tp_allocator()); }
+         .           
+         .           #if __cplusplus >= 201103L
+     2,090 ( 0.00%)        _Vector_base() = default;
+       112 ( 0.00%)  => /usr/include/c++/14.2.1/bits/stl_vector.h:std::_Vector_base<Edge, std::allocator<Edge> >::_Vector_impl::_Vector_impl() (4x)
+         .           #else
+         .                 _Vector_base() { }
+         .           #endif
+         .           
+         .                 _GLIBCXX20_CONSTEXPR
+        50 ( 0.00%)        _Vector_base(const allocator_type& __a) _GLIBCXX_NOEXCEPT
+        80 ( 0.00%)        : _M_impl(__a) { }
+        33 ( 0.00%)  => /usr/include/c++/14.2.1/bits/stl_vector.h:std::_Vector_base<std::function<std::pair<int, double> (std::vector<std::pair<int, std::pair<int, int> >, std::allocator<std::pair<int, std::pair<int, int> > > > const&)>, std::allocator<std::function<std::pair<int, double> (std::vector<std::pair<int, std::pair<int, int> >, std::allocator<std::pair<int, std::pair<int, int> > > > const&)> > >::_Vector_impl::_Vector_impl(std::allocator<std::function<std::pair<int, double> (std::vector<std::pair<int, std::pair<int, int> >, std::allocator<std::pair<int, std::pair<int, int> > > > const&)> > const&) (1x)
+         .           
+         .                 // Kept for ABI compatibility.
+         .           #if !_GLIBCXX_INLINE_VERSION
+         .                 _GLIBCXX20_CONSTEXPR
+         .                 _Vector_base(size_t __n)
+         .                 : _M_impl()
+         .                 { _M_create_storage(__n); }
+         .           #endif
+         .           
+         .                 _GLIBCXX20_CONSTEXPR
+     2,674 ( 0.00%)        _Vector_base(size_t __n, const allocator_type& __a)
+     1,910 ( 0.00%)        : _M_impl(__a)
+    10,395 ( 0.00%)  => /usr/include/c++/14.2.1/bits/stl_vector.h:std::_Vector_base<int, std::allocator<int> >::_Vector_impl::_Vector_impl(std::allocator<int> const&) (315x)
+     3,438 ( 0.00%)        { _M_create_storage(__n); }
+    82,431 ( 0.03%)  => /usr/include/c++/14.2.1/bits/stl_vector.h:std::_Vector_base<int, std::allocator<int> >::_M_create_storage(unsigned long) (315x)
+         .           
+         .           #if __cplusplus >= 201103L
+       130 ( 0.00%)        _Vector_base(_Vector_base&&) = default;
+       700 ( 0.00%)  => /usr/include/c++/14.2.1/bits/stl_vector.h:std::_Vector_base<std::pair<int, std::pair<int, int> >, std::allocator<std::pair<int, std::pair<int, int> > > >::_Vector_impl::_Vector_impl(std::_Vector_base<std::pair<int, std::pair<int, int> >, std::allocator<std::pair<int, std::pair<int, int> > > >::_Vector_impl&&) (10x)
+         .           
+         .                 // Kept for ABI compatibility.
+         .           # if !_GLIBCXX_INLINE_VERSION
+         .                 _GLIBCXX20_CONSTEXPR
+         .                 _Vector_base(_Tp_alloc_type&& __a) noexcept
+         .                 : _M_impl(std::move(__a)) { }
+         .           
+         .                 _GLIBCXX20_CONSTEXPR
+-- line 345 ----------------------------------------
+-- line 358 ----------------------------------------
+         .           
+         .                 _GLIBCXX20_CONSTEXPR
+         .                 _Vector_base(const allocator_type& __a, _Vector_base&& __x)
+         .                 : _M_impl(_Tp_alloc_type(__a), std::move(__x._M_impl))
+         .                 { }
+         .           #endif
+         .           
+         .                 _GLIBCXX20_CONSTEXPR
+     2,448 ( 0.00%)        ~_Vector_base() _GLIBCXX_NOEXCEPT
+         .                 {
+     4,284 ( 0.00%)  	_M_deallocate(_M_impl._M_start,
+       673 ( 0.00%)  => /usr/include/c++/14.2.1/bits/stl_vector.h:std::_Vector_base<std::thread, std::allocator<std::thread> >::_M_deallocate(std::thread*, unsigned long) (8x)
+     4,535 ( 0.00%)  		      _M_impl._M_end_of_storage - _M_impl._M_start);
+     3,672 ( 0.00%)        }
+       152 ( 0.00%)  => /usr/include/c++/14.2.1/bits/stl_vector.h:std::_Vector_base<std::thread, std::allocator<std::thread> >::_Vector_impl::~_Vector_impl() (8x)
+         .           
+         .               public:
+         .                 _Vector_impl _M_impl;
+         .           
+         .                 _GLIBCXX20_CONSTEXPR
+         .                 pointer
+     2,820 ( 0.00%)        _M_allocate(size_t __n)
+         .                 {
+         .           	typedef __gnu_cxx::__alloc_traits<_Tp_alloc_type> _Tr;
+     3,364 ( 0.00%)  	return __n != 0 ? _Tr::allocate(_M_impl, __n) : pointer();
+     1,128 ( 0.00%)        }
+         .           
+         .                 _GLIBCXX20_CONSTEXPR
+         .                 void
+     3,798 ( 0.00%)        _M_deallocate(pointer __p, size_t __n)
+         .                 {
+         .           	typedef __gnu_cxx::__alloc_traits<_Tp_alloc_type> _Tr;
+     1,740 ( 0.00%)  	if (__p)
+     2,862 ( 0.00%)  	  _Tr::deallocate(_M_impl, __p, __n);
+     1,899 ( 0.00%)        }
+         .           
+         .               protected:
+         .           
+         .                 _GLIBCXX20_CONSTEXPR
+         .                 void
+     1,910 ( 0.00%)        _M_create_storage(size_t __n)
+         .                 {
+     2,680 ( 0.00%)  	this->_M_impl._M_start = this->_M_allocate(__n);
+       218 ( 0.00%)  => /usr/include/c++/14.2.1/bits/stl_vector.h:std::_Vector_base<std::pair<int, std::pair<int, int> >, std::allocator<std::pair<int, std::pair<int, int> > > >::_M_allocate(unsigned long) (2x)
+     1,528 ( 0.00%)  	this->_M_impl._M_finish = this->_M_impl._M_start;
+     2,855 ( 0.00%)  	this->_M_impl._M_end_of_storage = this->_M_impl._M_start + __n;
+     1,146 ( 0.00%)        }
+         .               };
+         .           
+         .             /**
+         .              *  @brief A standard container which offers fixed time access to
+         .              *  individual elements in any order.
+         .              *
+         .              *  @ingroup sequences
+         .              *  @headerfile vector
+-- line 409 ----------------------------------------
+-- line 496 ----------------------------------------
+         .                 }
+         .           
+         .                 static pointer
+         .                 _S_do_relocate(pointer, pointer, pointer __result,
+         .           		     _Tp_alloc_type&, false_type) noexcept
+         .                 { return __result; }
+         .           
+         .                 static _GLIBCXX20_CONSTEXPR pointer
+     1,057 ( 0.00%)        _S_relocate(pointer __first, pointer __last, pointer __result,
+         .           		  _Tp_alloc_type& __alloc) noexcept
+         .                 {
+         .           #if __cpp_if_constexpr
+         .           	// All callers have already checked _S_use_relocate() so just do it.
+       906 ( 0.00%)  	return std::__relocate_a(__first, __last, __result, __alloc);
+     1,128 ( 0.00%)  => /usr/include/c++/14.2.1/bits/stl_uninitialized.h:std::unique_ptr<Pipeline::ActiveObject, std::default_delete<Pipeline::ActiveObject> >* std::__relocate_a<std::unique_ptr<Pipeline::ActiveObject, std::default_delete<Pipeline::ActiveObject> >*, std::unique_ptr<Pipeline::ActiveObject, std::default_delete<Pipeline::ActiveObject> >*, std::allocator<std::unique_ptr<Pipeline::ActiveObject, std::default_delete<Pipeline::ActiveObject> > > >(std::unique_ptr<Pipeline::ActiveObject, std::default_delete<Pipeline::ActiveObject> >*, std::unique_ptr<Pipeline::ActiveObject, std::default_delete<Pipeline::ActiveObject> >*, std::unique_ptr<Pipeline::ActiveObject, std::default_delete<Pipeline::ActiveObject> >*, std::allocator<std::unique_ptr<Pipeline::ActiveObject, std::default_delete<Pipeline::ActiveObject> > >&) (3x)
+         .           #else
+         .           	using __do_it = __bool_constant<_S_use_relocate()>;
+         .           	return _S_do_relocate(__first, __last, __result, __alloc, __do_it{});
+         .           #endif
+       302 ( 0.00%)        }
+         .           #endif // C++11
+         .           
+         .               protected:
+         .                 using _Base::_M_allocate;
+         .                 using _Base::_M_deallocate;
+         .                 using _Base::_M_impl;
+         .                 using _Base::_M_get_Tp_allocator;
+         .           
+-- line 522 ----------------------------------------
+-- line 523 ----------------------------------------
+         .               public:
+         .                 // [23.2.4.1] construct/copy/destroy
+         .                 // (assign() and get_allocator() are also listed in this section)
+         .           
+         .                 /**
+         .                  *  @brief  Creates a %vector with no elements.
+         .                  */
+         .           #if __cplusplus >= 201103L
+     2,090 ( 0.00%)        vector() = default;
+     2,166 ( 0.00%)  => /usr/include/c++/14.2.1/bits/stl_vector.h:std::_Vector_base<std::pair<int, std::pair<int, int> >, std::allocator<std::pair<int, std::pair<int, int> > > >::_Vector_base() (57x)
+         .           #else
+         .                 vector() { }
+         .           #endif
+         .           
+         .                 /**
+         .                  *  @brief  Creates a %vector with no elements.
+         .                  *  @param  __a  An allocator object.
+         .                  */
+-- line 539 ----------------------------------------
+-- line 548 ----------------------------------------
+         .                  *  @param  __n  The number of elements to initially create.
+         .                  *  @param  __a  An allocator.
+         .                  *
+         .                  *  This constructor fills the %vector with @a __n default
+         .                  *  constructed elements.
+         .                  */
+         .                 explicit
+         .                 _GLIBCXX20_CONSTEXPR
+       336 ( 0.00%)        vector(size_type __n, const allocator_type& __a = allocator_type())
+       576 ( 0.00%)        : _Base(_S_check_init_len(__n, __a), __a)
+     7,146 ( 0.00%)  => /usr/include/c++/14.2.1/bits/stl_vector.h:std::_Vector_base<std::vector<std::pair<int, int>, std::allocator<std::pair<int, int> > >, std::allocator<std::vector<std::pair<int, int>, std::allocator<std::pair<int, int> > > > >::_Vector_base(unsigned long, std::allocator<std::vector<std::pair<int, int>, std::allocator<std::pair<int, int> > > > const&) (38x)
+     3,192 ( 0.00%)  => /usr/include/c++/14.2.1/bits/stl_vector.h:std::vector<std::vector<std::pair<int, int>, std::allocator<std::pair<int, int> > >, std::allocator<std::vector<std::pair<int, int>, std::allocator<std::pair<int, int> > > > >::_S_check_init_len(unsigned long, std::allocator<std::vector<std::pair<int, int>, std::allocator<std::pair<int, int> > > > const&) (38x)
+       432 ( 0.00%)        { _M_default_initialize(__n); }
+    13,220 ( 0.00%)  => /usr/include/c++/14.2.1/bits/stl_vector.h:std::vector<std::vector<std::pair<int, int>, std::allocator<std::pair<int, int> > >, std::allocator<std::vector<std::pair<int, int>, std::allocator<std::pair<int, int> > > > >::_M_default_initialize(unsigned long) (38x)
+         .           
+         .                 /**
+         .                  *  @brief  Creates a %vector with copies of an exemplar element.
+         .                  *  @param  __n  The number of elements to initially create.
+         .                  *  @param  __value  An element to copy.
+         .                  *  @param  __a  An allocator.
+         .                  *
+         .                  *  This constructor fills the %vector with @a __n copies of @a __value.
+         .                  */
+         .                 _GLIBCXX20_CONSTEXPR
+       448 ( 0.00%)        vector(size_type __n, const value_type& __value,
+         .           	     const allocator_type& __a = allocator_type())
+       672 ( 0.00%)        : _Base(_S_check_init_len(__n, __a), __a)
+       384 ( 0.00%)  => /usr/include/c++/14.2.1/bits/stl_vector.h:std::_Vector_base<std::pair<int, std::pair<int, int> >, std::allocator<std::pair<int, std::pair<int, int> > > >::_Vector_base(unsigned long, std::allocator<std::pair<int, std::pair<int, int> > > const&) (2x)
+       168 ( 0.00%)  => /usr/include/c++/14.2.1/bits/stl_vector.h:std::vector<std::pair<int, std::pair<int, int> >, std::allocator<std::pair<int, std::pair<int, int> > > >::_S_check_init_len(unsigned long, std::allocator<std::pair<int, std::pair<int, int> > > const&) (2x)
+       560 ( 0.00%)        { _M_fill_initialize(__n, __value); }
+       382 ( 0.00%)  => /usr/include/c++/14.2.1/bits/stl_vector.h:std::vector<std::pair<int, std::pair<int, int> >, std::allocator<std::pair<int, std::pair<int, int> > > >::_M_fill_initialize(unsigned long, std::pair<int, std::pair<int, int> > const&) (2x)
+         .           #else
+         .                 /**
+         .                  *  @brief  Creates a %vector with copies of an exemplar element.
+         .                  *  @param  __n  The number of elements to initially create.
+         .                  *  @param  __value  An element to copy.
+         .                  *  @param  __a  An allocator.
+         .                  *
+         .                  *  This constructor fills the %vector with @a __n copies of @a __value.
+-- line 580 ----------------------------------------
+-- line 593 ----------------------------------------
+         .                  *  All the elements of @a __x are copied, but any unused capacity in
+         .                  *  @a __x  will not be copied
+         .                  *  (i.e. capacity() == size() in the new %vector).
+         .                  *
+         .                  *  The newly-created %vector uses a copy of the allocator object used
+         .                  *  by @a __x (unless the allocator traits dictate a different object).
+         .                  */
+         .                 _GLIBCXX20_CONSTEXPR
+     3,058 ( 0.00%)        vector(const vector& __x)
+         .                 : _Base(__x.size(),
+     6,672 ( 0.00%)  	_Alloc_traits::_S_select_on_copy(__x._M_get_Tp_allocator()))
+    84,367 ( 0.03%)  => /usr/include/c++/14.2.1/bits/stl_vector.h:std::_Vector_base<int, std::allocator<int> >::_Vector_base(unsigned long, std::allocator<int> const&) (270x)
+     3,240 ( 0.00%)  => /usr/include/c++/14.2.1/bits/stl_vector.h:std::vector<int, std::allocator<int> >::size() const (270x)
+     1,620 ( 0.00%)  => /usr/include/c++/14.2.1/bits/stl_vector.h:std::_Vector_base<int, std::allocator<int> >::_M_get_Tp_allocator() const (270x)
+         .                 {
+       558 ( 0.00%)  	this->_M_impl._M_finish =
+     3,892 ( 0.00%)  	  std::__uninitialized_copy_a(__x.begin(), __x.end(),
+    75,497 ( 0.03%)  => /usr/include/c++/14.2.1/bits/stl_uninitialized.h:int* std::__uninitialized_copy_a<__gnu_cxx::__normal_iterator<int const*, std::vector<int, std::allocator<int> > >, int*, int>(__gnu_cxx::__normal_iterator<int const*, std::vector<int, std::allocator<int> > >, __gnu_cxx::__normal_iterator<int const*, std::vector<int, std::allocator<int> > >, int*, std::allocator<int>&) (270x)
+     8,100 ( 0.00%)  => /usr/include/c++/14.2.1/bits/stl_vector.h:std::vector<int, std::allocator<int> >::end() const (270x)
+     7,830 ( 0.00%)  => /usr/include/c++/14.2.1/bits/stl_vector.h:std::vector<int, std::allocator<int> >::begin() const (270x)
+         .           				      this->_M_impl._M_start,
+     1,112 ( 0.00%)  				      _M_get_Tp_allocator());
+     1,620 ( 0.00%)  => /usr/include/c++/14.2.1/bits/stl_vector.h:std::_Vector_base<int, std::allocator<int> >::_M_get_Tp_allocator() (270x)
+     2,780 ( 0.00%)        }
+         .           
+         .           #if __cplusplus >= 201103L
+         .                 /**
+         .                  *  @brief  %Vector move constructor.
+         .                  *
+         .                  *  The newly-created %vector contains the exact contents of the
+         .                  *  moved instance.
+         .                  *  The contents of the moved instance are a valid, but unspecified
+         .                  *  %vector.
+         .                  */
+       130 ( 0.00%)        vector(vector&&) noexcept = default;
+       830 ( 0.00%)  => /usr/include/c++/14.2.1/bits/stl_vector.h:std::_Vector_base<std::pair<int, std::pair<int, int> >, std::allocator<std::pair<int, std::pair<int, int> > > >::_Vector_base(std::_Vector_base<std::pair<int, std::pair<int, int> >, std::allocator<std::pair<int, std::pair<int, int> > > >&&) (10x)
+         .           
+         .                 /// Copy constructor with alternative allocator
+         .                 _GLIBCXX20_CONSTEXPR
+         .                 vector(const vector& __x, const __type_identity_t<allocator_type>& __a)
+         .                 : _Base(__x.size(), __a)
+         .                 {
+         .           	this->_M_impl._M_finish =
+         .           	  std::__uninitialized_copy_a(__x.begin(), __x.end(),
+-- line 628 ----------------------------------------
+-- line 670 ----------------------------------------
+         .                  *
+         .                  *  Create a %vector consisting of copies of the elements in the
+         .                  *  initializer_list @a __l.
+         .                  *
+         .                  *  This will call the element type's copy constructor N times
+         .                  *  (where N is @a __l.size()) and do no memory reallocation.
+         .                  */
+         .                 _GLIBCXX20_CONSTEXPR
+       160 ( 0.00%)        vector(initializer_list<value_type> __l,
+         .           	     const allocator_type& __a = allocator_type())
+        50 ( 0.00%)        : _Base(__a)
+        46 ( 0.00%)  => /usr/include/c++/14.2.1/bits/stl_vector.h:std::_Vector_base<std::function<std::pair<int, double> (std::vector<std::pair<int, std::pair<int, int> >, std::allocator<std::pair<int, std::pair<int, int> > > > const&)>, std::allocator<std::function<std::pair<int, double> (std::vector<std::pair<int, std::pair<int, int> >, std::allocator<std::pair<int, std::pair<int, int> > > > const&)> > >::_Vector_base(std::allocator<std::function<std::pair<int, double> (std::vector<std::pair<int, std::pair<int, int> >, std::allocator<std::pair<int, std::pair<int, int> > > > const&)> > const&) (1x)
+         .                 {
+       130 ( 0.00%)  	_M_range_initialize(__l.begin(), __l.end(),
+     1,445 ( 0.00%)  => /usr/include/c++/14.2.1/bits/stl_vector.h:void std::vector<std::function<std::pair<int, double> (std::vector<std::pair<int, std::pair<int, int> >, std::allocator<std::pair<int, std::pair<int, int> > > > const&)>, std::allocator<std::function<std::pair<int, double> (std::vector<std::pair<int, std::pair<int, int> >, std::allocator<std::pair<int, std::pair<int, int> > > > const&)> > >::_M_range_initialize<std::function<std::pair<int, double> (std::vector<std::pair<int, std::pair<int, int> >, std::allocator<std::pair<int, std::pair<int, int> > > > const&)> const*>(std::function<std::pair<int, double> (std::vector<std::pair<int, std::pair<int, int> >, std::allocator<std::pair<int, std::pair<int, int> > > > const&)> const*, std::function<std::pair<int, double> (std::vector<std::pair<int, std::pair<int, int> >, std::allocator<std::pair<int, std::pair<int, int> > > > const&)> const*, std::forward_iterator_tag) (1x)
+        31 ( 0.00%)  => /usr/include/c++/14.2.1/initializer_list:std::initializer_list<std::function<std::pair<int, double> (std::vector<std::pair<int, std::pair<int, int> >, std::allocator<std::pair<int, std::pair<int, int> > > > const&)> >::end() const (1x)
+         7 ( 0.00%)  => /usr/include/c++/14.2.1/initializer_list:std::initializer_list<std::function<std::pair<int, double> (std::vector<std::pair<int, std::pair<int, int> >, std::allocator<std::pair<int, std::pair<int, int> > > > const&)> >::begin() const (1x)
+         .           			    random_access_iterator_tag());
+        70 ( 0.00%)        }
+         .           #endif
+         .           
+         .                 /**
+         .                  *  @brief  Builds a %vector from a range.
+         .                  *  @param  __first  An input iterator.
+         .                  *  @param  __last  An input iterator.
+         .                  *  @param  __a  An allocator.
+         .                  *
+-- line 692 ----------------------------------------
+-- line 725 ----------------------------------------
+         .           
+         .                 /**
+         .                  *  The dtor only erases the elements, and note that if the
+         .                  *  elements themselves are pointers, the pointed-to memory is
+         .                  *  not touched in any way.  Managing the pointer is the user's
+         .                  *  responsibility.
+         .                  */
+         .                 _GLIBCXX20_CONSTEXPR
+     2,585 ( 0.00%)        ~vector() _GLIBCXX_NOEXCEPT
+         .                 {
+     4,648 ( 0.00%)  	std::_Destroy(this->_M_impl._M_start, this->_M_impl._M_finish,
+     1,836 ( 0.00%)  		      _M_get_Tp_allocator());
+        12 ( 0.00%)  => /usr/include/c++/14.2.1/bits/stl_vector.h:std::_Vector_base<std::function<std::pair<int, double> (std::vector<std::pair<int, std::pair<int, int> >, std::allocator<std::pair<int, std::pair<int, int> > > > const&)>, std::allocator<std::function<std::pair<int, double> (std::vector<std::pair<int, std::pair<int, int> >, std::allocator<std::pair<int, std::pair<int, int> > > > const&)> > >::_M_get_Tp_allocator() (2x)
+         .           	_GLIBCXX_ASAN_ANNOTATE_BEFORE_DEALLOC;
+     3,758 ( 0.00%)        }
+       344 ( 0.00%)  => /usr/include/c++/14.2.1/bits/stl_vector.h:std::_Vector_base<std::function<std::pair<int, double> (std::vector<std::pair<int, std::pair<int, int> >, std::allocator<std::pair<int, std::pair<int, int> > > > const&)>, std::allocator<std::function<std::pair<int, double> (std::vector<std::pair<int, std::pair<int, int> >, std::allocator<std::pair<int, std::pair<int, int> > > > const&)> > >::~_Vector_base() (2x)
+         .           
+         .                 /**
+         .                  *  @brief  %Vector assignment operator.
+         .                  *  @param  __x  A %vector of identical element and allocator types.
+         .                  *
+         .                  *  All the elements of @a __x are copied, but any unused capacity in
+         .                  *  @a __x will not be copied.
+         .                  *
+-- line 746 ----------------------------------------
+-- line 780 ----------------------------------------
+         .                  *  initializer list @a __l.
+         .                  *
+         .                  *  Note that the assignment completely changes the %vector and
+         .                  *  that the resulting %vector's size is the same as the number
+         .                  *  of elements assigned.
+         .                  */
+         .                 _GLIBCXX20_CONSTEXPR
+         .                 vector&
+       300 ( 0.00%)        operator=(initializer_list<value_type> __l)
+         .                 {
+       260 ( 0.00%)  	this->_M_assign_aux(__l.begin(), __l.end(),
+    12,560 ( 0.00%)  => /usr/include/c++/14.2.1/bits/vector.tcc:void std::vector<std::pair<int, std::pair<int, int> >, std::allocator<std::pair<int, std::pair<int, int> > > >::_M_assign_aux<std::pair<int, std::pair<int, int> > const*>(std::pair<int, std::pair<int, int> > const*, std::pair<int, std::pair<int, int> > const*, std::forward_iterator_tag) (20x)
+       700 ( 0.00%)  => /usr/include/c++/14.2.1/initializer_list:std::initializer_list<std::pair<int, std::pair<int, int> > >::end() const (20x)
+       140 ( 0.00%)  => /usr/include/c++/14.2.1/initializer_list:std::initializer_list<std::pair<int, std::pair<int, int> > >::begin() const (20x)
+         .           			    random_access_iterator_tag());
+        20 ( 0.00%)  	return *this;
+       120 ( 0.00%)        }
+         .           #endif
+         .           
+         .                 /**
+         .                  *  @brief  Assigns a given value to a %vector.
+         .                  *  @param  __n  Number of elements to be assigned.
+         .                  *  @param  __val  Value to be assigned.
+         .                  *
+         .                  *  This function fills a %vector with @a __n copies of the given
+-- line 801 ----------------------------------------
+-- line 865 ----------------------------------------
+         .                 // iterators
+         .                 /**
+         .                  *  Returns a read/write iterator that points to the first
+         .                  *  element in the %vector.  Iteration is done in ordinary
+         .                  *  element order.
+         .                  */
+         .                 _GLIBCXX_NODISCARD _GLIBCXX20_CONSTEXPR
+         .                 iterator
+     1,435 ( 0.00%)        begin() _GLIBCXX_NOEXCEPT
+     2,255 ( 0.00%)        { return iterator(this->_M_impl._M_start); }
+       176 ( 0.00%)  => /usr/include/c++/14.2.1/bits/stl_iterator.h:__gnu_cxx::__normal_iterator<Edge*, std::vector<Edge, std::allocator<Edge> > >::__normal_iterator(Edge* const&) (16x)
+         .           
+         .                 /**
+         .                  *  Returns a read-only (constant) iterator that points to the
+         .                  *  first element in the %vector.  Iteration is done in ordinary
+         .                  *  element order.
+         .                  */
+         .                 _GLIBCXX_NODISCARD _GLIBCXX20_CONSTEXPR
+         .                 const_iterator
+     3,024 ( 0.00%)        begin() const _GLIBCXX_NOEXCEPT
+     4,752 ( 0.00%)        { return const_iterator(this->_M_impl._M_start); }
+       836 ( 0.00%)  => /usr/include/c++/14.2.1/bits/stl_iterator.h:__gnu_cxx::__normal_iterator<std::pair<int, std::pair<int, int> > const*, std::vector<std::pair<int, std::pair<int, int> >, std::allocator<std::pair<int, std::pair<int, int> > > > >::__normal_iterator(std::pair<int, std::pair<int, int> > const* const&) (76x)
+         .           
+         .                 /**
+         .                  *  Returns a read/write iterator that points one past the last
+         .                  *  element in the %vector.  Iteration is done in ordinary
+         .                  *  element order.
+         .                  */
+         .                 _GLIBCXX_NODISCARD _GLIBCXX20_CONSTEXPR
+         .                 iterator
+     3,276 ( 0.00%)        end() _GLIBCXX_NOEXCEPT
+     5,616 ( 0.00%)        { return iterator(this->_M_impl._M_finish); }
+       462 ( 0.00%)  => /usr/include/c++/14.2.1/bits/stl_iterator.h:__gnu_cxx::__normal_iterator<std::future<std::pair<int, double> >*, std::vector<std::future<std::pair<int, double> >, std::allocator<std::future<std::pair<int, double> > > > >::__normal_iterator(std::future<std::pair<int, double> >* const&) (42x)
+         .           
+         .                 /**
+         .                  *  Returns a read-only (constant) iterator that points one past
+         .                  *  the last element in the %vector.  Iteration is done in
+         .                  *  ordinary element order.
+         .                  */
+         .                 _GLIBCXX_NODISCARD _GLIBCXX20_CONSTEXPR
+         .                 const_iterator
+     2,975 ( 0.00%)        end() const _GLIBCXX_NOEXCEPT
+     5,100 ( 0.00%)        { return const_iterator(this->_M_impl._M_finish); }
+       836 ( 0.00%)  => /usr/include/c++/14.2.1/bits/stl_iterator.h:__gnu_cxx::__normal_iterator<std::pair<int, std::pair<int, int> > const*, std::vector<std::pair<int, std::pair<int, int> >, std::allocator<std::pair<int, std::pair<int, int> > > > >::__normal_iterator(std::pair<int, std::pair<int, int> > const* const&) (76x)
+         .           
+         .                 /**
+         .                  *  Returns a read/write reverse iterator that points to the
+         .                  *  last element in the %vector.  Iteration is done in reverse
+         .                  *  element order.
+         .                  */
+         .                 _GLIBCXX_NODISCARD _GLIBCXX20_CONSTEXPR
+         .                 reverse_iterator
+-- line 912 ----------------------------------------
+-- line 984 ----------------------------------------
+         .                 crend() const noexcept
+         .                 { return const_reverse_iterator(begin()); }
+         .           #endif
+         .           
+         .                 // [23.2.4.2] capacity
+         .                 /**  Returns the number of elements in the %vector.  */
+         .                 _GLIBCXX_NODISCARD _GLIBCXX20_CONSTEXPR
+         .                 size_type
+     3,114 ( 0.00%)        size() const _GLIBCXX_NOEXCEPT
+    14,577 ( 0.01%)        { return size_type(this->_M_impl._M_finish - this->_M_impl._M_start); }
+         .           
+         .                 /**  Returns the size() of the largest possible %vector.  */
+         .                 _GLIBCXX_NODISCARD _GLIBCXX20_CONSTEXPR
+         .                 size_type
+     1,208 ( 0.00%)        max_size() const _GLIBCXX_NOEXCEPT
+     2,114 ( 0.00%)        { return _S_max_size(_M_get_Tp_allocator()); }
+       774 ( 0.00%)  => /usr/include/c++/14.2.1/bits/stl_vector.h:std::vector<TarjanMST::Edge, std::allocator<TarjanMST::Edge> >::_S_max_size(std::allocator<TarjanMST::Edge> const&) (18x)
+       108 ( 0.00%)  => /usr/include/c++/14.2.1/bits/stl_vector.h:std::_Vector_base<TarjanMST::Edge, std::allocator<TarjanMST::Edge> >::_M_get_Tp_allocator() const (18x)
+         .           
+         .           #if __cplusplus >= 201103L
+         .                 /**
+         .                  *  @brief  Resizes the %vector to the specified number of elements.
+         .                  *  @param  __new_size  Number of elements the %vector should contain.
+         .                  *
+         .                  *  This function will %resize the %vector to the specified
+         .                  *  number of elements.  If the number is smaller than the
+-- line 1007 ----------------------------------------
+-- line 1070 ----------------------------------------
+         .           #endif
+         .           
+         .                 /**
+         .                  *  Returns the total number of elements that the %vector can
+         .                  *  hold before needing to allocate more memory.
+         .                  */
+         .                 _GLIBCXX_NODISCARD _GLIBCXX20_CONSTEXPR
+         .                 size_type
+        60 ( 0.00%)        capacity() const _GLIBCXX_NOEXCEPT
+         .                 {
+        40 ( 0.00%)  	return size_type(this->_M_impl._M_end_of_storage
+       159 ( 0.00%)  			   - this->_M_impl._M_start);
+        40 ( 0.00%)        }
+         .           
+         .                 /**
+         .                  *  Returns true if the %vector is empty.  (Thus begin() would
+         .                  *  equal end().)
+         .                  */
+         .                 _GLIBCXX_NODISCARD _GLIBCXX20_CONSTEXPR
+         .                 bool
+       357 ( 0.00%)        empty() const _GLIBCXX_NOEXCEPT
+       918 ( 0.00%)        { return begin() == end(); }
+       372 ( 0.00%)  => /usr/include/c++/14.2.1/bits/stl_iterator.h:bool __gnu_cxx::operator==<std::pair<int, int> const*, std::vector<std::pair<int, int>, std::allocator<std::pair<int, int> > > >(__gnu_cxx::__normal_iterator<std::pair<int, int> const*, std::vector<std::pair<int, int>, std::allocator<std::pair<int, int> > > > const&, __gnu_cxx::__normal_iterator<std::pair<int, int> const*, std::vector<std::pair<int, int>, std::allocator<std::pair<int, int> > > > const&) (12x)
+       360 ( 0.00%)  => /usr/include/c++/14.2.1/bits/stl_vector.h:std::vector<std::pair<int, int>, std::allocator<std::pair<int, int> > >::end() const (12x)
+       348 ( 0.00%)  => /usr/include/c++/14.2.1/bits/stl_vector.h:std::vector<std::pair<int, int>, std::allocator<std::pair<int, int> > >::begin() const (12x)
+         .           
+         .                 /**
+         .                  *  @brief  Attempt to preallocate enough memory for specified number of
+         .                  *          elements.
+         .                  *  @param  __n  Number of elements required.
+         .                  *  @throw  std::length_error  If @a n exceeds @c max_size().
+         .                  *
+         .                  *  This function attempts to reserve enough memory for the
+-- line 1099 ----------------------------------------
+-- line 1120 ----------------------------------------
+         .                  *
+         .                  *  This operator allows for easy, array-style, data access.
+         .                  *  Note that data access with this operator is unchecked and
+         .                  *  out_of_range lookups are not defined. (For checked lookups
+         .                  *  see at().)
+         .                  */
+         .                 _GLIBCXX_NODISCARD _GLIBCXX20_CONSTEXPR
+         .                 reference
+42,874,500 (15.55%)        operator[](size_type __n) _GLIBCXX_NOEXCEPT
+         .                 {
+       348 ( 0.00%)  	__glibcxx_requires_subscript(__n);
+69,670,614 (25.28%)  	return *(this->_M_impl._M_start + __n);
+21,437,250 ( 7.78%)        }
+         .           
+         .                 /**
+         .                  *  @brief  Subscript access to the data contained in the %vector.
+         .                  *  @param __n The index of the element for which data should be
+         .                  *  accessed.
+         .                  *  @return  Read-only (constant) reference to data.
+         .                  *
+         .                  *  This operator allows for easy, array-style, data access.
+         .                  *  Note that data access with this operator is unchecked and
+         .                  *  out_of_range lookups are not defined. (For checked lookups
+         .                  *  see at().)
+         .                  */
+         .                 _GLIBCXX_NODISCARD _GLIBCXX20_CONSTEXPR
+         .                 const_reference
+       260 ( 0.00%)        operator[](size_type __n) const _GLIBCXX_NOEXCEPT
+         .                 {
+       274 ( 0.00%)  	__glibcxx_requires_subscript(__n);
+       520 ( 0.00%)  	return *(this->_M_impl._M_start + __n);
+       130 ( 0.00%)        }
+         .           
+         .               protected:
+         .                 /// Safety check used only from at().
+         .                 _GLIBCXX20_CONSTEXPR
+         .                 void
+         .                 _M_range_check(size_type __n) const
+         .                 {
+         .           	if (__n >= this->size())
+-- line 1159 ----------------------------------------
+-- line 1205 ----------------------------------------
+         .                 /**
+         .                  *  Returns a read/write reference to the data at the first
+         .                  *  element of the %vector.
+         .                  */
+         .                 _GLIBCXX_NODISCARD _GLIBCXX20_CONSTEXPR
+         .                 reference
+         .                 front() _GLIBCXX_NOEXCEPT
+         .                 {
+         2 ( 0.00%)  	__glibcxx_requires_nonempty();
+         .           	return *begin();
+         .                 }
+         .           
+         .                 /**
+         .                  *  Returns a read-only (constant) reference to the data at the first
+         .                  *  element of the %vector.
+         .                  */
+         .                 _GLIBCXX_NODISCARD _GLIBCXX20_CONSTEXPR
+         .                 const_reference
+        49 ( 0.00%)        front() const _GLIBCXX_NOEXCEPT
+         .                 {
+         .           	__glibcxx_requires_nonempty();
+        49 ( 0.00%)  	return *begin();
+       203 ( 0.00%)  => /usr/include/c++/14.2.1/bits/stl_vector.h:std::vector<std::pair<int, int>, std::allocator<std::pair<int, int> > >::begin() const (7x)
+        49 ( 0.00%)  => /usr/include/c++/14.2.1/bits/stl_iterator.h:__gnu_cxx::__normal_iterator<std::pair<int, int> const*, std::vector<std::pair<int, int>, std::allocator<std::pair<int, int> > > >::operator*() const (7x)
+        35 ( 0.00%)        }
+         .           
+         .                 /**
+         .                  *  Returns a read/write reference to the data at the last
+         .                  *  element of the %vector.
+         .                  */
+         .                 _GLIBCXX_NODISCARD _GLIBCXX20_CONSTEXPR
+         .                 reference
+     1,841 ( 0.00%)        back() _GLIBCXX_NOEXCEPT
+         .                 {
+       231 ( 0.00%)  	__glibcxx_requires_nonempty();
+     3,156 ( 0.00%)  	return *(end() - 1);
+       148 ( 0.00%)  => /usr/include/c++/14.2.1/bits/stl_iterator.h:__gnu_cxx::__normal_iterator<std::unique_ptr<Pipeline::ActiveObject, std::default_delete<Pipeline::ActiveObject> >*, std::vector<std::unique_ptr<Pipeline::ActiveObject, std::default_delete<Pipeline::ActiveObject> >, std::allocator<std::unique_ptr<Pipeline::ActiveObject, std::default_delete<Pipeline::ActiveObject> > > > >::operator-(long) const (4x)
+       120 ( 0.00%)  => /usr/include/c++/14.2.1/bits/stl_vector.h:std::vector<std::unique_ptr<Pipeline::ActiveObject, std::default_delete<Pipeline::ActiveObject> >, std::allocator<std::unique_ptr<Pipeline::ActiveObject, std::default_delete<Pipeline::ActiveObject> > > >::end() (4x)
+        28 ( 0.00%)  => /usr/include/c++/14.2.1/bits/stl_iterator.h:__gnu_cxx::__normal_iterator<std::unique_ptr<Pipeline::ActiveObject, std::default_delete<Pipeline::ActiveObject> >*, std::vector<std::unique_ptr<Pipeline::ActiveObject, std::default_delete<Pipeline::ActiveObject> >, std::allocator<std::unique_ptr<Pipeline::ActiveObject, std::default_delete<Pipeline::ActiveObject> > > > >::operator*() const (4x)
+     1,315 ( 0.00%)        }
+         .           
+         .                 /**
+         .                  *  Returns a read-only (constant) reference to the data at the
+         .                  *  last element of the %vector.
+         .                  */
+         .                 _GLIBCXX_NODISCARD _GLIBCXX20_CONSTEXPR
+         .                 const_reference
+         .                 back() const _GLIBCXX_NOEXCEPT
+-- line 1247 ----------------------------------------
+-- line 1277 ----------------------------------------
+         .                  *  to it.  Due to the nature of a %vector this operation can be
+         .                  *  done in constant time if the %vector has preallocated space
+         .                  *  available.
+         .                  */
+         .                 _GLIBCXX20_CONSTEXPR
+         .                 void
+         .                 push_back(const value_type& __x)
+         .                 {
+       214 ( 0.00%)  	if (this->_M_impl._M_finish != this->_M_impl._M_end_of_storage)
+         .           	  {
+         .           	    _GLIBCXX_ASAN_ANNOTATE_GROW(1);
+         .           	    _Alloc_traits::construct(this->_M_impl, this->_M_impl._M_finish,
+         .           				     __x);
+        64 ( 0.00%)  	    ++this->_M_impl._M_finish;
+         .           	    _GLIBCXX_ASAN_ANNOTATE_GREW(1);
+         .           	  }
+         .           	else
+         .           	  _M_realloc_append(__x);
+         .                 }
+         .           
+         .           #if __cplusplus >= 201103L
+         .                 _GLIBCXX20_CONSTEXPR
+         .                 void
+       815 ( 0.00%)        push_back(value_type&& __x)
+     1,900 ( 0.00%)        { emplace_back(std::move(__x)); }
+     7,190 ( 0.00%)  => /usr/include/c++/14.2.1/bits/vector.tcc:std::__cxx11::basic_string<char, std::char_traits<char>, std::allocator<char> >& std::vector<std::__cxx11::basic_string<char, std::char_traits<char>, std::allocator<char> >, std::allocator<std::__cxx11::basic_string<char, std::char_traits<char>, std::allocator<char> > > >::emplace_back<std::__cxx11::basic_string<char, std::char_traits<char>, std::allocator<char> > >(std::__cxx11::basic_string<char, std::char_traits<char>, std::allocator<char> >&&) [clone .isra.0] (26x)
+         .           
+         .                 template<typename... _Args>
+         .           #if __cplusplus > 201402L
+         .           	_GLIBCXX20_CONSTEXPR
+         .           	reference
+         .           #else
+         .           	void
+         .           #endif
+-- line 1309 ----------------------------------------
+-- line 1316 ----------------------------------------
+         .                  *  This is a typical stack operation. It shrinks the %vector by one.
+         .                  *
+         .                  *  Note that no data is returned, and if the last element's
+         .                  *  data is needed, it should be retrieved before pop_back() is
+         .                  *  called.
+         .                  */
+         .                 _GLIBCXX20_CONSTEXPR
+         .                 void
+        21 ( 0.00%)        pop_back() _GLIBCXX_NOEXCEPT
+         .                 {
+         .           	__glibcxx_requires_nonempty();
+        35 ( 0.00%)  	--this->_M_impl._M_finish;
+        63 ( 0.00%)  	_Alloc_traits::destroy(this->_M_impl, this->_M_impl._M_finish);
+         .           	_GLIBCXX_ASAN_ANNOTATE_SHRINK(1);
+        21 ( 0.00%)        }
+         .           
+         .           #if __cplusplus >= 201103L
+         .                 /**
+         .                  *  @brief  Inserts an object in %vector before specified iterator.
+         .                  *  @param  __position  A const_iterator into the %vector.
+         .                  *  @param  __args  Arguments.
+         .                  *  @return  An iterator that points to the inserted data.
+         .                  *
+-- line 1338 ----------------------------------------
+-- line 1600 ----------------------------------------
+         .                  *  Erases all the elements.  Note that this function only erases the
+         .                  *  elements, and that if the elements themselves are pointers, the
+         .                  *  pointed-to memory is not touched in any way.  Managing the pointer is
+         .                  *  the user's responsibility.
+         .                  */
+         .                 _GLIBCXX20_CONSTEXPR
+         .                 void
+         .                 clear() _GLIBCXX_NOEXCEPT
+       150 ( 0.00%)        { _M_erase_at_end(this->_M_impl._M_start); }
+         .           
+         .               protected:
+         .                 /**
+         .                  *  Memory expansion handler.  Uses the member allocation function to
+         .                  *  obtain @a n bytes of memory, and then copies [first,last) into it.
+         .                  */
+         .                 template<typename _ForwardIterator>
+         .           	_GLIBCXX20_CONSTEXPR
+         .           	pointer
+       160 ( 0.00%)  	_M_allocate_and_copy(size_type __n,
+         .           			     _ForwardIterator __first, _ForwardIterator __last)
+         .           	{
+       120 ( 0.00%)  	  pointer __result = this->_M_allocate(__n);
+     2,180 ( 0.00%)  => /usr/include/c++/14.2.1/bits/stl_vector.h:std::_Vector_base<std::pair<int, std::pair<int, int> >, std::allocator<std::pair<int, std::pair<int, int> > > >::_M_allocate(unsigned long) (20x)
+         .           	  __try
+         .           	    {
+       100 ( 0.00%)  	      std::__uninitialized_copy_a(__first, __last, __result,
+     4,440 ( 0.00%)  => /usr/include/c++/14.2.1/bits/stl_uninitialized.h:std::pair<int, std::pair<int, int> >* std::__uninitialized_copy_a<std::pair<int, std::pair<int, int> > const*, std::pair<int, std::pair<int, int> >*, std::pair<int, std::pair<int, int> > >(std::pair<int, std::pair<int, int> > const*, std::pair<int, std::pair<int, int> > const*, std::pair<int, std::pair<int, int> >*, std::allocator<std::pair<int, std::pair<int, int> > >&) (20x)
+        80 ( 0.00%)  					  _M_get_Tp_allocator());
+       120 ( 0.00%)  => /usr/include/c++/14.2.1/bits/stl_vector.h:std::_Vector_base<std::pair<int, std::pair<int, int> >, std::allocator<std::pair<int, std::pair<int, int> > > >::_M_get_Tp_allocator() (20x)
+        40 ( 0.00%)  	      return __result;
+         .           	    }
+         .           	  __catch(...)
+         .           	    {
+         .           	      _M_deallocate(__result, __n);
+         .           	      __throw_exception_again;
+         .           	    }
+        60 ( 0.00%)  	}
+         .           
+         .           
+         .                 // Internal constructor functions follow.
+         .           
+         .                 // Called by the range constructor to implement [23.1.1]/9
+         .           
+         .           #if __cplusplus < 201103L
+         .                 // _GLIBCXX_RESOLVE_LIB_DEFECTS
+-- line 1641 ----------------------------------------
+-- line 1681 ----------------------------------------
+         .           	    __throw_exception_again;
+         .           	  }
+         .           	}
+         .           
+         .                 // Called by the second initialize_dispatch above
+         .                 template<typename _ForwardIterator>
+         .           	_GLIBCXX20_CONSTEXPR
+         .           	void
+       140 ( 0.00%)  	_M_range_initialize(_ForwardIterator __first, _ForwardIterator __last,
+         .           			    std::forward_iterator_tag)
+         .           	{
+        10 ( 0.00%)  	  const size_type __n = std::distance(__first, __last);
+         .           	  this->_M_impl._M_start
+       140 ( 0.00%)  	    = this->_M_allocate(_S_check_init_len(__n, _M_get_Tp_allocator()));
+       711 ( 0.00%)  => /usr/include/c++/14.2.1/bits/stl_vector.h:std::_Vector_base<std::pair<int, std::pair<int, int> >, std::allocator<std::pair<int, std::pair<int, int> > > >::_M_allocate(unsigned long) (3x)
+       252 ( 0.00%)  => /usr/include/c++/14.2.1/bits/stl_vector.h:std::vector<std::pair<int, std::pair<int, int> >, std::allocator<std::pair<int, std::pair<int, int> > > >::_S_check_init_len(unsigned long, std::allocator<std::pair<int, std::pair<int, int> > > const&) (3x)
+        18 ( 0.00%)  => /usr/include/c++/14.2.1/bits/stl_vector.h:std::_Vector_base<std::pair<int, std::pair<int, int> >, std::allocator<std::pair<int, std::pair<int, int> > > >::_M_get_Tp_allocator() (3x)
+        97 ( 0.00%)  	  this->_M_impl._M_end_of_storage = this->_M_impl._M_start + __n;
+        20 ( 0.00%)  	  this->_M_impl._M_finish =
+        60 ( 0.00%)  	    std::__uninitialized_copy_a(__first, __last,
+       666 ( 0.00%)  => /usr/include/c++/14.2.1/bits/stl_uninitialized.h:std::pair<int, std::pair<int, int> >* std::__uninitialized_copy_a<std::pair<int, std::pair<int, int> > const*, std::pair<int, std::pair<int, int> >*, std::pair<int, std::pair<int, int> > >(std::pair<int, std::pair<int, int> > const*, std::pair<int, std::pair<int, int> > const*, std::pair<int, std::pair<int, int> >*, std::allocator<std::pair<int, std::pair<int, int> > >&) (3x)
+         .           					this->_M_impl._M_start,
+        40 ( 0.00%)  					_M_get_Tp_allocator());
+        18 ( 0.00%)  => /usr/include/c++/14.2.1/bits/stl_vector.h:std::_Vector_base<std::pair<int, std::pair<int, int> >, std::allocator<std::pair<int, std::pair<int, int> > > >::_M_get_Tp_allocator() (3x)
+        70 ( 0.00%)  	}
+         .           
+         .                 // Called by the first initialize_dispatch above and by the
+         .                 // vector(n,value,a) constructor.
+         .                 _GLIBCXX20_CONSTEXPR
+         .                 void
+       336 ( 0.00%)        _M_fill_initialize(size_type __n, const value_type& __value)
+         .                 {
+       112 ( 0.00%)  	this->_M_impl._M_finish =
+       336 ( 0.00%)  	  std::__uninitialized_fill_n_a(this->_M_impl._M_start, __n, __value,
+   220,963 ( 0.08%)  => /usr/include/c++/14.2.1/bits/stl_uninitialized.h:std::vector<int, std::allocator<int> >* std::__uninitialized_fill_n_a<std::vector<int, std::allocator<int> >*, unsigned long, std::vector<int, std::allocator<int> >, std::vector<int, std::allocator<int> > >(std::vector<int, std::allocator<int> >*, unsigned long, std::vector<int, std::allocator<int> > const&, std::allocator<std::vector<int, std::allocator<int> > >&) (19x)
+       224 ( 0.00%)  					_M_get_Tp_allocator());
+       114 ( 0.00%)  => /usr/include/c++/14.2.1/bits/stl_vector.h:std::_Vector_base<std::vector<int, std::allocator<int> >, std::allocator<std::vector<int, std::allocator<int> > > >::_M_get_Tp_allocator() (19x)
+       168 ( 0.00%)        }
+         .           
+         .           #if __cplusplus >= 201103L
+         .                 // Called by the vector(n) constructor.
+         .                 _GLIBCXX20_CONSTEXPR
+         .                 void
+       240 ( 0.00%)        _M_default_initialize(size_type __n)
+         .                 {
+        96 ( 0.00%)  	this->_M_impl._M_finish =
+       288 ( 0.00%)  	  std::__uninitialized_default_n_a(this->_M_impl._M_start, __n,
+    12,232 ( 0.00%)  => /usr/include/c++/14.2.1/bits/stl_uninitialized.h:std::vector<std::pair<int, int>, std::allocator<std::pair<int, int> > >* std::__uninitialized_default_n_a<std::vector<std::pair<int, int>, std::allocator<std::pair<int, int> > >*, unsigned long, std::vector<std::pair<int, int>, std::allocator<std::pair<int, int> > > >(std::vector<std::pair<int, int>, std::allocator<std::pair<int, int> > >*, unsigned long, std::allocator<std::vector<std::pair<int, int>, std::allocator<std::pair<int, int> > > >&) (38x)
+       192 ( 0.00%)  					   _M_get_Tp_allocator());
+       228 ( 0.00%)  => /usr/include/c++/14.2.1/bits/stl_vector.h:std::_Vector_base<std::vector<std::pair<int, int>, std::allocator<std::pair<int, int> > >, std::allocator<std::vector<std::pair<int, int>, std::allocator<std::pair<int, int> > > > >::_M_get_Tp_allocator() (38x)
+       144 ( 0.00%)        }
+         .           #endif
+         .           
+         .                 // Internal assign functions follow.  The *_aux functions do the actual
+         .                 // assignment work for the range versions.
+         .           
+         .                 // Called by the range assign to implement [23.1.1]/9
+         .           
+         .                 // _GLIBCXX_RESOLVE_LIB_DEFECTS
+-- line 1730 ----------------------------------------
+-- line 1898 ----------------------------------------
+         .                 iterator
+         .                 _M_emplace_aux(const_iterator __position, value_type&& __v)
+         .                 { return _M_insert_rval(__position, std::move(__v)); }
+         .           #endif
+         .           
+         .                 // Called by _M_fill_insert, _M_insert_aux etc.
+         .                 _GLIBCXX20_CONSTEXPR
+         .                 size_type
+     1,510 ( 0.00%)        _M_check_len(size_type __n, const char* __s) const
+         .                 {
+     2,541 ( 0.00%)  	if (max_size() - size() < __n)
+       180 ( 0.00%)  => /usr/include/c++/14.2.1/bits/stl_vector.h:std::vector<std::unique_ptr<Pipeline::ActiveObject, std::default_delete<Pipeline::ActiveObject> >, std::allocator<std::unique_ptr<Pipeline::ActiveObject, std::default_delete<Pipeline::ActiveObject> > > >::max_size() const (3x)
+        36 ( 0.00%)  => /usr/include/c++/14.2.1/bits/stl_vector.h:std::vector<std::unique_ptr<Pipeline::ActiveObject, std::default_delete<Pipeline::ActiveObject> >, std::allocator<std::unique_ptr<Pipeline::ActiveObject, std::default_delete<Pipeline::ActiveObject> > > >::size() const (3x)
+         .           	  __throw_length_error(__N(__s));
+         .           
+     2,416 ( 0.00%)  	const size_type __len = size() + (std::max)(size(), __n);
+        72 ( 0.00%)  => /usr/include/c++/14.2.1/bits/stl_vector.h:std::vector<std::unique_ptr<Pipeline::ActiveObject, std::default_delete<Pipeline::ActiveObject> >, std::allocator<std::unique_ptr<Pipeline::ActiveObject, std::default_delete<Pipeline::ActiveObject> > > >::size() const (6x)
+        40 ( 0.00%)  => /usr/include/c++/14.2.1/bits/stl_algobase.h:unsigned long const& std::max<unsigned long>(unsigned long const&, unsigned long const&) (3x)
+     2,015 ( 0.00%)  	return (__len < size() || __len > max_size()) ? max_size() : __len;
+       180 ( 0.00%)  => /usr/include/c++/14.2.1/bits/stl_vector.h:std::vector<std::unique_ptr<Pipeline::ActiveObject, std::default_delete<Pipeline::ActiveObject> >, std::allocator<std::unique_ptr<Pipeline::ActiveObject, std::default_delete<Pipeline::ActiveObject> > > >::max_size() const (3x)
+        36 ( 0.00%)  => /usr/include/c++/14.2.1/bits/stl_vector.h:std::vector<std::unique_ptr<Pipeline::ActiveObject, std::default_delete<Pipeline::ActiveObject> >, std::allocator<std::unique_ptr<Pipeline::ActiveObject, std::default_delete<Pipeline::ActiveObject> > > >::size() const (3x)
+       906 ( 0.00%)        }
+         .           
+         .                 // Called by constructors to check initial size.
+         .                 static _GLIBCXX20_CONSTEXPR size_type
+     2,025 ( 0.00%)        _S_check_init_len(size_type __n, const allocator_type& __a)
+         .                 {
+       945 ( 0.00%)  	if (__n > _S_max_size(_Tp_alloc_type(__a)))
+       817 ( 0.00%)  => /usr/include/c++/14.2.1/bits/stl_vector.h:std::vector<std::vector<int, std::allocator<int> >, std::allocator<std::vector<int, std::allocator<int> > > >::_S_max_size(std::allocator<std::vector<int, std::allocator<int> > > const&) (19x)
+         .           	  __throw_length_error(
+         .           	      __N("cannot create std::vector larger than max_size()"));
+       135 ( 0.00%)  	return __n;
+       810 ( 0.00%)        }
+         .           
+         .                 static _GLIBCXX20_CONSTEXPR size_type
+     3,059 ( 0.00%)        _S_max_size(const _Tp_alloc_type& __a) _GLIBCXX_NOEXCEPT
+         .                 {
+         .           	// std::distance(begin(), end()) cannot be greater than PTRDIFF_MAX,
+         .           	// and realistically we can't store more than PTRDIFF_MAX/sizeof(T)
+         .           	// (even if std::allocator_traits::max_size says we can).
+     3,496 ( 0.00%)  	const size_t __diffmax
+         .           	  = __gnu_cxx::__numeric_traits<ptrdiff_t>::__max / sizeof(_Tp);
+       437 ( 0.00%)  	const size_t __allocmax = _Alloc_traits::max_size(__a);
+     2,622 ( 0.00%)  	return (std::min)(__diffmax, __allocmax);
+       416 ( 0.00%)  => /usr/include/c++/14.2.1/bits/stl_algobase.h:unsigned long const& std::min<unsigned long>(unsigned long const&, unsigned long const&) (32x)
+     2,185 ( 0.00%)        }
+         .           
+         .                 // Internal erase functions follow.
+         .           
+         .                 // Called by erase(q1,q2), clear(), resize(), _M_fill_assign,
+         .                 // _M_assign_aux.
+         .                 _GLIBCXX20_CONSTEXPR
+         .                 void
+         .                 _M_erase_at_end(pointer __pos) _GLIBCXX_NOEXCEPT
+         .                 {
+       447 ( 0.00%)  	if (size_type __n = this->_M_impl._M_finish - __pos)
+         .           	  {
+         .           	    std::_Destroy(__pos, this->_M_impl._M_finish,
+         .           			  _M_get_Tp_allocator());
+         .           	    this->_M_impl._M_finish = __pos;
+         .           	    _GLIBCXX_ASAN_ANNOTATE_SHRINK(__n);
+         .           	  }
+         .                 }
+         .           
+-- line 1953 ----------------------------------------
+-- line 1967 ----------------------------------------
+         .                 _GLIBCXX20_CONSTEXPR
+         .                 void
+         .                 _M_move_assign(vector&& __x, true_type) noexcept
+         .                 {
+         .           	vector __tmp(get_allocator());
+         .           	this->_M_impl._M_swap_data(__x._M_impl);
+         .           	__tmp._M_impl._M_swap_data(__x._M_impl);
+         .           	std::__alloc_on_move(_M_get_Tp_allocator(), __x._M_get_Tp_allocator());
+         2 ( 0.00%)        }
+        20 ( 0.00%)  => /usr/include/c++/14.2.1/bits/stl_vector.h:std::vector<std::__cxx11::basic_string<char, std::char_traits<char>, std::allocator<char> >, std::allocator<std::__cxx11::basic_string<char, std::char_traits<char>, std::allocator<char> > > >::~vector() (1x)
+         .           
+         .                 // Do move assignment when it might not be possible to move source
+         .                 // object's memory, resulting in a linear-time operation.
+         .                 _GLIBCXX20_CONSTEXPR
+         .                 void
+         .                 _M_move_assign(vector&& __x, false_type)
+         .                 {
+         .           	if (__x._M_get_Tp_allocator() == this->_M_get_Tp_allocator())
+-- line 1983 ----------------------------------------
+
+--------------------------------------------------------------------------------
+The following files chosen for auto-annotation could not be found:
+--------------------------------------------------------------------------------
+  /usr/src/debug/glibc/glibc/elf/../sysdeps/generic/dl-new-hash.h
+  /usr/src/debug/glibc/glibc/elf/../sysdeps/x86_64/dl-machine.h
+  /usr/src/debug/glibc/glibc/elf/dl-lookup.c
+  /usr/src/debug/glibc/glibc/elf/dl-reloc.c
+  /usr/src/debug/glibc/glibc/elf/do-rel.h
+  /usr/src/debug/glibc/glibc/libio/fileops.c
+  /usr/src/debug/glibc/glibc/malloc/malloc.c
+  /usr/src/debug/glibc/glibc/misc/../sysdeps/unix/sysv/linux/select.c
+  /usr/src/debug/glibc/glibc/nptl/../nptl/descr.h
+  /usr/src/debug/glibc/glibc/nptl/cancellation.c
+  /usr/src/debug/glibc/glibc/stdio-common/Xprintf_buffer_write.c
+  /usr/src/debug/glibc/glibc/stdio-common/vfprintf-internal.c
+  /usr/src/debug/glibc/glibc/string/../sysdeps/x86_64/multiarch/../multiarch/strcmp-sse2.S
+  /usr/src/debug/glibc/glibc/string/../sysdeps/x86_64/multiarch/memmove-vec-unaligned-erms.S
+  /usr/src/debug/gtest/googletest-1.15.2/googletest/src/gtest.cc
+
+--------------------------------------------------------------------------------
+Ir                   
+--------------------------------------------------------------------------------
+258,239,140 (93.69%)  events annotated
+

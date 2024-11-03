@@ -284,8 +284,7 @@ std::string Server::solveMST(const std::string &algorithm, int choice, int clien
 
         case 2:
             // Pipeline
-            pipeline.execute(mst);
-            result = pipeline.getResult();
+            result = pipeline.execute(mst);
             break;
 
         default:

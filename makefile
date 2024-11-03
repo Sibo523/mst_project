@@ -4,22 +4,19 @@ LDFLAGS := -pthread
 
 # Directory structure
 SRC_DIR := src
-TEST_DIR := tests
 BUILD_DIR := build
 OBJ_DIR := $(BUILD_DIR)/obj
 BIN_DIR := $(BUILD_DIR)/bin
 COV_DIR := $(BUILD_DIR)/coverage
 MEMCHECK_DIR := $(BUILD_DIR)/memcheck
 
-# Source files
-SRCS := $(shell find $(SRC_DIR) -name '*.cpp')
+# Source files (excluding main.cpp and test files)
+SRCS := $(filter-out $(SRC_DIR)/main.cpp,$(shell find $(SRC_DIR) -name '*.cpp'))
+TEST_SRCS := $(shell find $(SRC_DIR)/tests -name '*.cpp')
 OBJS := $(SRCS:$(SRC_DIR)/%.cpp=$(OBJ_DIR)/%.o)
-DEPS := $(OBJS:.o=.d)
-
-# Test files
-TEST_SRCS := $(shell find $(TEST_DIR) -name '*.cpp')
-TEST_OBJS := $(TEST_SRCS:$(TEST_DIR)/%.cpp=$(OBJ_DIR)/$(TEST_DIR)/%.o)
-TEST_DEPS := $(TEST_OBJS:.o=.d)
+TEST_OBJS := $(TEST_SRCS:$(SRC_DIR)/%.cpp=$(OBJ_DIR)/%.o)
+MAIN_OBJ := $(OBJ_DIR)/main.o
+DEPS := $(OBJS:.o=.d) $(TEST_OBJS:.o=.d)
 
 # Executables
 EXEC := mst_project
@@ -31,56 +28,54 @@ GTEST_LIB := /usr/local/lib
 CXXFLAGS += -I$(GTEST_DIR)/include
 LDFLAGS += -L$(GTEST_LIB) -lgtest -lgtest_main
 
-# Valgrind command
-VALGRIND := valgrind --leak-check=full --show-leak-kinds=all --track-origins=yes --verbose
-
-.PHONY: all clean test coverage profile run_all memcheck
+# Valgrind commands
+VALGRIND := valgrind --leak-check=full -s --show-leak-kinds=all --track-origins=yes
+HELGRIND := valgrind --tool=helgrind --trace-children=yes
+CALLGRIND := valgrind --tool=callgrind 
+.PHONY: all clean test coverage memcheck helgrind
 
 all: $(EXEC) $(TEST_EXEC)
 
-$(EXEC): $(filter-out $(OBJ_DIR)/tests/%, $(OBJS))
+$(EXEC): $(OBJS) $(MAIN_OBJ)
 	@mkdir -p $(@D)
 	$(CXX) $^ -o $@ $(LDFLAGS)
 
-$(TEST_EXEC): $(filter-out $(OBJ_DIR)/main.o, $(OBJS)) $(TEST_OBJS)
+$(TEST_EXEC): $(OBJS) $(TEST_OBJS)
 	@mkdir -p $(@D)
 	$(CXX) $^ -o $@ $(LDFLAGS)
+
+$(MAIN_OBJ): $(SRC_DIR)/main.cpp
+	@mkdir -p $(@D)
+	$(CXX) $(CXXFLAGS) -MMD -MP -c $< -o $@
 
 $(OBJ_DIR)/%.o: $(SRC_DIR)/%.cpp
 	@mkdir -p $(@D)
 	$(CXX) $(CXXFLAGS) -MMD -MP -c $< -o $@
 
-$(OBJ_DIR)/$(TEST_DIR)/%.o: $(TEST_DIR)/%.cpp
-	@mkdir -p $(@D)
-	$(CXX) $(CXXFLAGS) -I$(SRC_DIR) -MMD -MP -c $< -o $@
-
--include $(DEPS) $(TEST_DEPS)
+-include $(DEPS)
 
 test: $(TEST_EXEC)
 	./$(TEST_EXEC)
 
-coverage: CXXFLAGS += -fprofile-arcs -ftest-coverage
-coverage: LDFLAGS += -lgcov
-coverage: clean test
-	@mkdir -p $(COV_DIR)
-	find $(OBJ_DIR) -name "*.gcno" -exec gcov -r {} +
-	lcov --capture --directory $(OBJ_DIR) --output-file $(COV_DIR)/coverage.info
-	genhtml $(COV_DIR)/coverage.info --output-directory $(COV_DIR)/report
-
-profile: CXXFLAGS += -pg
-profile: LDFLAGS += -pg
-profile: clean $(EXEC)
-	./$(EXEC)
-	gprof $(EXEC) gmon.out > $(BUILD_DIR)/profile_report.txt
 
 memcheck: CXXFLAGS += -g
-memcheck: clean $(TEST_EXEC)
+memcheck:  $(TEST_EXEC)
 	@mkdir -p $(MEMCHECK_DIR)
-	$(VALGRIND) --log-file=$(MEMCHECK_DIR)/memcheck.log $(TEST_EXEC)
+	$(VALGRIND) --log-file=$(MEMCHECK_DIR)/memcheck.log ./$(TEST_EXEC)
 	@echo "Memcheck complete. Results saved to $(MEMCHECK_DIR)/memcheck.log"
-
-run_all: $(EXEC)
-	./run_all_features.sh
-
+ 
+helgrind: CXXFLAGS += -g
+helgrind: $(TEST_EXEC)
+	@mkdir -p $(MEMCHECK_DIR)
+	$(HELGRIND) --log-file=$(MEMCHECK_DIR)/helgrind.log ./$(TEST_EXEC)
+cg:  $(TEST_EXEC)
+	@mkdir -p $(MEMCHECK_DIR)
+	$(CALLGRIND) --callgrind-out-file=$(MEMCHECK_DIR)/callgrind.log ./$(TEST_EXEC)
+	callgrind_annotate  $(MEMCHECK_DIR)/callgrind.log > $(MEMCHECK_DIR)/callgrind_annotate.log
+ 
 clean:
-	rm -rf $(BUILD_DIR) mst_project *.gcov *.gcda *.gcno gmon.out
+	rm -rf $(BUILD_DIR)
+	find . -type f -name "*.gcno" -delete
+	find . -type f -name "*.gcda" -delete
+	find . -type f -name "*.gcov" -delete
+	rm -f $(EXEC) gmon.out

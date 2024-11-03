@@ -102,10 +102,10 @@ void Pipeline::stop()
     isStarted = false;
 }
 
-void Pipeline::execute(std::vector<std::pair<int, std::pair<int, int>>> data)
+std::string Pipeline::execute(std::vector<std::pair<int, std::pair<int, int>>> data)
 {
     if (!isStarted || activeObjects.empty())
-        return;
+        return "";
 
     // Push data to the first stage
     auto &first = activeObjects[0];
@@ -114,9 +114,7 @@ void Pipeline::execute(std::vector<std::pair<int, std::pair<int, int>>> data)
         first->taskQueue.push(data);
         first->condition.notify_one();
     }
-}
-std::string Pipeline::getResult()
-{
+
     while (ans[3] == 0)
     {
     } // wait for it to fill up.
@@ -128,6 +126,7 @@ std::string Pipeline::getResult()
     }
     return msg;
 }
+
 
 std::string Pipeline::format_msg()
 {

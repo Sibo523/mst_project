@@ -43,15 +43,6 @@ TEST_F(PrimMSTTest, SimpleConnectedGraph) {
     ASSERT_EQ(totalWeight, 5);  // Minimum spanning tree weight should be 5 (2 + 3)
 }
 
-// TEST_F(PrimMSTTest, DisconnectedGraph) {
-//     Graph g(4);
-//     g.addEdge(0, 1, 1);
-//     g.addEdge(2, 3, 2);
-
-//     auto result = prim->findMST(g);
-//     ASSERT_EQ(result.size(), 2);  // Should return edges from both components
-// }
-
 TEST_F(PrimMSTTest, CompleteGraph) {
     Graph g(4);
     g.addEdge(0, 1, 1);

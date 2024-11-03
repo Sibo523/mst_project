@@ -20,11 +20,9 @@ public:
 
     void start();
     void stop();
-    void execute(std::vector<std::pair<int, std::pair<int, int>>> data);
-    std::string getResult();
+    std::string execute(std::vector<std::pair<int, std::pair<int, int>>> data);
 
 private:
- 
     class ActiveObject
     {
     public:
@@ -46,10 +44,9 @@ private:
         std::queue<std::vector<std::pair<int, std::pair<int, int>>>> taskQueue;
         bool shouldStop;
     };
-       std::vector<double> ans;
+    std::vector<double> ans;
     std::string format_msg();
     std::vector<std::unique_ptr<ActiveObject>> activeObjects;
     bool isStarted = false;
-
 };
 ;

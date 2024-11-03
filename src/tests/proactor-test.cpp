@@ -92,45 +92,6 @@ TEST_F(ProactorTest, MultipleConnections) {
     ASSERT_EQ(connectionCount, NUM_CONNECTIONS);
 }
 
-// TEST_F(ProactorTest, StopOperation) {
-//     std::atomic<bool> handlerCalled{false};
-    
-//     auto handler = [&handlerCalled](int socket) {
-//         handlerCalled = true;
-//         close(socket);
-//     };
-
-//     proactor->run(serverSocket, handler);
-    
-//     // Stop the proactor before any connections
-//     proactor->stop();
-    
-//     // Try to connect after stopping
-//     int clientSocket = socket(AF_INET, SOCK_STREAM, 0);
-//     sockaddr_in address;
-//     socklen_t len = sizeof(address);
-//     getsockname(serverSocket, (struct sockaddr*)&address, &len);
-    
-//     connect(clientSocket, (struct sockaddr*)&address, sizeof(address));
-//     std::this_thread::sleep_for(std::chrono::milliseconds(100));
-    
-//     close(clientSocket);
-//     ASSERT_FALSE(handlerCalled);
-// }
-
-// TEST_F(ProactorTest, PostHandler) {
-//     std::atomic<bool> handlerExecuted{false};
-    
-//     auto handler = [&handlerExecuted](int socket) {
-//         handlerExecuted = true;
-//         close(socket);
-//     };
-
-//     proactor->post(serverSocket, handler);
-//     std::this_thread::sleep_for(std::chrono::milliseconds(100));
-    
-//     ASSERT_TRUE(handlerExecuted);
-// }
 
 TEST_F(ProactorTest, ThreadCleanup) {
     auto handler = [](int socket) {
