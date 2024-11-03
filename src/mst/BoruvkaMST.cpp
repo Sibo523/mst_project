@@ -4,6 +4,12 @@
 
 std::vector<std::pair<int, std::pair<int, int>>> BoruvkaMST::findMST(const Graph &graph) {
     int V = graph.getVertices();
+    // Add early return for empty graph
+    if (V == 0) {
+        std::cout << "Warning: Empty graph passed to BoruvkaMST::findMST" << std::endl;
+        return {};
+    }
+
     std::vector<std::pair<int, std::pair<int, int>>> result;
     std::vector<int> parent(V);
     std::vector<int> rank(V, 0);
@@ -59,7 +65,6 @@ std::vector<std::pair<int, std::pair<int, int>>> BoruvkaMST::findMST(const Graph
 
     return result;
 }
-
 int BoruvkaMST::find(std::vector<int> &parent, int i) {
     if (parent[i] != i) {
         parent[i] = find(parent, parent[i]);

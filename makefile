@@ -83,4 +83,4 @@ run_all: $(EXEC)
 	./run_all_features.sh
 
 clean:
-	rm -rf $(BUILD_DIR) mst_project
+	rm -rf $(BUILD_DIR) mst_project *.gcov *.gcda *.gcno gmon.out
