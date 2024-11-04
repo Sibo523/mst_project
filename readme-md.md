@@ -2,6 +2,8 @@
 
 This project implements various Minimum Spanning Tree (MST) algorithms and provides a server for solving MST problems on weighted, directed graphs.
 
+## In src there's all the code, and in Welldone!, there's the rest meaning memcheck:)
+
 ## Features
 
 - Graph data structure implementation
