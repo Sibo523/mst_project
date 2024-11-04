@@ -33,12 +33,12 @@ private:
     std::string solveMST(const std::string &algorithm, int choice, int clientSocket);
     void sendMessage(int clientSocket, const std::string &message);
     std::string getClientInput(int clientSocket);
-
+    std::mutex graphMutex;
     Graph currentGraph;
     std::unique_ptr<MSTAlgorithm> currentAlgorithm;
     LeaderFollowerThreadPool threadPool;
     Pipeline pipeline;
-    Proactor proactor;  // Replace troll with proactor
+    Proactor proactor; // Replace troll with proactor
     int serverSocket;
     bool running;
     int port;

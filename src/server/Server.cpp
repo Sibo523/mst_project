@@ -79,7 +79,7 @@ void Server::handleClient(int clientSocket)
     while (true)
     {
         memset(buffer, 0, sizeof(buffer));
-        sendMessage(clientSocket, "Enter command:\n addGraph, solveMST");
+        sendMessage(clientSocket, "Enter command:\n addGraph,\n solveMST \n updateGraph \n exit\n clear \n help\n");
 
         int valread = read(clientSocket, buffer, 1024);
         if (valread <= 0)
@@ -196,7 +196,8 @@ std::string Server::handleRequest(const std::string &request, int clientSocket)
     }
     else if (command == "clear")
     {
-        // I have no time :) (supposed to clear the graph and start from scratch)
+        graphMutex.lock();
+        currentGraph = Graph(0);
     }
 
     else
@@ -233,17 +234,23 @@ std::string Server::getClientInput(int clientSocket)
 // overide the old graph, and print the message
 void Server::addGraph(const Graph &graph)
 {
-    currentGraph = graph;
-    std::cout << "Graph added successfully." << std::endl;
+    {
+        std::lock_guard<std::mutex> lock(graphMutex);
+        currentGraph = graph;
+        std::cout << "Graph added successfully." << std::endl;
+    }
 }
 // update the current graph
 void Server::updateGraph(const std::string &changes)
 {
-    std::istringstream iss(changes);
-    int src, dest, weight;
-    while (iss >> src >> dest >> weight)
     {
-        currentGraph.addEdge(src, dest, weight);
+        std::lock_guard<std::mutex> lock(graphMutex);
+        std::istringstream iss(changes);
+        int src, dest, weight;
+        while (iss >> src >> dest >> weight)
+        {
+            currentGraph.addEdge(src, dest, weight);
+        }
     }
     std::cout << "Graph updated successfully." << std::endl;
 }
