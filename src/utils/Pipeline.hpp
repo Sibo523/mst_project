@@ -1,3 +1,4 @@
+// Pipeline.hpp
 #pragma once
 #include <vector>
 #include <queue>
@@ -10,10 +11,9 @@
 #include <string>
 #include <memory>
 
-class Pipeline
-{
+class Pipeline {
 public:
-    Pipeline(const std::vector<std::function<std::pair<int, double>(const std::vector<std::pair<int, std::pair<int, int>>> &)>> &functions);
+    Pipeline(const std::vector<std::function<std::pair<int, double>(const std::vector<std::pair<int, std::pair<int, int>>>&)>>& functions);
     Pipeline() = default;
     ~Pipeline();
 
@@ -22,30 +22,33 @@ public:
     std::string execute(std::vector<std::pair<int, std::pair<int, int>>> data);
 
 private:
-    class ActiveObject
-    {
+    struct PipelineData {
+        std::vector<std::pair<int, std::pair<int, int>>> data;
+        std::vector<std::pair<int, double>> results;
+    };
+
+    class ActiveObject {
     public:
-        ActiveObject(std::function<std::pair<int, double>(const std::vector<std::pair<int, std::pair<int, int>>> &)> func)
+        ActiveObject(std::function<std::pair<int, double>(const std::vector<std::pair<int, std::pair<int, int>>>&)> func)
             : function(std::move(func)), shouldStop(false) {}
 
-        // Delete copy constructor and assignment operator
-        ActiveObject(const ActiveObject &) = delete;
-        ActiveObject &operator=(const ActiveObject &) = delete;
+        ActiveObject(const ActiveObject&) = delete;
+        ActiveObject& operator=(const ActiveObject&) = delete;
+        ActiveObject(ActiveObject&&) = default;
+        ActiveObject& operator=(ActiveObject&&) = default;
 
-        // Add move constructor and assignment operator
-        ActiveObject(ActiveObject &&) = default;
-        ActiveObject &operator=(ActiveObject &&) = default;
-
-        std::function<std::pair<int, double>(const std::vector<std::pair<int, std::pair<int, int>>> &)> function;
+        std::function<std::pair<int, double>(const std::vector<std::pair<int, std::pair<int, int>>>&)> function;
         std::thread thread;
         std::mutex mutex;
         std::condition_variable condition;
-        std::queue<std::vector<std::pair<int, std::pair<int, int>>>> taskQueue;
+        std::queue<PipelineData> taskQueue;
         bool shouldStop;
     };
-    std::vector<double> ans;
-    std::string format_msg();
+
+    std::string format_msg(const PipelineData& data);
     std::vector<std::unique_ptr<ActiveObject>> activeObjects;
     bool isStarted = false;
+    std::mutex resultMutex;
+    std::condition_variable resultCondition;
+    PipelineData* currentResult = nullptr;
 };
-;

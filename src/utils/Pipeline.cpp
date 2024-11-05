@@ -1,15 +1,10 @@
+
 #include "Pipeline.hpp"
-#include <iostream>
 Pipeline::Pipeline(const std::vector<std::function<std::pair<int, double>(const std::vector<std::pair<int, std::pair<int, int>>> &)>> &functions)
 {
-    // Create active objects for each function
     for (const auto &function : functions)
     {
         activeObjects.push_back(std::make_unique<ActiveObject>(function));
-    }
-    for (int i = 0; i < 4; i++)
-    {
-        ans.push_back(0);
     }
 }
 
@@ -25,9 +20,9 @@ void Pipeline::start()
 {
     if (isStarted || activeObjects.empty())
         return;
+
     isStarted = true;
-    std::cout << "we started start" << std::endl;
-    // Start a thread for each active object
+
     for (size_t i = 0; i < activeObjects.size(); ++i)
     {
         auto &ao = activeObjects[i];
@@ -37,9 +32,7 @@ void Pipeline::start()
             auto& current = *activeObjects[i];
             
             while (true) {
-                std::vector<std::pair<int, std::pair<int, int>>> data;
-                
-                // Wait for and get data from queue
+                PipelineData pipelineData;
                 {
                     std::unique_lock<std::mutex> lock(current.mutex);
                     current.condition.wait(lock, [&]() {
@@ -50,27 +43,25 @@ void Pipeline::start()
                         break;
                     }
 
-                    data = std::move(current.taskQueue.front());
+                    pipelineData = std::move(current.taskQueue.front());
                     current.taskQueue.pop();
                 }
 
-                // Process data using the function
-                if (!data.empty()) {
-                    auto output = current.function(data);
-                    ans[output.first] = output.second;
-                    //debug purpuses
-                    // std::cout << "Output: " << output.second << " Answer: " << ans[output.first] << std::endl;
-                    // for (int j = 0; j < 4; ++j) {
-                    //     std::cout << "ans[" << j << "]: " << ans[j] << std::endl;
-                    // }
-                    // std::cout<<getResult()<<std::endl; 
-                }
+                // Process data using the function and store result
+                auto result = current.function(pipelineData.data);
+                pipelineData.results.push_back(result);
 
-                // Pass data to next stage if not the last stage
-                if (i < activeObjects.size() - 1) {
+                // If this is the last stage, store the final result
+                if (i == activeObjects.size() - 1) {
+                    std::unique_lock<std::mutex> lock(resultMutex);
+                    *currentResult = std::move(pipelineData);
+                    resultCondition.notify_one();
+                }
+                // Otherwise, pass to the next stage
+                else if (i < activeObjects.size() - 1) {
                     auto& next = *activeObjects[i + 1];
                     std::unique_lock<std::mutex> lock(next.mutex);
-                    next.taskQueue.push(data);
+                    next.taskQueue.push(std::move(pipelineData));
                     next.condition.notify_one();
                 }
             } });
@@ -82,7 +73,6 @@ void Pipeline::stop()
     if (!isStarted)
         return;
 
-    // Signal all active objects to stop
     for (auto &ao : activeObjects)
     {
         std::unique_lock<std::mutex> lock(ao->mutex);
@@ -90,7 +80,6 @@ void Pipeline::stop()
         ao->condition.notify_one();
     }
 
-    // Join all threads
     for (auto &ao : activeObjects)
     {
         if (ao->thread.joinable())
@@ -107,30 +96,55 @@ std::string Pipeline::execute(std::vector<std::pair<int, std::pair<int, int>>> d
     if (!isStarted || activeObjects.empty())
         return "";
 
-    // Push data to the first stage
-    auto &first = activeObjects[0];
+    PipelineData pipelineData;
+    pipelineData.data = std::move(data);
+
+    // Store pointer to where we want the result
+    PipelineData result;
     {
+        std::unique_lock<std::mutex> lock(resultMutex);
+        currentResult = &result;
+    }
+
+    // Push data to the first stage
+    {
+        auto &first = activeObjects[0];
         std::unique_lock<std::mutex> lock(first->mutex);
-        first->taskQueue.push(data);
+        first->taskQueue.push(std::move(pipelineData));
         first->condition.notify_one();
     }
 
-    while (ans[3] == 0)
+    // Wait for the result
     {
-    } // wait for it to fill up.
-
-    std::string msg = format_msg();
-    for (int i = 0; i < 4; i++)
-    {
-        ans[i] = 0;
+        std::unique_lock<std::mutex> lock(resultMutex);
+        resultCondition.wait(lock, [this]()
+                             { return currentResult->results.size() == activeObjects.size(); });
     }
-    return msg;
+
+    return format_msg(result);
 }
 
-
-std::string Pipeline::format_msg()
+std::string Pipeline::format_msg(const PipelineData &data)
 {
-    return "New message \nTotal weight: " + std::to_string(ans[0]) + "\nLongest distance: " +
-           std::to_string(ans[1]) + "\nAverage distance: " + std::to_string(ans[2]) +
-           "\nShortest MST edge: " + std::to_string(ans[3]) + "\n";
+    std::stringstream ss;
+    ss << "New message\n";
+    for (const auto &result : data.results)
+    {
+        switch (result.first)
+        {
+        case 0:
+            ss << "Total weight: " << result.second << "\n";
+            break;
+        case 1:
+            ss << "Longest distance: " << result.second << "\n";
+            break;
+        case 2:
+            ss << "Average distance: " << result.second << "\n";
+            break;
+        case 3:
+            ss << "Shortest MST edge: " << result.second << "\n";
+            break;
+        }
+    }
+    return ss.str();
 }
