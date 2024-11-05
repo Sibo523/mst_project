@@ -20,4 +20,5 @@ struct MSTAnalysis
     static std::pair<int, double> findLongestDistance(const std::vector<std::pair<int, std::pair<int, int>>> &mst);
     static std::pair<int, double> calculateAverageDistance(const std::vector<std::pair<int, std::pair<int, int>>> &mst);
     static std::pair<int, double> findShortestMSTEdge(const std::vector<std::pair<int, std::pair<int, int>>> &mst);
+    static std::string getAllResults(const std::vector<std::pair<int, std::pair<int, int>>> &mst);
 };

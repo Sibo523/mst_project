@@ -130,3 +130,13 @@ std::pair<int, double> MSTAnalysis::findShortestMSTEdge(const std::vector<std::p
     }
     return std::make_pair(3, shortestEdge);
 }
+std::string MSTAnalysis::getAllResults(const std::vector<std::pair<int, std::pair<int, int>>> &mst)
+{
+    std::string results;
+    for (const auto &func : getPipelineFunctions())
+    {
+        auto result = func(mst);
+        results += "Analysis " + std::to_string(result.first) + ": " + std::to_string(result.second) + "\n";
+    }
+    return results;
+}
