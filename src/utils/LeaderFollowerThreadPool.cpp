@@ -1,6 +1,3 @@
-// LeaderFollowerThreadPool.hpp remains the same
-
-// Update LeaderFollowerThreadPool.cpp:
 #include "LeaderFollowerThreadPool.hpp"
 
 void LeaderFollowerThreadPool::workerThread(size_t id)
