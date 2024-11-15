@@ -155,12 +155,12 @@ std::string Server::handleRequest(const std::string &request, int clientSocket)
     }
     else if (command == "solveMST")
     {
-        sendMessage(clientSocket, "Enter MST algorithm (e.g., 'Kruskal', 'Prim', 'IntegerMST', 'Tarjan', 'Boruvka'):");
+        sendMessage(clientSocket, "Enter MST algorithm (e.g., 'Kruskal', 'Prim', 'Tarjan', 'Boruvka'):");
         std::string algorithm = getClientInput(clientSocket);
         algorithm = trimString(algorithm); // Remove any leading/trailing whitespace
         std::cout << "Algorithm received: '" << algorithm << "'" << std::endl;
 
-        std::vector<std::string> validAlgorithms = {"Kruskal", "Prim", "IntegerMST", "Tarjan", "Boruvka"};
+        std::vector<std::string> validAlgorithms = {"Kruskal", "Prim", "Tarjan", "Boruvka"};
         if (std::find(validAlgorithms.begin(), validAlgorithms.end(), algorithm) != validAlgorithms.end())
         {
             std::cout << "Solving MST with algorithm: " << algorithm << std::endl;
@@ -175,7 +175,7 @@ std::string Server::handleRequest(const std::string &request, int clientSocket)
         }
         else
         {
-            std::string errorMsg = "Invalid MST algorithm: '" + algorithm + "'. Valid options are: Kruskal, Prim, IntegerMST, Tarjan, Boruvka.\n";
+            std::string errorMsg = "Invalid MST algorithm: '" + algorithm + "'. Valid options are: Kruskal, Prim, Tarjan, Boruvka.\n";
             sendMessage(clientSocket, errorMsg);
             return errorMsg;
         }

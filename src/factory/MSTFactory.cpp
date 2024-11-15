@@ -3,7 +3,6 @@
 #include "../mst/PrimMST.hpp"
 #include "../mst/KruskalMST.hpp"
 #include "../mst/TarjanMST.hpp"
-#include "../mst/IntegerMST.hpp"
 #include <stdexcept>
 
 // simple factory pattern
@@ -24,10 +23,6 @@ std::unique_ptr<MSTAlgorithm> MSTFactory::createMSTAlgorithm(const std::string &
     else if (algorithmName == "Tarjan")
     {
         return std::make_unique<TarjanMST>();
-    }
-    else if (algorithmName == "Integer")
-    {
-        return std::make_unique<IntegerMST>();
     }
     else
     {
