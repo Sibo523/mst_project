@@ -1,5 +1,4 @@
 #pragma once
-
 #include "../graph/Graph.hpp"
 #include <vector>
 #include <utility>

@@ -40,9 +40,8 @@ std::string LeaderFollowerThreadPool::processMST(const std::vector<std::pair<int
     }
 
     // Create a single future for the getAllResults task
-    auto future = enqueue([&mst]() {
-        return MSTAnalysis::getAllResults(mst);
-    });
+    auto future = enqueue([&mst]()
+                          { return MSTAnalysis::getAllResults(mst); });
 
     try
     {

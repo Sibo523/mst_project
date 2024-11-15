@@ -1,4 +1,3 @@
-
 #include "Pipeline.hpp"
 Pipeline::Pipeline(const std::vector<std::function<std::pair<int, double>(const std::vector<std::pair<int, std::pair<int, int>>> &)>> &functions)
 {
